@@ -5,7 +5,13 @@
     "php": "^8.3"
   },
   "type": "magento2-module",
-  "minimum-stability": "stable",
+  "license": "CC-BY-NC-ND-3.0",
+  "keywords": [
+    "Monta",
+    "Montapacking",
+    "Checkout",
+    "Magento 2"
+  ],
   "autoload": {
     "files": [
       "registration.php"
