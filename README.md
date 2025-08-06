@@ -1,2 +1,2 @@
 # magento2-checkout
-Monta Magento Checkout Plus
+The new Monta Checkout module for modern Magento webshops. 
