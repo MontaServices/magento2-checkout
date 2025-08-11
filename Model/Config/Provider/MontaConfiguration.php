@@ -28,12 +28,12 @@ class MontaConfiguration
 
     public function getUsername(): string
     {
-        return $this->getShippingConfig('username');
+        return $this->getShippingConfig(field: 'username');
     }
 
     public function getPassword(): string
     {
-        return $this->encryptor->decrypt($this->getShippingConfig('password'));
+        return $this->getShippingConfig(field: 'password', decrypt: true);
     }
 
     protected function getCarrierConfig(string $field)
@@ -41,8 +41,12 @@ class MontaConfiguration
         return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
     }
 
-    protected function getShippingConfig(string $field)
+    protected function getShippingConfig(string $field, bool $decrypt = false)
     {
-        return $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
+        $value = $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
+        if ($decrypt) {
+            $value = $this->encryptor->decrypt($value);
+        }
+        return $value;
     }
 }
