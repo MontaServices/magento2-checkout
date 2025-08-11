@@ -72,6 +72,9 @@ class Monta extends AbstractCarrier implements CarrierInterface
         $rateMethod->setMethod($this->_code);
         $rateMethod->setMethodTitle($this->getConfigData('name'));
 
+        $rateMethod->setPrice($this->getHandlingFee());
+        $rateMethod->setCost($this->getHandlingFee());
+
         return $rateMethod;
     }
 
@@ -81,5 +84,13 @@ class Monta extends AbstractCarrier implements CarrierInterface
     public function getAllowedMethods(): array
     {
         return [$this->_code => $this->getConfigData('name')];
+    }
+
+    /**
+     * @return float
+     */
+    protected function getHandlingFee(): float
+    {
+        return (float)$this->getConfigData('handling_fee');
     }
 }

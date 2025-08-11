@@ -5,10 +5,10 @@
         <carriers>
             <monta>
                 <active>0</active>
-                <model>Monta\Checkout\Model\Carrier\Monta</model>
                 <name>Monta</name>
-                <price>9.95</price>
                 <title>Verzending via Monta</title>
+                <model>Monta\Checkout\Model\Carrier\Monta</model>
+                <handling_fee>9.95</handling_fee>
                 <sort_order>50</sort_order>
             </monta>
         </carriers>

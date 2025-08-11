@@ -11,7 +11,7 @@
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="30"  canRestore="1"
+                <field id="title" translate="label" type="text" sortOrder="30" canRestore="1"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
@@ -19,8 +19,14 @@
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Method Name</label>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="90"
-                       showInDefault="1" showInWebsite="1">
+                <field id="handling_fee" translate="label comment" type="text" sortOrder="80" canRestore="1"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Handling Fee</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <comment><![CDATA[Fallback shipping price when no Timeframes are returned.]]></comment>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="90" canRestore="1"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sort Order</label>
                 </field>
             </group>

@@ -1,23 +1,23 @@
 {
-  "name": "monta/checkout",
-  "description": "Monta Checkout for Magento2",
-  "require": {
-    "php": "^8.3"
-  },
-  "type": "magento2-module",
-  "license": "CC-BY-NC-ND-3.0",
-  "keywords": [
-    "Monta",
-    "Montapacking",
-    "Checkout",
-    "Magento 2"
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "monta/checkout",
+    "description": "Monta Checkout for Magento2",
+    "require": {
+        "php": "^8.3"
+    },
+    "type": "magento2-module",
+    "license": "CC-BY-NC-ND-3.0",
+    "keywords": [
+        "Monta",
+        "Montapacking",
+        "Checkout",
+        "Magento 2"
     ],
-    "psr-4": {
-      "Monta\\Checkout\\": ""
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Monta\\Checkout\\": ""
+        }
     }
-  }
 }
