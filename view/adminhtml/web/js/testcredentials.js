@@ -1,15 +1,17 @@
 define(['underscore'], function (_) {
     'use strict';
+    
+    /**
+     * @param {Object} config
+     * @param {Element} element - the Button element
+     * @returns {void}
+     */
+    return function (config, element) {
+        element.onclick = null;
+        console.log("init", config, element);
 
-    return {
-        events: {
-            onclick: function (event) {
-                console.log("Button clicked", event);
-            }
-        },
-
-        init: function (buttonElement) {
-            buttonElement.onclick = this.events.onclick;
+        element.onclick = function (event) {
+            console.log("Button clicked", event);
         }
     }
 })

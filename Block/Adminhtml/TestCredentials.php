@@ -5,10 +5,8 @@
  */
 namespace Monta\Checkout\Block\Adminhtml;
 
-use Magento\Backend\Block\Widget\Button;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
-use Magento\Framework\View\Element\BlockInterface;
 
 class TestCredentials extends Field
 {
@@ -38,21 +36,5 @@ class TestCredentials extends Field
     protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return $this->toHtml();
-    }
-
-    /**
-     * @return BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function getButton(): BlockInterface
-    {
-        return $this->getLayout()
-            ->createBlock(Button::class)
-            ->setData(
-                [
-                    'id' => self::BUTTON_ID,
-                    'label' => __('Test credentials'),
-                ]
-            );
     }
 }
