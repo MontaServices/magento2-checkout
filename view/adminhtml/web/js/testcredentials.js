@@ -3,11 +3,13 @@ define(['underscore'], function (_) {
 
     return {
         events: {
-            onclick: null
+            onclick: function (event) {
+                console.log("Button clicked", event);
+            }
         },
 
-        init: function () {
-            console.log("Initialize");
+        init: function (buttonElement) {
+            buttonElement.onclick = this.events.onclick;
         }
     }
 })

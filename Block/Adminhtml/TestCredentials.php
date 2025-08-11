@@ -12,6 +12,8 @@ use Magento\Framework\View\Element\BlockInterface;
 
 class TestCredentials extends Field
 {
+    public const string BUTTON_ID = 'validate_credentials';
+
     /** @var string $_template - Define template for this Block */
     protected $_template = 'Monta_Checkout::testcredentials.phtml';
 
@@ -48,7 +50,7 @@ class TestCredentials extends Field
             ->createBlock(Button::class)
             ->setData(
                 [
-                    'id' => 'test_credentials',
+                    'id' => self::BUTTON_ID,
                     'label' => __('Test credentials'),
                 ]
             );
