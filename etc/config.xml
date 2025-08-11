@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <monta>
+                <active>0</active>
+                <name>Monta</name>
+                <title>Verzending via Monta</title>
+                <model>Monta\Checkout\Model\Carrier\Monta</model>
+                <handling_fee>9.95</handling_fee>
+                <sort_order>50</sort_order>
+            </monta>
+        </carriers>
+    </default>
+</config>
