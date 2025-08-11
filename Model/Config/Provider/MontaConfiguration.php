@@ -36,6 +36,11 @@ class MontaConfiguration
         return $this->getShippingConfig(field: 'password', decrypt: true);
     }
 
+    public function getGoogleKey(): string
+    {
+        return $this->getShippingConfig(field: 'googleapikey', decrypt: true);
+    }
+
     protected function getCarrierConfig(string $field)
     {
         return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
