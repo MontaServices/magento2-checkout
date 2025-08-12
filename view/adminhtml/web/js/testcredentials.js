@@ -1,17 +1,28 @@
 define(['underscore'], function (_) {
     'use strict';
-    
+
     /**
      * @param {Object} config
      * @param {Element} element - the Button element
      * @returns {void}
      */
-    return function (config, element) {
-        element.onclick = null;
-        console.log("init", config, element);
+    return function (config, buttonElement) {
+        buttonElement.onclick = function (event) {
+            // Avoid double click
+            buttonElement.disabled = true;
 
-        element.onclick = function (event) {
-            console.log("Button clicked", event);
+            fetch('/monta/credentials/validate', {
+                method: 'POST',
+                headers: {contentType: 'application/json'}
+            }).then(response => {
+                console.log("Got response: ", response.json());
+                if (response.redirected && response.url.includes("review")) {
+                    throw new Error();
+                }
+                return response.text();
+            }).catch(error => {
+                console.warn("Error", error);
+            });
         }
     }
 })
