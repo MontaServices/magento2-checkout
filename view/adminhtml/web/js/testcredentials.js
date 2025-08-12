@@ -11,27 +11,20 @@ define(['underscore'], function (_) {
             // Avoid double click
             buttonElement.disabled = true;
 
-            console.log("hello, call url", config.validateUrl);
-
-            let params = {
-                form_key: config.formKey
-            };
             var orderData = new FormData();
-
             orderData.append('form_key', config.formKey);
-            console.log("Call with formdata: ", params);
             fetch(config.validateUrl, {
                 method: 'POST',
                 headers: {contentType: 'application/json'},
                 body: orderData,
-            }).then(response => {
-                console.log("Got response: ", response.json());
-                if (response.redirected && response.url.includes("review")) {
-                    throw new Error();
-                }
-                return response.text();
-            }).catch(error => {
-                console.warn("Error", error);
+            }).then(response => response.json()).then(data => {
+                buttonElement.querySelector('label').innerHTML = data.message;
+            })
+                .catch(error => {
+                    console.warn("Error", error);
+                }).finally(() => {
+                // Whatever happens, enable button again
+                buttonElement.disabled = false;
             });
         }.bind(config);
     }
