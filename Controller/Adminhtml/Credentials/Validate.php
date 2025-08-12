@@ -10,25 +10,38 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Monta\Checkout\Helper\Api;
 
 class Validate extends Action implements HttpPostActionInterface
 {
+    /**
+     * @param Context $context
+     * @param Json $encoder
+     * @param Api $apiHelper
+     */
     public function __construct(
         Context $context,
         protected readonly Json $encoder,
+        protected readonly Api $apiHelper,
     )
     {
         parent::__construct($context);
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function execute(): ResponseInterface
     {
-        // TODO implement verification
-        $response = [
-            'success' => true,
-            'message' => 'Credentials are valid',
+        $api = $this->apiHelper->getApi();
+        $response = $api->testConnection();
+        $message = $response ? 'Credentials are valid!' : 'Credentials are not valid! Did you save before testing?';
+        $result = [
+            'success' => $response,
+            'message' => __($message),
         ];
         return $this->getResponse()
-            ->representJson($this->encoder->serialize($response));
+            ->representJson($this->encoder->serialize($result));
     }
 }
