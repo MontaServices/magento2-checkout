@@ -10,6 +10,7 @@ define(['underscore'], function (_) {
         buttonElement.onclick = function (event) {
             // Avoid double click
             buttonElement.disabled = true;
+            let retry = true;
 
             var orderData = new FormData();
             orderData.append('form_key', config.formKey);
@@ -19,12 +20,16 @@ define(['underscore'], function (_) {
                 body: orderData,
             }).then(response => response.json()).then(data => {
                 buttonElement.querySelector('label').innerHTML = data.message;
+                // Disable button to avoid spam after success
+                retry = !data.success;
             })
                 .catch(error => {
                     console.warn("Error", error);
                 }).finally(() => {
                 // Whatever happens, enable button again
-                buttonElement.disabled = false;
+                if (retry) {
+                    buttonElement.disabled = false;
+                }
             });
         }.bind(config);
     }
