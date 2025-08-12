@@ -47,6 +47,18 @@ class TestCredentials extends Field
         return parent::render($element);
     }
 
+    /** Everything the component needs to function
+     *
+     * @return array
+     */
+    public function getComponentData(): array
+    {
+        return [
+            'formKey' => $this->getFormKey(),
+            'validateUrl' => $this->getRoute(),
+        ];
+    }
+
     /** Element HTML is block HTML
      *
      * @param AbstractElement $element
