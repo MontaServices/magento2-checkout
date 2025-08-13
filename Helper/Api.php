@@ -31,13 +31,12 @@ class Api extends AbstractHelper
      */
     public function getApi(): MontaPackingShipping
     {
-        $settings = $this->apiFactory->createSettings([
+        // TODO create with SystemInfo, copy pretty code from old module
+        return $this->apiFactory->createFromSettings(settings: [
             $this->montaConfiguration->getOrigin(),
             $this->montaConfiguration->getUsername(),
             $this->montaConfiguration->getPassword(),
         ]);
-        // TODO create with SystemInfo, copy pretty code from old module
-        return $this->apiFactory->create($settings);
     }
 
 }
