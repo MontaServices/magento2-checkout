@@ -30,7 +30,6 @@ class Validate extends Action implements HttpPostActionInterface
 
     /**
      * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function execute(): ResponseInterface
     {
