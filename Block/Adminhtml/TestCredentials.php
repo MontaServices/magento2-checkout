@@ -13,7 +13,7 @@ use Magento\Framework\View\Helper\SecureHtmlRenderer;
 
 class TestCredentials extends Field
 {
-    /** @var string  */
+    /** @var string */
     public const string BUTTON_ID = 'validate_credentials';
 
     /** @var string $_template - Define template for this Block */
