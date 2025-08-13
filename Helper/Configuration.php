@@ -1,0 +1,85 @@
+<?php
+/**
+ * @author Jacco.Amersfoort <jacco.amersfoort@monta.nl>
+ * @created 11/08/2025 12:49
+ */
+namespace Monta\Checkout\Helper;
+
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Encryption\EncryptorInterface;
+
+class Configuration
+{
+    /** @var string */
+    public const string CONFIG_PATH_SHIPPING = 'shipping/monta/';
+
+    /** @var string */
+    public const string CONFIG_PATH_CARRIER = 'carriers/monta/';
+
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param EncryptorInterface $encryptor
+     */
+    public function __construct(
+        protected readonly ScopeConfigInterface $scopeConfig,
+        protected readonly EncryptorInterface $encryptor,
+    )
+    {
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrigin(): string
+    {
+        return $this->getShippingConfig('origin');
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->getShippingConfig(field: 'username');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->getShippingConfig(field: 'password', decrypt: true);
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleKey(): string
+    {
+        return $this->getShippingConfig(field: 'googleapikey', decrypt: true);
+    }
+
+    /**
+     * @param string $field
+     * @return mixed
+     */
+    protected function getCarrierConfig(string $field)
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
+    }
+
+    /**
+     * @param string $field
+     * @param bool $decrypt - If value is encrypted, decrypt it
+     * @return mixed|string
+     */
+    protected function getShippingConfig(string $field, bool $decrypt = false)
+    {
+        $value = $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
+        if ($decrypt) {
+            // TODO remove parameter, check if config item is "obscure"
+            $value = $this->encryptor->decrypt($value);
+        }
+        return $value;
+    }
+}
