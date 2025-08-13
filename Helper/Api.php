@@ -16,11 +16,13 @@ class Api extends AbstractHelper
      * @param Context $context
      * @param ApiFactory $apiFactory
      * @param Configuration $montaConfiguration
+     * @param System $systemHelper
      */
     public function __construct(
         Context $context,
         protected readonly ApiFactory $apiFactory,
         protected Configuration $montaConfiguration,
+        protected System $systemHelper,
     )
     {
         parent::__construct($context);
@@ -31,12 +33,13 @@ class Api extends AbstractHelper
      */
     public function getApi(): MontaPackingShipping
     {
-        // TODO create with SystemInfo, copy pretty code from old module
-        return $this->apiFactory->createFromSettings(settings: [
-            $this->montaConfiguration->getOrigin(),
-            $this->montaConfiguration->getUsername(),
-            $this->montaConfiguration->getPassword(),
-        ]);
+        return $this->apiFactory->createFromSettings(
+            settings: [
+                $this->montaConfiguration->getOrigin(),
+                $this->montaConfiguration->getUsername(),
+                $this->montaConfiguration->getPassword(),
+            ],
+            systemInfo: $this->systemHelper->getInfo());
     }
 
 }
