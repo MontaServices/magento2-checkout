@@ -33,7 +33,7 @@ class Api extends AbstractHelper
     public function getApi(): MontaPackingShipping
     {
         $settings = $this->apiFactory->createSettings([
-            $this->montaConfiguration->getWebshop(),
+            $this->montaConfiguration->getOrigin(),
             $this->montaConfiguration->getUsername(),
             $this->montaConfiguration->getPassword(),
         ]);

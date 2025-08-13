@@ -34,8 +34,8 @@
         <section id="shipping">
             <group id="monta" sortOrder="80" showInDefault="1" showInWebsite="1">
                 <label>Monta RestAPI</label>
-                <field id="webshop" translate="label" type="text" showInDefault="1" showInWebsite="1">
-                    <label>Webshop</label>
+                <field id="origin" translate="label" type="text" showInDefault="1" showInWebsite="1">
+                    <label>Origin</label>
                 </field>
                 <field id="username" translate="label" type="text" showInDefault="1" showInWebsite="1">
                     <label>Username</label>
