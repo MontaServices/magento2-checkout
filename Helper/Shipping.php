@@ -7,6 +7,7 @@ namespace Monta\Checkout\Helper;
 
 class Shipping extends Api
 {
+    public const string MONTA_SHIPPING_OPTIONS = 'monta_shipping_options';
     /** Equivalent of old AbstractDeliveryOptions::generateApi
      *
      * @return array

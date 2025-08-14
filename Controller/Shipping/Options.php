@@ -14,6 +14,6 @@ class Options implements HttpGetActionInterface
      */
     public function execute()
     {
-        // TODO get quote, call Api, return Timeframes
+        // TODO get quote, call Api, return ShippingOptions
     }
 }

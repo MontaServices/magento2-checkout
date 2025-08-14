@@ -9,8 +9,8 @@ use Magento\Quote\Api\Data\ShippingMethodInterfaceFactory;
 use Magento\Quote\Model\Cart\ShippingMethod;
 use Magento\Quote\Model\Cart\ShippingMethodConverter;
 use Magento\Quote\Model\Quote\Address\Rate;
+use Monta\Checkout\Helper\Shipping;
 use Monta\Checkout\Model\Carrier\Monta;
-use Monta\CheckoutApiWrapper\Objects\TimeFrame;
 
 /**
  * @kudos Based on Andresa Martins:
@@ -20,9 +20,11 @@ class MethodConverter
 {
     /**
      * @param ShippingMethodInterfaceFactory $extensionFactory
+     * @param Shipping $shippingHelper
      */
     public function __construct(
         protected readonly ShippingMethodInterfaceFactory $extensionFactory,
+        protected readonly Shipping $shippingHelper,
     )
     {
     }
@@ -37,20 +39,12 @@ class MethodConverter
     {
         if ($rate->getMethod() == Monta::METHOD_CODE) {
             $ext = $result->getExtensionAttributes() ?? $this->extensionFactory->create();
-            $ext->setData(TimeFrame::TIMEFRAMES_FIELD, $this->getTimeframes());
+            // Insert extension attribute based on Quote
+            $ext->setData(Shipping::MONTA_SHIPPING_OPTIONS,
+                $this->shippingHelper->getOptions($rate->getAddress()->getQuote())
+            );
             $result->setExtensionAttributes($ext);
         }
         return $result;
-    }
-
-    /**
-     * @return array[]
-     */
-    protected function getTimeframes(): array
-    {
-        return [
-            ['code' => "postnl", "title" => "Pakjegemakt"],
-            ['code' => "dhl", "title" => "DHL Tomorrow"],
-        ];
     }
 }
