@@ -21,8 +21,8 @@ class Api extends AbstractHelper
     public function __construct(
         Context $context,
         protected readonly ApiFactory $apiFactory,
-        protected Configuration $montaConfiguration,
-        protected System $systemHelper,
+        protected readonly Configuration $montaConfiguration,
+        protected readonly System $systemHelper,
     )
     {
         parent::__construct($context);
