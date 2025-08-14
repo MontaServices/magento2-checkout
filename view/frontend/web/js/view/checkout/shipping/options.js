@@ -13,6 +13,7 @@ define([
         initObservable: function () {
             this.isSelected = ko.computed(function () {
                 let method = quote.shippingMethod();
+                // TODO do something with quote.shippingMethod.extension_attributes now available here
                 return (method && method.carrier_code === 'monta');
             }, this);
 
