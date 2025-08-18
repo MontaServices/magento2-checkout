@@ -23,18 +23,7 @@ class Shipping extends Api
         $api = $this->getApi();
 
         // Add Shipping address to quote
-        $addr = $quote->getShippingAddress();
-        $api->setAddress(
-        // TODO perhaps use TIG\PostNL\Helper\AddressEnhancer? what if street is string, or 1 line, or 4 lines
-        // TODO move that converting to CheckoutApiWrapper to use generic
-            street: $addr->getStreetLine(1), // First line is usually
-            houseNumber: $addr->getStreetLine(2), // By default Magento puts housenumber on line 2
-            houseNumberAddition: $addr->getStreetLine(3), // Usually housenumber is on line 3
-            postalCode: $addr->getPostcode(),
-            city: $addr->getCity(),
-            state: $addr->getRegionCode(),
-            countryCode: (string)$addr->getCountryId(),
-        );
+        $api->setAddressFromArray($quote->getShippingAddress()->getData());
         /* TODO
         foreach($quote->getAllItems() as $item) {
             $api->addProduct($item->getData());
