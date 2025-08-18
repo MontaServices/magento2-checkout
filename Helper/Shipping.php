@@ -20,25 +20,31 @@ class Shipping extends Api
      */
     public function getOptions(CartInterface $quote): array
     {
-        $api = $this->getApi();
+        $shippingAddress = $quote->getShippingAddress();
+        $shippingOptions = [];
+        // Without address, don't bother loading API
+        if ($shippingAddress->getStreetFull()) {
+            // Instantiate API with configured credentials
+            $api = $this->getApi();
 
-        // Add Shipping address to quote
-        $api->setAddressFromArray($quote->getShippingAddress()->getData());
-        /* TODO
-        foreach($quote->getAllItems() as $item) {
-            $api->addProduct($item->getData());
+            // Add Shipping address to quote
+            $api->setAddressFromArray($shippingAddress->getData());
+            /* TODO
+            foreach($quote->getAllItems() as $item) {
+                $api->addProduct($item->getData());
+            }
+            */
+            // Call the API, get formatted shipping options
+            $shippingOptions = $api->getShippingOptions();
+            /*
+             if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
+            if shippingOptions.StoreLocation{
+                set storeLocation and to PickupOptions
+            }
+            remove PickupOptions with code AFH
+            recalculate PickupOptions[].distanceMeters
+            */
         }
-        */
-        // Call the API, get formatted shipping options
-        $shippingOptions = $api->getShippingOptions();
-        /*
-         if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
-        if shippingOptions.StoreLocation{
-            set storeLocation and to PickupOptions
-        }
-        remove PickupOptions with code AFH
-        recalculate PickupOptions[].distanceMeters
-        */
         return $shippingOptions;
     }
 }
