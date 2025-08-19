@@ -7,8 +7,8 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Monta\CheckoutApiWrapper\ApiFactory;
 use Monta\CheckoutApiWrapper\MontapackingShipping;
+use Monta\CheckoutApiWrapper\Service\ApiFactory;
 
 class Api extends AbstractHelper
 {
