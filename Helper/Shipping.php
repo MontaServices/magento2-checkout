@@ -36,13 +36,12 @@ class Shipping extends Api
             }
 
             // Call the API, get formatted shipping options
-            $shippingOptions = $api->getShippingOptions();
+            $shippingOptions = $api->getShippingOptions(computeKm: true);
             /*
             TODO  if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
             if shippingOptions.StoreLocation{
                TODO set storeLocation and to PickupOptions
             }
-            TODO recalculate PickupOptions[].distanceMeters
             */
             if (!empty($shippingOptions[PickupPoint::PICKUP_OPTIONS_KEY])) {
                 foreach ($shippingOptions[PickupPoint::PICKUP_OPTIONS_KEY] as $pickup) {
