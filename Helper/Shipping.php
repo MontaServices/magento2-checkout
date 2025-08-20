@@ -29,20 +29,20 @@ class Shipping extends Api
 
             // Add Shipping address to quote
             $api->setAddressFromArray($shippingAddress->getData());
-            /* TODO
-            foreach($quote->getAllItems() as $item) {
-                $api->addProduct($item->getData());
+
+            foreach ($quote->getAllVisibleItems() as $item) {
+                $api->addProductFromArray($item->getData());
             }
-            */
+
             // Call the API, get formatted shipping options
             $shippingOptions = $api->getShippingOptions();
             /*
-             if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
+            TODO  if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
             if shippingOptions.StoreLocation{
-                set storeLocation and to PickupOptions
+               TODO set storeLocation and to PickupOptions
             }
-            remove PickupOptions with code AFH
-            recalculate PickupOptions[].distanceMeters
+            TODO remove PickupOptions with code AFH
+            TODO recalculate PickupOptions[].distanceMeters
             */
         }
         return $shippingOptions;
