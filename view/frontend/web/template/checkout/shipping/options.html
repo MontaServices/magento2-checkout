@@ -1,3 +1,10 @@
 <div class="monta-shipping-options" id="block-shipping-options" visible="isSelected()">
-    <p>Choose shipping options Timeframe here.</p>
+    <div if="DeliveryOptions">
+        <p>Delivery Options</p>
+        <p each="DeliveryOptions">One Timeframe</p>
+    </div>
+    <div if="PickupOptions">
+        <p>Pickup Options</p>
+        <p each="PickupOptions">One Pickup</p>
+    </div>
 </div>
