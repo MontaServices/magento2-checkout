@@ -7,8 +7,8 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Monta\CheckoutApiWrapper\ApiFactory;
 use Monta\CheckoutApiWrapper\MontapackingShipping;
+use Monta\CheckoutApiWrapper\Service\ApiFactory;
 
 class Api extends AbstractHelper
 {
@@ -21,8 +21,8 @@ class Api extends AbstractHelper
     public function __construct(
         Context $context,
         protected readonly ApiFactory $apiFactory,
-        protected Configuration $montaConfiguration,
-        protected System $systemHelper,
+        protected readonly Configuration $montaConfiguration,
+        protected readonly System $systemHelper,
     )
     {
         parent::__construct($context);

@@ -18,8 +18,11 @@ use Psr\Log\LoggerInterface;
 
 class Monta extends AbstractCarrier implements CarrierInterface
 {
+    /** @var string */
+    public const string METHOD_CODE = 'monta';
+
     /** @var string $_code - Defined by parent */
-    protected $_code = 'monta';
+    protected $_code = self::METHOD_CODE;
 
     /**
      * @param ScopeConfigInterface $scopeConfig
@@ -50,11 +53,9 @@ class Monta extends AbstractCarrier implements CarrierInterface
         if (!$this->getConfigFlag('active')) {
             return false;
         }
-
         $result = $this->rateResultFactory->create();
-        $method = $this->createResultMethod();
 
-        $result->append($method);
+        $result->append($this->createResultMethod());
 
         return $result;
     }
