@@ -6,7 +6,6 @@
 namespace Monta\Checkout\Helper;
 
 use Magento\Quote\Api\Data\CartInterface;
-use Monta\CheckoutApiWrapper\Objects\PickupPoint;
 
 class Shipping extends Api
 {
@@ -43,16 +42,6 @@ class Shipping extends Api
                TODO set storeLocation and to PickupOptions
             }
             */
-            if (!empty($shippingOptions[PickupPoint::PICKUP_OPTIONS_KEY])) {
-                foreach ($shippingOptions[PickupPoint::PICKUP_OPTIONS_KEY] as $pickup) {
-                    /** @var PickupPoint $pickup */
-                    // For every non-AFH pickup point, remove the imageName
-                    if ($pickup->getCode() != 'AFH') {
-                        // TODO is this whole thing needed? imageName has no references or is NULL already
-                        $pickup->imageName = null;
-                    }
-                }
-            }
         }
         return $shippingOptions;
     }
