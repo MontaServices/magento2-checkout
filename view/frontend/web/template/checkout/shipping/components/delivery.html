@@ -1,3 +1,17 @@
 <div class="delivery-option">
-    <span text="option.dateFormatted"></span>
+    <span text="deliveryOption.dateFormatted"></span>
+    <div class="delivery-header">
+        <div class="shipper-logo">
+        <strong class="title" text="deliveryOption.shipper"></strong>
+        <span text="deliveryOption.displayNameShort"></span>
+        <span class="price" text="deliveryOption.priceFormatted"></span>
+    </div>
+    <div class="extras" if="deliveryOption.deliveryOptions.length">
+        <p>Extra verzendopties:</p>
+        <div class="extra" each="data: deliveryOption.deliveryOptions, as: 'extra'">
+            <input type="checkbox" data-bind="name: extra.code"/>
+            <span text="extra.description"></span>
+            <span text="extra.priceFormatted"></span>
+        </div>
+    </div>
 </div>

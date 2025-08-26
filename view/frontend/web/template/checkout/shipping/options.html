@@ -1,12 +1,21 @@
 <div class="monta-shipping-options" id="block-shipping-options" visible="isSelected()">
-    <div if="DeliveryOptions.length > 0">
-        <p>Delivery Options</p>
-        <each args="data: DeliveryOptions, as: 'option'">
-            <div template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: option">
-            </div>
-        </each>
+    <div if="DeliveryOptions.length">
+        <div id="slider-content">
+            <ul each="data: DeliveryOptions, as: 'option'">
+                <li class="day">
+                    <p text="day"></p>
+                    <p text="dateFormatted"></p>
+                    <!-- On each day, render list of delivery options -->
+                    <each args="data: options, as: 'deliveryOption'">
+                        <div
+                            template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+                        </div>
+                    </each>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div if="PickupOptions.length > 0">
+    <div if="PickupOptions.length">
         <p>Pickup Options</p>
         <each args="data: PickupOptions, as 'option'">
             <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: option"></div>
