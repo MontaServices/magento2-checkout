@@ -1,17 +1,22 @@
-<div class="delivery-option">
+<div class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-4 max-w-md mx-auto">
     <span text="deliveryOption.dateFormatted"></span>
     <div class="delivery-header">
         <div class="shipper-logo">
-        <strong class="title" text="deliveryOption.shipper"></strong>
-        <span text="deliveryOption.displayNameShort"></span>
-        <span class="price" text="deliveryOption.priceFormatted"></span>
-    </div>
-    <div class="extras" if="deliveryOption.deliveryOptions.length">
-        <p>Extra verzendopties:</p>
-        <div class="extra" each="data: deliveryOption.deliveryOptions, as: 'extra'">
-            <input type="checkbox" data-bind="name: extra.code"/>
-            <span text="extra.description"></span>
-            <span text="extra.priceFormatted"></span>
+            <p class="font-semibold" text="deliveryOption.shipper"></p>
+            <p class="text-sm text-gray-600" text="deliveryOption.displayNameShort"></p>
+            <p class="text-sm font-medium" text="deliveryOption.priceFormatted"></p>
+        </div>
+        <div class="extras" if="deliveryOption.deliveryOptions.length">
+            <p class="font-semibold mb-2">Extra verzendopties:</p>
+            <div class="space-y-2">
+                <label class="flex justify-between items-center p-2 rounded-lg border-2 border-blue-400 bg-white"
+                       each="data: deliveryOption.deliveryOptions, as: 'extra'">
+                    <span class="flex items-center space-x-2">
+                    <input type="checkbox" class="text-blue-500" data-bind="name: extra.code"/>
+                    <span text="extra.description"></span>
+                    <span class="text-sm font-medium" text="'+' + extra.priceFormatted"></span>
+                </label>
+            </div>
         </div>
     </div>
 </div>

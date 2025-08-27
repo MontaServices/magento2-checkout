@@ -1,10 +1,10 @@
 <div class="monta-shipping-options" id="block-shipping-options" visible="isSelected()">
     <div if="DeliveryOptions.length">
-        <div id="slider-content">
-            <ul each="data: DeliveryOptions, as: 'option'">
+        <div id="flex justify-center gap-3 mb-5">
+            <ul each="data: DeliveryOptions, as: 'option'" class="flex flex-col items-center px-4 py-2 bg-white rounded-xl border text-center">
                 <li class="day">
-                    <p text="day"></p>
-                    <p text="dateFormatted"></p>
+                    <p class="font-semibold" text="day"></p>
+                    <p class="text-sm text-gray-500" text="dateFormatted"></p>
                     <!-- On each day, render list of delivery options -->
                     <each args="data: options, as: 'deliveryOption'">
                         <div
