@@ -4,7 +4,6 @@
   "description": "Tailwind CSS for Magento 2 Monta Checkout",
   "main": "tailwind.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tailwindcss --postcsss -i theme.css -o ../css/tailwind.css --minify"
   },
   "dependencies": {
