@@ -1,24 +1,25 @@
 <div class="monta-shipping-options" id="block-shipping-options" visible="isSelected()">
     <div if="DeliveryOptions.length">
-        <div id="flex justify-center gap-3 mb-5">
-            <ul each="data: DeliveryOptions, as: 'option'" class="flex flex-col items-center px-4 py-2 bg-white rounded-xl border text-center">
-                <li class="day">
-                    <p class="font-semibold" text="day"></p>
-                    <p class="text-sm text-gray-500" text="dateFormatted"></p>
-                    <!-- On each day, render list of delivery options -->
-                    <each args="data: options, as: 'deliveryOption'">
-                        <div
-                            template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
-                        </div>
-                    </each>
-                </li>
-            </ul>
+        <div class="flex justify-center gap-3 mb-5">
+            <div each="data: DeliveryOptions, as: 'option'"
+                 class="flex flex-col items-center px-4 py-2 bg-white rounded-xl border text-center">
+                <p class="font-semibold" text="day"></p>
+                <p class="text-sm text-gray-500" text="dateFormatted"></p>
+                <!-- On each day, render list of delivery options -->
+                <each args="data: option.options, as: 'deliveryOption'">
+                    <div
+                        class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-4 max-w-md mx-auto"
+                        template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+                    </div>
+                </each>
+            </div>
         </div>
     </div>
     <div if="PickupOptions.length">
         <p>Pickup Options</p>
         <each args="data: PickupOptions, as 'option'">
-            <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: option"></div>
+            <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: option">
+            </div>
         </each>
     </div>
 </div>
