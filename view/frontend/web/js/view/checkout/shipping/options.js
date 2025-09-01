@@ -36,6 +36,13 @@ define([
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, option]) => {
                 if (self.hasOwnProperty(key)) {
+                    switch (key) {
+                        case "DeliveryOptions":
+                            // TODO set one of the options to show
+                            self.SelectedDateOptions = option[1].options;
+                            break;
+                    }
+
                     self[key] = option;
                 }
             })
