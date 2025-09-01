@@ -9,6 +9,7 @@ define([
         defaults: {
             DeliveryOptions: [],
             PickupOptions: [],
+            SelectedDateOptions: [],
             template: 'Monta_Checkout/checkout/shipping/options'
         },
 
@@ -34,16 +35,16 @@ define([
 
         setOptions: function (options) {
             // Copy each response property to component properties
-            Object.entries(options).forEach(([key, option]) => {
+            Object.entries(options).forEach(([key, responseProp]) => {
                 if (self.hasOwnProperty(key)) {
                     switch (key) {
                         case "DeliveryOptions":
                             // TODO set one of the options to show
-                            self.SelectedDateOptions = option[1].options;
+                            self.SelectedDateOptions = responseProp[1].options;
                             break;
                     }
 
-                    self[key] = option;
+                    self[key] = responseProp;
                 }
             })
         }.bind(this),

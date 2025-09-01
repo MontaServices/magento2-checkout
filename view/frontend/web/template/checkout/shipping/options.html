@@ -1,20 +1,30 @@
-<div class="monta-shipping-options" id="block-shipping-options" visible="isSelected()">
+<div class="monta-shipping-options" id="block-shipping-options" visible="isSelected">
+    <!-- Buttons-->
+    <div class="flex w-full max-w-md mx-auto rounded-lg overflow-hidden mb-4">
+        <!-- TODO for some reason Tailwind doesn't work on button element -->
+        <button type="button" class="button action primary w-1/2 py-2 font-semibold text-white mx-auto">Bezorgen
+        </button>
+        <button type="button" class="button action secondary w-1/2 py-2 font semibold bg-white mx-auto">Afhalen</button>
+    </div>
+    <!-- Delivery Options -->
     <div if="DeliveryOptions.length">
         <div class="flex justify-center gap-3 mb-5">
-            <div each="data: DeliveryOptions, as: 'option'"
-                 class="flex flex-col items-center px-4 py-2 bg-white rounded-xl border text-center">
-                <p class="font-semibold" text="day"></p>
-                <p class="text-sm text-gray-500" text="dateFormatted"></p>
-                <!-- On each day, render list of delivery options -->
-                <each args="data: option.options, as: 'deliveryOption'">
-                    <div
-                        class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-4 max-w-md mx-auto"
-                        template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
-                    </div>
-                </each>
-            </div>
+            <each args="data: DeliveryOptions, as: 'option'">
+                <div
+                    class="selectDayButton flex flex-col items-center px-4 py-2 rounded-xl border border-gray-300 text-center">
+                    <p class="font-semibold" text="day"></p>
+                    <p class="text-sm text-gray-500" text="dateFormatted"></p>
+                </div>
+            </each>
         </div>
+        <each args="data: SelectedDateOptions, as: 'deliveryOption'">
+            <div
+                class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-4 max-w-md mx-auto"
+                template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+            </div>
+        </each>
     </div>
+    <!-- Pickup Options -->
     <div if="PickupOptions.length">
         <p>Pickup Options</p>
         <each args="data: PickupOptions, as 'option'">
