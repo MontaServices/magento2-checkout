@@ -39,7 +39,7 @@ define([
                 if (self.hasOwnProperty(key)) {
                     switch (key) {
                         case "DeliveryOptions":
-                            // TODO set one of the options to show
+                            // TODO do this when a day is selected, not here
                             self.SelectedDateOptions = responseProp[1].options;
                             break;
                     }

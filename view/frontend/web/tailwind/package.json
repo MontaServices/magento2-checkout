@@ -1,20 +1,20 @@
 {
   "name": "@monta/magento2-tailwind",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tailwind CSS for Magento 2 Monta Checkout",
   "main": "tailwind.config.js",
-  "scripts": {
-    "build": "npx tailwindcss --postcsss -i theme.css -o ../css/tailwind.css --minify"
-  },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/vite": "^4.1.12",
     "@vue-storefront/magento-api": "^6.3.0",
-    "@vue-storefront/middleware": "^5.4.0",
-    "postcss": "^8.5.6",
-    "postcss-loader": "^8.1.1",
+    "@vue-storefront/middleware": "^5.4.1",
+    "postcss-loader": "^8.2.0",
     "tailwindcss": "^4.1.12"
+  },
+  "scripts": {
+    "build": "npx tailwindcss --postcsss -i theme.css -o ../css/tailwind.css --minify",
+    "watch": "npx tailwindcss --postcsss -i theme.css -o ../css/tailwind.css --minify --watch"
   },
   "repository": {
     "type": "git",
