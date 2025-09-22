@@ -14,13 +14,15 @@ define([
         },
 
         initObservable: function () {
+            // Determine if Monta popup should be shown
             this.isSelected = ko.computed(function () {
                 // Self references this component instead of Window
                 self = this;
                 let method = quote.shippingMethod();
                 if (method && method.carrier_code === 'monta') {
                     let options = JSON.parse(method.extension_attributes?.monta_shipping_options);
-                    if (options) {
+                    // If object is not empty
+                    if (options && options.hasOwnProperty('DeliveryOptions')) {
                         this.setOptions(options);
 
                         // Show block now
