@@ -28,8 +28,11 @@ define([
                 if (method && method.carrier_code === 'monta') {
                     let options = JSON.parse(method.extension_attributes?.monta_shipping_options);
                     // If object is not empty
-                    if (options && options.hasOwnProperty('DeliveryOptions')) {
+                    if (options && options.DeliveryOptions?.length > 0) {
                         this.setOptions(options);
+
+                        // Preselect first day on init
+                        this.selectDay(options.DeliveryOptions[0]);
 
                         // Show block now
                         return true;
@@ -56,13 +59,6 @@ define([
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {
                 if (self.hasOwnProperty(key)) {
-                    switch (key) {
-                        case "DeliveryOptions":
-                            // TODO do this when a day is selected, not here
-                            self.SelectedDateOptions(responseProp[1].options);
-                            break;
-                    }
-
                     self[key] = responseProp;
                 }
             });
