@@ -9,8 +9,14 @@ define([
         defaults: {
             DeliveryOptions: [],
             PickupOptions: [],
-            SelectedDateOptions: [],
+            SelectedDateOptions: ko.observableArray([]),
             template: 'Monta_Checkout/checkout/shipping/options'
+        },
+
+        initialize: function () {
+            // Create observables before _super (which applies bindings)
+            this.SelectedDateOptions = ko.observableArray([]);
+            return this._super().initObservable();
         },
 
         initObservable: function () {
@@ -42,8 +48,8 @@ define([
             let opts = (option && option.options) ? option.options : [];
             // TODO why would option.options ever be empty?
 
-            // Update array to trigger re-render
-            self.SelectedDateOptions = opts;
+            // Update observable array to trigger re-render
+            self.SelectedDateOptions(opts);
         },
 
         setOptions: function (options) {
@@ -53,7 +59,7 @@ define([
                     switch (key) {
                         case "DeliveryOptions":
                             // TODO do this when a day is selected, not here
-                            self.SelectedDateOptions = responseProp[1].options;
+                            self.SelectedDateOptions(responseProp[1].options);
                             break;
                     }
 
