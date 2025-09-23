@@ -2,7 +2,8 @@ define([
     'uiComponent',
     'ko',
     'Magento_Checkout/js/model/quote',
-], function (Component, ko, quote) {
+    'Monta_Checkout/js/model/delivery'
+], function (Component, ko, quote, delivery) {
     'use strict';
 
     return Component.extend({
@@ -20,6 +21,7 @@ define([
         },
 
         initObservable: function () {
+            delivery.isSelected();
             // Determine if Monta popup should be shown
             this.isSelected = ko.computed(function () {
                 // Self references this component instead of Window
@@ -44,21 +46,10 @@ define([
             return this;
         },
 
-
         // Called from the template when a day tile is clicked
         selectDay: function (option, event) {
-            if (event) {
-                let selectedTileStyle = "bg-blue-50 border-blue-400";
-                // TODO style this tile as selected (same style as hover); option.classes does not update in UI
-                // option.additionalClasses = selectedTileStyle;
-                // event.target.addClass(selectedTileStyle);
-            }
-            // option is the day, options is the list of carriers for that day
-            let opts = (option && option.options) ? option.options : [];
-            // TODO why would option.options ever be empty?
-
             // Update observable array to trigger re-render
-            self.SelectedDateOptions(opts);
+            self.SelectedDateOptions(delivery.selectDay(option, event));
         },
 
         setOptions: function (options) {
