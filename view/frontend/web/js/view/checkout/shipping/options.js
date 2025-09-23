@@ -35,6 +35,17 @@ define([
             return this;
         },
 
+
+        // Called from the template when a day tile is clicked
+        selectDay: function (option) {
+            // option is the day, options is the list of carriers for that day
+            let opts = (option && option.options) ? option.options : [];
+            // TODO why would option.options ever be empty?
+
+            // Update array to trigger re-render
+            self.SelectedDateOptions = opts;
+        },
+
         setOptions: function (options) {
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {
@@ -48,7 +59,7 @@ define([
 
                     self[key] = responseProp;
                 }
-            })
+            });
         }.bind(this),
     });
 });
