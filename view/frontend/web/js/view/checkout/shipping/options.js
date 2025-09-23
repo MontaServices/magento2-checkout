@@ -46,7 +46,13 @@ define([
 
 
         // Called from the template when a day tile is clicked
-        selectDay: function (option) {
+        selectDay: function (option, event) {
+            if (event) {
+                let selectedTileStyle = "bg-blue-50 border-blue-400";
+                // TODO style this tile as selected (same style as hover); option.classes does not update in UI
+                // option.additionalClasses = selectedTileStyle;
+                // event.target.addClass(selectedTileStyle);
+            }
             // option is the day, options is the list of carriers for that day
             let opts = (option && option.options) ? option.options : [];
             // TODO why would option.options ever be empty?
