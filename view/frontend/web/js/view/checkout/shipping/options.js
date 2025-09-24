@@ -34,7 +34,7 @@ define([
                         this.setOptions(options);
 
                         // Preselect first day on init
-                        this.selectDay(options.DeliveryOptions[0]);
+                        this.clickDayTile(options.DeliveryOptions[0]);
 
                         // Show block now
                         return true;
@@ -47,7 +47,7 @@ define([
         },
 
         // Called from the template when a day tile is clicked
-        selectDay: function (option, event) {
+        clickDayTile: function (option, event) {
             // Update observable array to trigger re-render
             self.SelectedDateOptions(delivery.selectDay(option, event));
         },
