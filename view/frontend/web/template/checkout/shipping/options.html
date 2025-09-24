@@ -21,6 +21,7 @@
         </div>
         <each args="data: SelectedDateOptions, as: 'deliveryOption'">
             <div
+                    click="$parent.clickDeliveryOption"
                     class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-5 max-w-lg mx-auto"
                     template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
             </div>

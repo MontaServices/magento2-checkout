@@ -52,6 +52,11 @@ define([
             self.SelectedDateOptions(delivery.selectDay(option, event));
         },
 
+        clickDeliveryOption: function (option, event) {
+            // Select this day, pass quote to save
+            delivery.selectDeliveryOption(option, quote);
+        },
+
         setOptions: function (options) {
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {

@@ -17,5 +17,13 @@ define([], function () {
             // TODO why would option.options ever be empty?
             return (option && option.options) ? option.options : [];
         },
+
+        selectDeliveryOption: function (option, quote) {
+            // Set selected option code in quote as string
+            // TODO extend extension_attirbutes instead of overwriting
+            quote.shippingAddress().extensionAttributes = {
+                SelectedDeliveryOption: option.code,
+            };
+        }
     }
 });
