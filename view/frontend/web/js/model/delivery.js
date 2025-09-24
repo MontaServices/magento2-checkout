@@ -14,13 +14,13 @@ define([], function () {
                 // event.target.addClass(selectedTileStyle);
             }
             // option is the day, options is the list of carriers for that day
-            // TODO why would option.options ever be empty?
-            return (option && option.options) ? option.options : [];
+            return option.options ?? [];
         },
 
         selectDeliveryOption: function (option, quote) {
             // Set selected option code in quote as string
-            // TODO extend extension_attirbutes instead of overwriting
+            // TODO extend instead of overwriting
+            // TODO should this be snake_case instead? data is not passed
             quote.shippingAddress().extensionAttributes = {
                 SelectedDeliveryOption: option.code,
             };

@@ -49,11 +49,15 @@ define([
         // Called from the template when a day tile is clicked
         clickDayTile: function (option, event) {
             // Update observable array to trigger re-render
-            self.SelectedDateOptions(delivery.selectDay(option, event));
+            self.SelectedDateOptions(
+                // extract delivery options from the selected day
+                delivery.selectDay(option, event)
+            );
         },
 
+        // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
-            // Select this day, pass quote to save
+            // Select this day in quote
             delivery.selectDeliveryOption(option, quote);
         },
 
