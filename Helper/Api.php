@@ -35,9 +35,10 @@ class Api extends AbstractHelper
     {
         return $this->apiFactory->createFromSettings(
             settings: [
-                $this->montaConfiguration->getOrigin(),
-                $this->montaConfiguration->getUsername(),
-                $this->montaConfiguration->getPassword(),
+                'origin' => $this->montaConfiguration->getOrigin(),
+                'user' => $this->montaConfiguration->getUsername(),
+                'password' => $this->montaConfiguration->getPassword(),
+                'googleKey' => $this->montaConfiguration->getGoogleKey(),
             ],
             systemInfo: $this->systemHelper->getInfo());
     }
