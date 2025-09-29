@@ -20,10 +20,13 @@ class ShippingAddress
         ShippingAddressManagement $subject,
         $cartId,
         AddressInterface $address
-    )
+    ): void
     {
-
-        dd($address->getExtensionAttributes()['shipping_option']);;
+        // If selected shipping option was passed
+        if (!empty($selectedOption = $address->getExtensionAttributes()->getShippingOption())) {
+            // Keep field in address, saved later in 'assign'
+            $address->setMontaShippingData($selectedOption);
+        }
     }
 
 }
