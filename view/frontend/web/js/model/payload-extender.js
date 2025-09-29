@@ -14,7 +14,7 @@ define([
             // Set extension attribute in Shipping address
             payload.addressInformation.shipping_address.extension_attributes = {
                 // TODO obviously get the real data from quote
-                SelectedDeliveryOption: "PostNL_20250925_202509260815_202509261045",
+                shipping_option: "PostNL_20250925_202509260815_202509261045",
             };
             return payload;
         });

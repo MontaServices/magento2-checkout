@@ -22,7 +22,7 @@ define([], function () {
             // TODO extend instead of overwriting
             // TODO should this be snake_case instead? data is not passed
             quote.shippingAddress().extensionAttributes = {
-                SelectedDeliveryOption: option.code,
+                shipping_option: option.code,
             };
         }
     }
