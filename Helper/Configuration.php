@@ -32,7 +32,7 @@ class Configuration
      */
     public function getOrigin(): string
     {
-        return $this->getShippingConfig('origin');
+        return (string)$this->getShippingConfig('origin');
     }
 
     /**
@@ -40,23 +40,24 @@ class Configuration
      */
     public function getUsername(): string
     {
-        return $this->getShippingConfig(field: 'username');
+        return (string)$this->getShippingConfig(field: 'username');
     }
 
-    /**
+    /** Get decrypted password as string
+     *
      * @return string
      */
     public function getPassword(): string
     {
-        return $this->getShippingConfig(field: 'password', decrypt: true);
+        return (string)$this->getShippingConfig(field: 'password', decrypt: true);
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGoogleKey(): string
     {
-        return $this->getShippingConfig(field: 'googleapikey', decrypt: true);
+        return (string)$this->getShippingConfig(field: 'googleapikey', decrypt: true);
     }
 
     /**
