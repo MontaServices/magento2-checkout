@@ -78,7 +78,7 @@ class Configuration
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
         if ($decrypt) {
-            // TODO remove parameter, check if config item is "obscure"
+            // TODO when value is set in config file (env.php) instead of DB then the value is doubly encrypted here, goes wrong
             $value = $this->encryptor->decrypt($value);
         }
         return $value;
