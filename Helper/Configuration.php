@@ -53,7 +53,7 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getGoogleKey(): string
     {

@@ -5,7 +5,11 @@
         <plugin name="method_converter" type="Monta\Checkout\Plugin\MethodConverter"/>
     </type>
     <type name="Magento\Quote\Model\ShippingAddressManagement">
-        <plugin name="QuoteShippingAddressManagement"
+        <plugin name="MontaQuoteShippingAddressManagement"
                 type="Monta\Checkout\Plugin\ShippingAddress"/>
+    </type>
+    <type name="Magento\Quote\Model\QuoteManagement">
+        <plugin name="MontaQuoteManagement"
+                type="Monta\Checkout\Plugin\Quote\Management"/>
     </type>
 </config>

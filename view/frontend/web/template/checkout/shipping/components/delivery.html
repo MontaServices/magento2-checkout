@@ -17,6 +17,7 @@
             <label class="flex justify-between p-2 rounded-xl border border-blue-400"
                    each="data: deliveryOption.deliveryOptions, as: 'extra'">
                 <div class="flex items-center space-x-2">
+                    <!-- TODO clicking input is caught by ClickDeliveryOption above -->
                     <input type="checkbox" class="" data-bind="name: extra.code"/>
                     <span text="extra.description"></span>
                 </div>
