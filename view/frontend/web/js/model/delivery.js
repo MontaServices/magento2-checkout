@@ -19,11 +19,12 @@ define([], function () {
 
         selectDeliveryOption: function (option, quote) {
             // Set selected option code in quote as string
-            // TODO extend instead of overwriting
-            // TODO should this be snake_case instead? data is not passed
-            quote.shippingAddress().extensionAttributes = {
-                shipping_option: option.code,
-            };
+            let addrs = quote.shippingAddress();
+            // create extension attributes if not present
+            if (addrs['extension_attributes'] === undefined) {
+                addrs['extension_attributes'] = {};
+            }
+            addrs['extension_attributes']['shipping_option'] = option.code;
         }
     }
 });
