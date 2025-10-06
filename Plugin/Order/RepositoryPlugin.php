@@ -58,6 +58,7 @@ class RepositoryPlugin
         $extensionAttributes = $order->getExtensionAttributes() ?? $this->extensionFactory->create();
         $extensionAttributes->setData('monta_shipping_data', $montaShipData);
 
+        // Set extension attributes back to order in case they were just created
         $order->setExtensionAttributes($extensionAttributes);
 
         return $order;

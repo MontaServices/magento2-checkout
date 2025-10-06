@@ -37,7 +37,7 @@ class Shipping extends Api
             // Call the API, get formatted shipping options
             $shippingOptions = $api->getShippingOptions(computeKm: true);
             /*
-            TODO  if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
+            TODO from old module: if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
             if shippingOptions.StoreLocation{
                TODO set storeLocation and to PickupOptions
             }
