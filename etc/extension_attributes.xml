@@ -8,4 +8,8 @@
     <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
         <attribute code="shipping_option" type="string"/>
     </extension_attributes>
+
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="monta_shipping_data" type="string"/>
+    </extension_attributes>
 </config>

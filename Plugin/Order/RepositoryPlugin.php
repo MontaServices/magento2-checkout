@@ -24,6 +24,16 @@ class RepositoryPlugin
 
     /**
      * @param OrderRepositoryInterface $subject
+     * @param OrderInterface $order
+     * @return OrderInterface
+     */
+    public function afterGet(OrderRepositoryInterface $subject, OrderInterface $order): OrderInterface
+    {
+        return $this->extendOrder($order);
+    }
+
+    /**
+     * @param OrderRepositoryInterface $subject
      * @param OrderSearchResultInterface $searchResult
      * @return OrderSearchResultInterface
      */
