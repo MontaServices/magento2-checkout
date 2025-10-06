@@ -12,4 +12,8 @@
         <plugin name="MontaQuoteManagement"
                 type="Monta\Checkout\Plugin\Quote\Management"/>
     </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="MontaOrderRepoPlugin"
+                type="Monta\Checkout\Plugin\Order\RepositoryPlugin"/>
+    </type>
 </config>
