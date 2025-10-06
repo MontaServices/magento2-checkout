@@ -6,6 +6,7 @@
 namespace Monta\Checkout\Helper;
 
 use Monta\CheckoutApiWrapper\MontapackingShipping;
+use Monta\CheckoutApiWrapper\Objects\Settings;
 use Monta\CheckoutApiWrapper\Service\ApiFactory;
 
 class Api
@@ -28,14 +29,15 @@ class Api
      */
     public function getApi(): MontaPackingShipping
     {
-        return $this->apiFactory->createFromSettings(
-            settings: [
-                'origin' => $this->montaConfiguration->getOrigin(),
-                'user' => $this->montaConfiguration->getUsername(),
-                'password' => $this->montaConfiguration->getPassword(),
-                'googleKey' => $this->montaConfiguration->getGoogleKey(),
-            ],
-            systemInfo: $this->systemHelper->getInfo());
+        return $this->apiFactory->create(
+            settings: new Settings(
+                origin: $this->montaConfiguration->getOrigin(),
+                user: $this->montaConfiguration->getUsername(),
+                password: $this->montaConfiguration->getPassword(),
+                googleKey: $this->montaConfiguration->getGoogleKey(),
+            ),
+            systemInfo: $this->systemHelper->getInfo(),
+        );
     }
 
 }
