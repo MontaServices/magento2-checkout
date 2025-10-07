@@ -19,13 +19,14 @@ define([], function () {
 
         selectDeliveryOption: function (option, quote) {
             // Set selected option code in quote as string
-            let addrs = quote.shippingAddress();
+            let address = quote.shippingAddress();
             // create extension attributes if not present
-            if (addrs['extension_attributes'] === undefined) {
-                addrs['extension_attributes'] = {};
+            if (address['extension_attributes'] === undefined) {
+                address['extension_attributes'] = {};
             }
-            addrs['extension_attributes']['shipping_option'] = option.code;
+            address['extension_attributes']['shipping_option'] = option.code;
 
+            // Return TRUE to propagate default click behavior
             return true;
         }
     }

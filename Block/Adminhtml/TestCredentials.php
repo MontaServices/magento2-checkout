@@ -40,7 +40,7 @@ class TestCredentials extends Field
      * @param AbstractElement $element
      * @return string
      */
-    public function render(AbstractElement $element)
+    public function render(AbstractElement $element): string
     {
         // Remove scope comment, field has no label
         $element->unsScope();
@@ -65,7 +65,7 @@ class TestCredentials extends Field
      * @param AbstractElement $element
      * @return string
      */
-    protected function _getElementHtml(AbstractElement $element)
+    protected function _getElementHtml(AbstractElement $element): string
     {
         return $this->toHtml();
     }

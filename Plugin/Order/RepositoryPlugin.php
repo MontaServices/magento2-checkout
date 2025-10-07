@@ -10,14 +10,14 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 
-class RepositoryPlugin
+readonly class RepositoryPlugin
 {
 
     /**
      * @param OrderExtensionFactory $extensionFactory
      */
     public function __construct(
-        protected readonly OrderExtensionFactory $extensionFactory,
+        protected OrderExtensionFactory $extensionFactory,
     )
     {
     }

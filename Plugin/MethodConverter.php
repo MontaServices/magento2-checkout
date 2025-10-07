@@ -17,7 +17,7 @@ use Monta\Checkout\Model\Carrier\Monta;
  * @kudos Based on Andresa Martins:
  * https://magento.stackexchange.com/a/305907
  */
-class MethodConverter
+readonly class MethodConverter
 {
     /**
      * @param ShippingMethodInterfaceFactory $extensionFactory
