@@ -13,6 +13,6 @@
 
     <!-- Field on Order available in REST API export -->
     <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
-        <attribute code="monta_shipping_data" type="string"/>
+        <attribute code="montapacking_montacheckout_data" type="string"/>
     </extension_attributes>
 </config>

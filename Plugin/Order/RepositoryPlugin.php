@@ -12,8 +12,12 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 
 readonly class RepositoryPlugin
 {
-    /** @var string - Name of the field on Order in export via REST API */
-    public const string MONTA_SHIPPING_DATA = 'monta_shipping_data';
+
+    /**
+     * @var string - Name of the field on Order in export via REST API
+     * TODO replace ugly backwards-compatible field name with clean "monta_shipping_data" when importer is converted
+     */
+    public const string MONTA_SHIPPING_DATA = 'montapacking_montacheckout_data';
 
     /**
      * @param OrderExtensionFactory $extensionFactory
