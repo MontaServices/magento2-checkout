@@ -12,6 +12,8 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 
 readonly class RepositoryPlugin
 {
+    /** @var string - Name of the field on Order in export via REST API */
+    public const string MONTA_SHIPPING_DATA = 'monta_shipping_data';
 
     /**
      * @param OrderExtensionFactory $extensionFactory
@@ -56,7 +58,7 @@ readonly class RepositoryPlugin
         $montaShipData = $order->getMontaShippingData();
 
         $extensionAttributes = $order->getExtensionAttributes() ?? $this->extensionFactory->create();
-        $extensionAttributes->setData('monta_shipping_data', $montaShipData);
+        $extensionAttributes->setData(self::MONTA_SHIPPING_DATA, $montaShipData);
 
         // Set extension attributes back to order in case they were just created
         $order->setExtensionAttributes($extensionAttributes);

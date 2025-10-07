@@ -25,9 +25,9 @@ readonly class MethodConverter
      * @param Json $serializer
      */
     public function __construct(
-        protected readonly ShippingMethodInterfaceFactory $extensionFactory,
-        protected readonly Shipping $shippingHelper,
-        protected readonly Json $serializer,
+        protected ShippingMethodInterfaceFactory $extensionFactory,
+        protected Shipping $shippingHelper,
+        protected Json $serializer,
     )
     {
     }
