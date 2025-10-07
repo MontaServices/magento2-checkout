@@ -14,14 +14,15 @@
     <div class="extras" if="deliveryOption.deliveryOptions.length">
         <p class="font-semibold mb-2">Extra verzendopties:</p>
         <div class="space-y-2">
-            <label class="flex justify-between p-2 rounded-xl border border-blue-400"
-                   each="data: deliveryOption.deliveryOptions, as: 'extra'">
-                <div class="flex items-center space-x-2">
-                    <input type="checkbox" class="" data-bind="name: extra.code"/>
-                    <span text="extra.description"></span>
-                </div>
-                <span class="text-md" text="'+' + extra.priceFormatted"></span>
-            </label>
+            <each args="data: deliveryOption.deliveryOptions, as: 'extra'">
+                <label class="flex justify-between p-2 rounded-xl border border-blue-400">
+                    <div class="items-center space-x-2">
+                        <input type="checkbox" class="" data-bind="name: extra.code"/>
+                        <span text="extra.description"></span>
+                    </div>
+                    <span class="text-md" text="'+' + extra.priceFormatted"></span>
+                </label>
+            </each>
         </div>
     </div>
 </div>
