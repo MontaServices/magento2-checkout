@@ -58,7 +58,7 @@ define([
         // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
             // Select this day in quote
-            delivery.selectDeliveryOption(option, quote);
+            return delivery.selectDeliveryOption(option, quote);
         },
 
         setOptions: function (options) {

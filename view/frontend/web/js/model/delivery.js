@@ -25,6 +25,8 @@ define([], function () {
                 addrs['extension_attributes'] = {};
             }
             addrs['extension_attributes']['shipping_option'] = option.code;
+
+            return true;
         }
     }
 });
