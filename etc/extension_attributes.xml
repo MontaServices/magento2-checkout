@@ -13,6 +13,7 @@
 
     <!-- Field on Order available in REST API export -->
     <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <!-- TODO replace ugly backwards-compatible field name with clean "monta_shipping_data" once importer is converted -->
         <attribute code="montapacking_montacheckout_data" type="string"/>
     </extension_attributes>
 </config>
