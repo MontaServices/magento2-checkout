@@ -53,7 +53,7 @@ class Configuration
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getGoogleKey(): string
     {
@@ -64,7 +64,7 @@ class Configuration
      * @param string $field
      * @return mixed
      */
-    protected function getCarrierConfig(string $field)
+    protected function getCarrierConfig(string $field): mixed
     {
         return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
     }
@@ -74,11 +74,11 @@ class Configuration
      * @param bool $decrypt - If value is encrypted, decrypt it
      * @return mixed|string
      */
-    protected function getShippingConfig(string $field, bool $decrypt = false)
+    protected function getShippingConfig(string $field, bool $decrypt = false): mixed
     {
         $value = $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
         if ($decrypt) {
-            // TODO remove parameter, check if config item is "obscure"
+            // TODO when value is set in config file (env.php) instead of DB then the value is doubly encrypted here, goes wrong
             $value = $this->encryptor->decrypt($value);
         }
         return $value;

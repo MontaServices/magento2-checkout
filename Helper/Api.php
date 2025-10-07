@@ -5,27 +5,23 @@
  */
 namespace Monta\Checkout\Helper;
 
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
 use Monta\CheckoutApiWrapper\MontapackingShipping;
+use Monta\CheckoutApiWrapper\Objects\Settings;
 use Monta\CheckoutApiWrapper\Service\ApiFactory;
 
-class Api extends AbstractHelper
+class Api
 {
     /**
-     * @param Context $context
      * @param ApiFactory $apiFactory
      * @param Configuration $montaConfiguration
      * @param System $systemHelper
      */
     public function __construct(
-        Context $context,
         protected readonly ApiFactory $apiFactory,
         protected readonly Configuration $montaConfiguration,
         protected readonly System $systemHelper,
     )
     {
-        parent::__construct($context);
     }
 
     /**
@@ -33,13 +29,15 @@ class Api extends AbstractHelper
      */
     public function getApi(): MontaPackingShipping
     {
-        return $this->apiFactory->createFromSettings(
-            settings: [
-                $this->montaConfiguration->getOrigin(),
-                $this->montaConfiguration->getUsername(),
-                $this->montaConfiguration->getPassword(),
-            ],
-            systemInfo: $this->systemHelper->getInfo());
+        return $this->apiFactory->create(
+            settings: new Settings(
+                origin: $this->montaConfiguration->getOrigin(),
+                user: $this->montaConfiguration->getUsername(),
+                password: $this->montaConfiguration->getPassword(),
+                googleKey: $this->montaConfiguration->getGoogleKey(),
+            ),
+            systemInfo: $this->systemHelper->getInfo(),
+        );
     }
 
 }

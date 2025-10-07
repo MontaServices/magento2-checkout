@@ -8,8 +8,8 @@ define([
 
     return Component.extend({
         defaults: {
-            DeliveryOptions: [],
-            PickupOptions: [],
+            DeliveryOptions: ko.observableArray([]),
+            PickupOptions: ko.observableArray([]),
             SelectedDateOptions: ko.observableArray([]),
             template: 'Monta_Checkout/checkout/shipping/options'
         },
@@ -58,14 +58,16 @@ define([
         // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
             // Select this day in quote
-            delivery.selectDeliveryOption(option, quote);
+            return delivery.selectDeliveryOption(option, quote);
         },
 
         setOptions: function (options) {
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {
                 if (self.hasOwnProperty(key)) {
-                    self[key] = responseProp;
+                    // Update observable property with new array
+                    // TODO check if property is observable, or it will fail
+                    self[key](responseProp);
                 }
             });
         }.bind(this),

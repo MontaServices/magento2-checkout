@@ -1,7 +1,19 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <!-- List of available shipping options passed to frontend-->
     <extension_attributes for="Magento\Quote\Api\Data\ShippingMethodInterface">
         <attribute code="monta_shipping_options" type="string"/>
+    </extension_attributes>
+
+    <!-- The shipping option selected by customer -->
+    <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
+        <attribute code="shipping_option" type="string"/>
+    </extension_attributes>
+
+    <!-- Field on Order available in REST API export -->
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <!-- TODO replace ugly backwards-compatible field name with clean "monta_shipping_data" once importer is converted -->
+        <attribute code="montapacking_montacheckout_data" type="string"/>
     </extension_attributes>
 </config>

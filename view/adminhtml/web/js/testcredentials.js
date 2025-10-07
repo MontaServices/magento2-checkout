@@ -12,7 +12,7 @@ define(['underscore'], function (_) {
             buttonElement.disabled = true;
             let retry = true;
 
-            var orderData = new FormData();
+            let orderData = new FormData();
             orderData.append('form_key', config.formKey);
             fetch(config.validateUrl, {
                 method: 'POST',
