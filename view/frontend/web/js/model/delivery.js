@@ -14,11 +14,12 @@ define([], function () {
                 let target = event.currentTarget;
                 let parent = target.parentElement;
 
-                // Remove selection classes from all sibling tiles
+                // Remove focus from all sibling tiles
                 if (parent) {
-                    var tiles = parent.querySelectorAll('.selectDayButton');
-                    tiles.forEach(function (el) {
-                        el.classList.remove.apply(el.classList, selectedTileStyle);
+                    parent.childNodes.forEach(function (el) {
+                        if (el.classList && el.tagName === target.tagName) {
+                            el.classList.remove.apply(el.classList, selectedTileStyle);
+                        }
                     });
                 }
 
