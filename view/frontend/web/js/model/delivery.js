@@ -1,17 +1,19 @@
 define([], function () {
     'use strict';
+    // Selected state
+    let selectedTileStyle = ["monta-blue-focus"];
 
     return {
         isSelected: function () {
             // in this context, $this is still the component
         },
 
+        // Mark the clicked day as selected
         selectDay: function (option, event) {
-            if (event) {
-                let selectedTileStyle = "bg-blue-50 border-blue-400";
-                // TODO style this tile as selected (same style as hover); option.classes does not update in UI
-                // option.additionalClasses = selectedTileStyle;
-                // event.target.addClass(selectedTileStyle);
+            if (event && event.currentTarget) {
+                let target = event.currentTarget;
+                // Add selection classes to the clicked tile
+                target.classList.add.apply(target.classList, selectedTileStyle);
             }
             // option is the day, options is the list of carriers for that day
             return option.options ?? [];
