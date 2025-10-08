@@ -13,7 +13,7 @@
             <each args="data: DeliveryOptions(), as: 'option'">
                 <div
                         click="$parent.clickDayTile"
-                        class="selectDayButton flex-col p-4 rounded-xl border border-gray-300 text-center hover:bg-blue-50 hover:border-blue-400 ">
+                        class="selectDayButton flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">
                     <p class="font-semibold py-2" text="day"></p>
                     <p class="text-sm text-gray-500" text="dateFormatted"></p>
                 </div>
@@ -22,7 +22,7 @@
         <each args="data: SelectedDateOptions, as: 'deliveryOption'">
             <div
                     click="$parent.clickDeliveryOption"
-                    class="delivery-option bg-blue-50 border border-blue-400 rounded-xl p-4 mb-5 max-w-lg mx-auto"
+                    class="delivery-option monta-blue-focus border rounded-xl p-4 mb-5 max-w-lg mx-auto"
                     template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
             </div>
         </each>
