@@ -11,7 +11,9 @@ define([
             DeliveryOptions: ko.observableArray([]),
             PickupOptions: ko.observableArray([]),
             SelectedDateOptions: ko.observableArray([]),
-            template: 'Monta_Checkout/checkout/shipping/options'
+            template: 'Monta_Checkout/checkout/shipping/options',
+            dayButtonIdentifier: 'selectDayButton',
+            shippingOptionIdentifier: 'selectShippingOption',
         },
 
         initialize: function () {
@@ -34,6 +36,7 @@ define([
                         this.setOptions(options);
 
                         // Preselect first day on init
+                        // TODO replace this with running 'click' event on element, however not yet loaded
                         this.clickDayTile(options.DeliveryOptions[0]);
 
                         // Show block now
