@@ -60,6 +60,8 @@ define([
 
         // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
+            // Focus on the selected option
+            delivery.focusSelection(event.currentTarget);
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
         },
