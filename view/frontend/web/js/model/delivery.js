@@ -11,20 +11,7 @@ define([], function () {
         // Mark the clicked day as selected and unselect siblings
         selectDay: function (option, event) {
             if (event && event.currentTarget) {
-                let target = event.currentTarget;
-                let parent = target.parentElement;
-
-                // Remove focus from all sibling tiles
-                if (parent) {
-                    parent.childNodes.forEach(function (el) {
-                        if (el.classList && el.tagName === target.tagName) {
-                            el.classList.remove.apply(el.classList, selectedTileStyle);
-                        }
-                    });
-                }
-
-                // Add selection classes to the clicked tile
-                target.classList.add.apply(target.classList, selectedTileStyle);
+                this.focusSelection(event.currentTarget);
             }
             // option is the day, options is the list of carriers for that day
             return option.options ?? [];
@@ -41,6 +28,23 @@ define([], function () {
 
             // Return TRUE to propagate default click behavior
             return true;
-        }
+        },
+
+        focusSelection(element) {
+            let parent = element.parentElement;
+
+            // Remove focus from all sibling tiles
+            if (parent) {
+                parent.childNodes.forEach(function (el) {
+                    // Only the same tag siblins with a classlist
+                    if (el.classList && el.tagName === element.tagName) {
+                        el.classList.remove.apply(el.classList, selectedTileStyle);
+                    }
+                });
+            }
+
+            // Add selection classes to the clicked tile
+            element.classList.add.apply(element.classList, selectedTileStyle);
+        },
     }
 });
