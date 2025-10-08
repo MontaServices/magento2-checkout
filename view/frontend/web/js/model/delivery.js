@@ -8,10 +8,20 @@ define([], function () {
             // in this context, $this is still the component
         },
 
-        // Mark the clicked day as selected
+        // Mark the clicked day as selected and unselect siblings
         selectDay: function (option, event) {
             if (event && event.currentTarget) {
                 let target = event.currentTarget;
+                let parent = target.parentElement;
+
+                // Remove selection classes from all sibling tiles
+                if (parent) {
+                    var tiles = parent.querySelectorAll('.selectDayButton');
+                    tiles.forEach(function (el) {
+                        el.classList.remove.apply(el.classList, selectedTileStyle);
+                    });
+                }
+
                 // Add selection classes to the clicked tile
                 target.classList.add.apply(target.classList, selectedTileStyle);
             }
