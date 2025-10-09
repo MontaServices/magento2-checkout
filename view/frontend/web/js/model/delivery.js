@@ -30,21 +30,29 @@ define([], function () {
             return true;
         },
 
-        focusSelection(element) {
-            let parent = element.parentElement;
+        focusSelection: function (element) {
+            let self = this;
+            if (Array.isArray(element)) {
+                element.forEach(function (subelement) {
+                    self.focusSelection(subelement);
+                })
+            } else {
+                let parent = element.parentElement;
 
-            // Remove focus from all sibling tiles
-            if (parent) {
-                parent.childNodes.forEach(function (el) {
-                    // Only the same tag siblins with a classlist
-                    if (el.classList && el.tagName === element.tagName) {
-                        el.classList.remove.apply(el.classList, selectedTileStyle);
-                    }
-                });
+                // Remove focus from all sibling tiles
+                if (parent) {
+                    console.log("has parent, find sibling, apply");
+                    parent.childNodes.forEach(function (el) {
+                        // Only the same tag siblins with a classlist
+                        if (el.classList && el.tagName === element.tagName) {
+                            el.classList.remove.apply(el.classList, selectedTileStyle);
+                        }
+                    });
+                }
+
+                // Add selection classes to the clicked tile
+                element.classList?.add.apply(element.classList, selectedTileStyle);
             }
-
-            // Add selection classes to the clicked tile
-            element.classList?.add.apply(element.classList, selectedTileStyle);
         },
     }
 });
