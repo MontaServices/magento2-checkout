@@ -34,10 +34,6 @@ define([
                     if (options && options.DeliveryOptions?.length > 0) {
                         this.setOptions(options);
 
-                        // Preselect first day on init
-                        // TODO replace this with running 'click' event on element, however not yet loaded
-                        this.clickDayTile(options.DeliveryOptions[0]);
-
                         // Show block now
                         return true;
                     }
@@ -49,11 +45,11 @@ define([
         },
 
         // Called from the template when a day tile is clicked
-        clickDayTile: function (option, event) {
+        clickDayTile: function (option, event, element) {
             // Update observable array to trigger re-render
             self.SelectedDateOptions(
                 // extract delivery options from the selected day
-                delivery.selectDay(option, event)
+                delivery.selectDay(option, event, element)
             );
         },
 
@@ -63,6 +59,19 @@ define([
             delivery.focusSelection(event.currentTarget);
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
+        },
+        /**
+         * Select the first timeframe in the list
+         *
+         * @param element
+         */
+        selectFirst: function (element) {
+            // Find first child tag
+            let firstChild = element.querySelector("*:first-of-type");
+
+            // Click first one (to open)
+            // TODO replace all this with running 'click' event on the first child, but Knockout doesn't catch it
+            this.clickDayTile(self.DeliveryOptions()[0], null, firstChild);
         },
 
         setOptions: function (options) {

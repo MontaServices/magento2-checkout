@@ -9,9 +9,9 @@
     </div>
     <!-- Delivery Options -->
     <div if="DeliveryOptions().length">
-        <div class="flex max-w-md mx-auto justify-center gap-5 mb-5">
+        <div class="flex max-w-md mx-auto justify-center gap-5 mb-5" data-bind="afterRender: selectFirst">
             <!-- <each> is a Ko construct that copies the <div> below for each option -->
-            <each args="data: DeliveryOptions(), as: 'option', afterRender: selectFirst">
+            <each args="data: DeliveryOptions(), as: 'option'">
                 <div
                         data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
                         class="flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">

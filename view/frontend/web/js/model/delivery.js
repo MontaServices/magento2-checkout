@@ -8,10 +8,18 @@ define([], function () {
             // in this context, $this is still the component
         },
 
-        // Mark the clicked day as selected and unselect siblings
-        selectDay: function (option, event) {
-            if (event && event.currentTarget) {
-                this.focusSelection(event.currentTarget);
+        /** Mark the clicked day as select and unselect siblins
+         *
+         * @param option - Timeframe object that was selected
+         * @param event - Click event
+         * @param element - or the HTML element that was clicked
+         * @returns {*[]}
+         */
+        selectDay: function (option, event, element) {
+            // Pass click event or element
+            let el = event?.currentTarget ?? element;
+            if (el.classList) {
+                this.focusSelection(el);
             }
             // option is the day, options is the list of carriers for that day
             return option.options ?? [];
