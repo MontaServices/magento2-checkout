@@ -20,13 +20,15 @@
                 </div>
             </each>
         </div>
-        <each args="data: SelectedDateOptions, as: 'deliveryOption'">
-            <div
-                    data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
-                    class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
-                    template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
-            </div>
-        </each>
+        <div data-bind="afterRender: selectFirst">
+            <each args="data: SelectedDateOptions, as: 'deliveryOption'">
+                <div
+                        data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
+                        class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
+                        template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+                </div>
+            </each>
+        </div>
     </div>
     <!-- Pickup Options -->
     <div if="PickupOptions().length">
