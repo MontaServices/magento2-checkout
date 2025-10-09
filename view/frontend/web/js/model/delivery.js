@@ -49,7 +49,6 @@ define([], function () {
 
                 // Remove focus from all sibling tiles
                 if (parent) {
-                    console.log("has parent, find sibling, apply");
                     parent.childNodes.forEach(function (el) {
                         // Only the same tag siblins with a classlist
                         if (el.classList && el.tagName === element.tagName) {

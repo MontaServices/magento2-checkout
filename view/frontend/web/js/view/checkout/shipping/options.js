@@ -66,12 +66,14 @@ define([
          * @param element
          */
         selectFirst: function (element) {
-            // Find first child tag
-            let firstChild = element.querySelector("*:first-of-type");
-
-            // Click first one (to open)
-            // TODO replace all this with running 'click' event on the first child, but Knockout doesn't catch it
-            this.clickDayTile(self.DeliveryOptions()[0], null, firstChild);
+            // use timeout to wait for next click when all elements are rendered
+            setTimeout(function () {
+                // Find first child element and click it
+                let firstChild = element.querySelector("*:first-of-type");
+                if (firstChild) {
+                    firstChild.click();
+                }
+            }, 0);
         },
 
         setOptions: function (options) {
