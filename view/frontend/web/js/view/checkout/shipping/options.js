@@ -17,9 +17,8 @@ define([
         },
 
         initialize: function () {
-            // Create observables before _super (which applies bindings)
-            this.SelectedDateOptions = ko.observableArray([]);
-            return this._super().initObservable();
+            this._super().initObservable();
+            return this;
         },
 
         initObservable: function () {

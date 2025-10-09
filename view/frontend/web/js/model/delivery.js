@@ -44,7 +44,7 @@ define([], function () {
             }
 
             // Add selection classes to the clicked tile
-            element.classList.add.apply(element.classList, selectedTileStyle);
+            element.classList?.add.apply(element.classList, selectedTileStyle);
         },
     }
 });
