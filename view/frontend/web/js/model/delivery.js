@@ -1,17 +1,25 @@
 define([], function () {
     'use strict';
+    // Selected state
+    let selectedTileStyle = ["monta-blue-focus"];
 
     return {
         isSelected: function () {
             // in this context, $this is still the component
         },
 
-        selectDay: function (option, event) {
-            if (event) {
-                let selectedTileStyle = "bg-blue-50 border-blue-400";
-                // TODO style this tile as selected (same style as hover); option.classes does not update in UI
-                // option.additionalClasses = selectedTileStyle;
-                // event.target.addClass(selectedTileStyle);
+        /** Mark the clicked day as select and unselect siblings
+         *
+         * @param option - Timeframe object that was selected
+         * @param event - Click event
+         * @param element - or the HTML element that was clicked
+         * @returns {*[]}
+         */
+        selectDay: function (option, event, element) {
+            // Pass click event or element
+            let el = event?.currentTarget ?? element;
+            if (el.classList) {
+                this.focusSelection(el);
             }
             // option is the day, options is the list of carriers for that day
             return option.options ?? [];
@@ -28,6 +36,30 @@ define([], function () {
 
             // Return TRUE to propagate default click behavior
             return true;
-        }
+        },
+
+        focusSelection: function (element) {
+            let self = this;
+            if (Array.isArray(element)) {
+                element.forEach(function (subelement) {
+                    self.focusSelection(subelement);
+                })
+            } else {
+                let parent = element.parentElement;
+
+                // Remove focus from all sibling tiles
+                if (parent) {
+                    parent.childNodes.forEach(function (sibling) {
+                        // Only same-tag siblings with a classlist
+                        if (sibling.classList && sibling.tagName === element.tagName) {
+                            sibling.classList.remove.apply(sibling.classList, selectedTileStyle);
+                        }
+                    });
+                }
+
+                // Add selection classes to the clicked tile
+                element.classList?.add.apply(element.classList, selectedTileStyle);
+            }
+        },
     }
 });

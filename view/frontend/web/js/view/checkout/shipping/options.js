@@ -11,13 +11,14 @@ define([
             DeliveryOptions: ko.observableArray([]),
             PickupOptions: ko.observableArray([]),
             SelectedDateOptions: ko.observableArray([]),
-            template: 'Monta_Checkout/checkout/shipping/options'
+            template: 'Monta_Checkout/checkout/shipping/options',
+            dayButtonIdentifier: 'selectDayButton',
+            shippingOptionIdentifier: 'selectShippingOption',
         },
 
         initialize: function () {
-            // Create observables before _super (which applies bindings)
-            this.SelectedDateOptions = ko.observableArray([]);
-            return this._super().initObservable();
+            this._super().initObservable();
+            return this;
         },
 
         initObservable: function () {
@@ -33,9 +34,6 @@ define([
                     if (options && options.DeliveryOptions?.length > 0) {
                         this.setOptions(options);
 
-                        // Preselect first day on init
-                        this.clickDayTile(options.DeliveryOptions[0]);
-
                         // Show block now
                         return true;
                     }
@@ -47,18 +45,35 @@ define([
         },
 
         // Called from the template when a day tile is clicked
-        clickDayTile: function (option, event) {
+        clickDayTile: function (option, event, element) {
             // Update observable array to trigger re-render
             self.SelectedDateOptions(
                 // extract delivery options from the selected day
-                delivery.selectDay(option, event)
+                delivery.selectDay(option, event, element)
             );
         },
 
         // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
+            // Focus on the selected option
+            delivery.focusSelection(event.currentTarget);
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
+        },
+        /**
+         * Select the first timeframe in the list
+         *
+         * @param element
+         */
+        selectFirst: function (element) {
+            // use timeout to wait for next click when all elements are rendered
+            setTimeout(function () {
+                // Find first child element and click it
+                let firstChild = element.querySelector("*:first-of-type");
+                if (firstChild) {
+                    firstChild.click();
+                }
+            }, 0);
         },
 
         setOptions: function (options) {
