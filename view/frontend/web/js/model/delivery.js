@@ -8,7 +8,7 @@ define([], function () {
             // in this context, $this is still the component
         },
 
-        /** Mark the clicked day as select and unselect siblins
+        /** Mark the clicked day as select and unselect siblings
          *
          * @param option - Timeframe object that was selected
          * @param event - Click event
@@ -49,10 +49,10 @@ define([], function () {
 
                 // Remove focus from all sibling tiles
                 if (parent) {
-                    parent.childNodes.forEach(function (el) {
-                        // Only the same tag siblins with a classlist
-                        if (el.classList && el.tagName === element.tagName) {
-                            el.classList.remove.apply(el.classList, selectedTileStyle);
+                    parent.childNodes.forEach(function (sibling) {
+                        // Only same-tag siblings with a classlist
+                        if (sibling.classList && sibling.tagName === element.tagName) {
+                            sibling.classList.remove.apply(sibling.classList, selectedTileStyle);
                         }
                     });
                 }
