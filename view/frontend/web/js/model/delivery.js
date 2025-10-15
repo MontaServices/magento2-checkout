@@ -1,5 +1,8 @@
-define([], function () {
+define([
+    'Monta_Checkout/js/model/utility'
+], function (utility) {
     'use strict';
+
     // Selected state
     let selectedTileStyle = ["monta-blue-focus"];
 
@@ -34,28 +37,10 @@ define([], function () {
             return true;
         },
 
-        focusSelection: function (element) {
-            let self = this;
-            if (Array.isArray(element)) {
-                element.forEach(function (subelement) {
-                    self.focusSelection(subelement);
-                })
-            } else {
-                let parent = element.parentElement;
-
-                // Remove focus from all sibling tiles
-                if (parent) {
-                    parent.childNodes.forEach(function (sibling) {
-                        // Only same-tag siblings with a classlist
-                        if (sibling.classList && sibling.tagName === element.tagName) {
-                            sibling.classList.remove.apply(sibling.classList, selectedTileStyle);
-                        }
-                    });
-                }
-
-                // Add selection classes to the clicked tile
-                element.classList?.add.apply(element.classList, selectedTileStyle);
-            }
+        focusSelection: function (element){
+            utility.applyAmongSiblings(element, [selectedTileStyle]);
         },
+
+
     }
 });

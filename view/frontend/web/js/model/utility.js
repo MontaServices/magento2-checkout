@@ -27,11 +27,43 @@ define([], function () {
         clickMode: function (mode, event) {
             let element = event.currentTarget;
             if (element.classList) {
-
                 element.classList.add.apply(element.classList, ['primary']);
                 element.classList.remove.apply(element.classList, ['secondary']);
             }
             // TODO also remove class from siblings
+        },
+
+        /** Apply class to element, remove that class from siblins
+         *
+         * @param element
+         * @param targetClasses - string[]
+         */
+        applyAmongSiblings: function (element, targetClasses) {
+            if (element && element.classList) {
+                let self = this;
+                if (Array.isArray(element)) {
+                    element.forEach(function (subelement) {
+                        self.applyAmongSiblings(subelement, targetClasses);
+                    })
+                } else {
+                    let parent = element.parentElement;
+
+                    // Remove focus from all sibling tiles
+                    if (parent) {
+                        parent.childNodes.forEach(function (sibling) {
+                            // Only same-tag siblings with a classlist
+                            if (sibling.classList && sibling.tagName === element.tagName) {
+                                sibling.classList.remove.apply(sibling.classList, targetClasses);
+                            }
+                        });
+                    }
+
+                    // Add selection classes to the clicked tile
+                    element.classList?.add.apply(element.classList, targetClasses);
+                }
+            } else {
+                console.warn("Cannot apply classes since no element was passed.");
+            }
         },
     };
 });
