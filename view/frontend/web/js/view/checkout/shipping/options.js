@@ -2,8 +2,9 @@ define([
     'uiComponent',
     'ko',
     'Magento_Checkout/js/model/quote',
-    'Monta_Checkout/js/model/delivery'
-], function (Component, ko, quote, delivery) {
+    'Monta_Checkout/js/model/delivery',
+    'Monta_Checkout/js/model/utility'
+], function (Component, ko, quote, delivery, utility) {
     'use strict';
 
     return Component.extend({
@@ -67,14 +68,7 @@ define([
          * @param element
          */
         selectFirst: function (element) {
-            // use timeout to wait for next click when all elements are rendered
-            setTimeout(function () {
-                // Find first child element and click it
-                let firstChild = element.querySelector("*:first-of-type");
-                if (firstChild) {
-                    firstChild.click();
-                }
-            }, 0);
+            return utility.selectFirst(element);
         },
 
         setOptions: function (options) {
