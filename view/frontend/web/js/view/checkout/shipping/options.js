@@ -61,14 +61,17 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
-        clickDelivery: function (event, element) {
-            utility.clickMode('delivery', event,element);
+        /**
+         * @param component - Event handlers always receive component itself as first argument
+         * @param event - Click event, including the clicked element
+         */
+        clickDelivery: function (component, event) {
+            utility.clickMode('delivery', event);
         },
 
-        clickPickup: function (component,event) {
+        clickPickup: function (component, event) {
             utility.clickMode('pickup', event);
         },
-
 
         selectFirst: function (element) {
             return utility.selectFirst(element);

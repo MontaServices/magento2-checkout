@@ -1,5 +1,6 @@
 define([], function () {
     'use strict';
+
     return {
         /**
          * Select the first item in the list
@@ -25,12 +26,7 @@ define([], function () {
          * @param event
          */
         clickMode: function (mode, event) {
-            let element = event.currentTarget;
-            if (element.classList) {
-                element.classList.add.apply(element.classList, ['primary']);
-                element.classList.remove.apply(element.classList, ['secondary']);
-            }
-            // TODO also remove class from siblings
+            this.applyAmongSiblings(event.currentTarget, ['primary']);
         },
 
         /** Apply class to element, remove that class from siblins
