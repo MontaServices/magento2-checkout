@@ -7,20 +7,20 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Monta\Checkout\Model\Carrier\Monta;
 
 class Configuration
 {
     /** @var string */
     public const string CONFIG_PATH_SHIPPING = 'shipping/monta/';
 
-    /** @var string */
-    public const string CONFIG_PATH_CARRIER = 'carriers/monta/';
-
     /**
+     * @param Monta $carrier
      * @param ScopeConfigInterface $scopeConfig
      * @param EncryptorInterface $encryptor
      */
     public function __construct(
+        protected readonly Monta $carrier,
         protected readonly ScopeConfigInterface $scopeConfig,
         protected readonly EncryptorInterface $encryptor,
     )
@@ -65,7 +65,7 @@ class Configuration
      */
     public function getPickupPointsEnabled(): bool
     {
-        return (bool)$this->getCarrierConfig('enablepickuppoints');
+        return (bool)$this->carrier->getConfigData('enablepickuppoints');
     }
 
     /**
@@ -73,16 +73,7 @@ class Configuration
      */
     public function getMaxPickupPoints(): int
     {
-        return (int)$this->getCarrierConfig('number_of_pickuppoints');
-    }
-
-    /**
-     * @param string $field
-     * @return mixed
-     */
-    protected function getCarrierConfig(string $field): mixed
-    {
-        return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
+        return (int)$this->carrier->getConfigData('number_of_pickuppoints');
     }
 
     /**
