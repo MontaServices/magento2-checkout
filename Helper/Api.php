@@ -47,6 +47,7 @@ class Api
             pickupPointsEnabled: $this->montaConfiguration->getPickupPointsEnabled(),
             maxPickupPoints: $this->montaConfiguration->getMaxPickupPoints(),
             googleKey: $this->montaConfiguration->getGoogleKey(),
+            defaultCosts: $this->montaConfiguration->getHandlingFee(),
         );
     }
 

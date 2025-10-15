@@ -90,7 +90,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
     /**
      * @return float
      */
-    protected function getHandlingFee(): float
+    public function getHandlingFee(): float
     {
         return (float)$this->getConfigData('handling_fee');
     }

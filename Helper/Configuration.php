@@ -77,6 +77,14 @@ class Configuration
     }
 
     /**
+     * @return float
+     */
+    public function getHandlingFee(): float
+    {
+        return $this->carrier->getHandlingFee();
+    }
+
+    /**
      * @param string $field
      * @param bool $decrypt - If value is encrypted, decrypt it
      * @return mixed|string
