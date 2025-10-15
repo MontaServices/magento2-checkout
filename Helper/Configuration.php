@@ -70,6 +70,22 @@ class Configuration
     }
 
     /**
+     * @return bool
+     */
+    public function getPickupPointsEnabled(): bool
+    {
+        return (bool)$this->getCarrierConfig('enablepickuppoints');
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPickupPoints(): int
+    {
+        return (int)$this->getCarrierConfig('number_of_pickuppoints');
+    }
+
+    /**
      * @param string $field
      * @param bool $decrypt - If value is encrypted, decrypt it
      * @return mixed|string

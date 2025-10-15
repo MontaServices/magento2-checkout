@@ -8,6 +8,8 @@
                 <name>Monta</name>
                 <title>Verzending via Monta</title>
                 <model>Monta\Checkout\Model\Carrier\Monta</model>
+                <enablepickuppoints>0</enablepickuppoints>
+                <number_of_pickuppoints>3</number_of_pickuppoints>
                 <handling_fee>9.95</handling_fee>
                 <sort_order>50</sort_order>
             </monta>
