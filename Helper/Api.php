@@ -30,15 +30,23 @@ class Api
     public function getApi(): MontaPackingShipping
     {
         return $this->apiFactory->create(
-            settings: new Settings(
-                origin: $this->montaConfiguration->getOrigin(),
-                user: $this->montaConfiguration->getUsername(),
-                password: $this->montaConfiguration->getPassword(),
-                pickupPointsEnabled: $this->montaConfiguration->getPickupPointsEnabled(),
-                maxPickupPoints: $this->montaConfiguration->getMaxPickupPoints(),
-                googleKey: $this->montaConfiguration->getGoogleKey(),
-            ),
+            settings: $this->getSettings(),
             systemInfo: $this->systemHelper->getInfo(),
+        );
+    }
+
+    /**
+     * @return Settings
+     */
+    protected function getSettings(): Settings
+    {
+        return new Settings(
+            origin: $this->montaConfiguration->getOrigin(),
+            user: $this->montaConfiguration->getUsername(),
+            password: $this->montaConfiguration->getPassword(),
+            pickupPointsEnabled: $this->montaConfiguration->getPickupPointsEnabled(),
+            maxPickupPoints: $this->montaConfiguration->getMaxPickupPoints(),
+            googleKey: $this->montaConfiguration->getGoogleKey(),
         );
     }
 
