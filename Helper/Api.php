@@ -34,6 +34,8 @@ class Api
                 origin: $this->montaConfiguration->getOrigin(),
                 user: $this->montaConfiguration->getUsername(),
                 password: $this->montaConfiguration->getPassword(),
+                pickupPointsEnabled: $this->montaConfiguration->getPickupPointsEnabled(),
+                maxPickupPoints: $this->montaConfiguration->getMaxPickupPoints(),
                 googleKey: $this->montaConfiguration->getGoogleKey(),
             ),
             systemInfo: $this->systemHelper->getInfo(),

@@ -61,15 +61,6 @@ class Configuration
     }
 
     /**
-     * @param string $field
-     * @return mixed
-     */
-    protected function getCarrierConfig(string $field): mixed
-    {
-        return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
-    }
-
-    /**
      * @return bool
      */
     public function getPickupPointsEnabled(): bool
@@ -83,6 +74,15 @@ class Configuration
     public function getMaxPickupPoints(): int
     {
         return (int)$this->getCarrierConfig('number_of_pickuppoints');
+    }
+
+    /**
+     * @param string $field
+     * @return mixed
+     */
+    protected function getCarrierConfig(string $field): mixed
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_PATH_CARRIER . trim(string: $field, characters: "/"));
     }
 
     /**
