@@ -4,10 +4,6 @@ define([], function () {
     let selectedTileStyle = ["monta-blue-focus"];
 
     return {
-        isSelected: function () {
-            // in this context, $this is still the component
-        },
-
         /** Mark the clicked day as select and unselect siblings
          *
          * @param option - Timeframe object that was selected

@@ -18,5 +18,20 @@ define([], function () {
 
             return true;
         },
+
+        /**
+         *  Select a mode for the checkout
+         * @param mode
+         * @param event
+         */
+        clickMode: function (mode, event) {
+            let element = event.currentTarget;
+            if (element.classList) {
+
+                element.classList.add.apply(element.classList, ['primary']);
+                element.classList.remove.apply(element.classList, ['secondary']);
+            }
+            // TODO also remove class from siblings
+        },
     };
 });

@@ -3,14 +3,17 @@
     <!-- Buttons-->
     <div class="flex mx-auto mb-5">
         <!-- TODO for some reason Tailwind doesn't work on button element -->
-        <button type="button" class="button action primary w-1/2 py-2 text-white mx-auto">Bezorgen
+        <button type="button" click="clickDelivery"
+                class="button action primary w-1/2 py-2 text-white mx-auto">Bezorgen
         </button>
-        <button type="button" class="button action secondary w-1/2 py-2 bg-white mx-auto">Afhalen</button>
+        <button type="button" click="clickPickup"
+                class="button action secondary w-1/2 py-2 bg-white mx-auto">Afhalen
+        </button>
     </div>
     <!-- Delivery Options -->
     <div if="DeliveryOptions().length">
         <div class="flex max-w-md mx-auto justify-center gap-5 mb-5" data-bind="afterRender: selectFirst">
-            <!-- <each> is a Ko construct that copies the <div> below for each option -->
+            <!-- <each> is a Ko construct that copies the <div> below for each option. $this becomes that element, $parent becomes the current component -->
             <each args="data: DeliveryOptions(), as: 'option'">
                 <div
                         data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"

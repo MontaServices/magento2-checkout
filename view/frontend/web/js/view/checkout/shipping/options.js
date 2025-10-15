@@ -23,7 +23,6 @@ define([
         },
 
         initObservable: function () {
-            delivery.isSelected();
             // Determine if Monta popup should be shown
             this.isSelected = ko.computed(function () {
                 // Self references this component instead of Window
@@ -62,11 +61,15 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
-        /**
-         * Select the first item in the list
-         *
-         * @param element
-         */
+        clickDelivery: function (event, element) {
+            utility.clickMode('delivery', event,element);
+        },
+
+        clickPickup: function (component,event) {
+            utility.clickMode('pickup', event);
+        },
+
+
         selectFirst: function (element) {
             return utility.selectFirst(element);
         },
