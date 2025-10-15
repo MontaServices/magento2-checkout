@@ -60,8 +60,9 @@ define([
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
         },
+
         /**
-         * Select the first timeframe in the list
+         * Select the first item in the list
          *
          * @param element
          */
@@ -80,9 +81,16 @@ define([
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {
                 if (self.hasOwnProperty(key)) {
-                    // Update observable property with new array
-                    // TODO check if property is observable, or it will fail
-                    self[key](responseProp);
+                    // Update observable property with new data
+                    switch (typeof self[key]) {
+                        // ObservableArrays have this typeof
+                        case 'function':
+                            self[key](responseProp);
+                            break;
+                        default:
+                            // otherwise just set the property
+                            self[key] = responseProp;
+                    }
                 }
             });
         }.bind(this),

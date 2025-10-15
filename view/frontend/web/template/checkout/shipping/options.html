@@ -33,7 +33,7 @@
     <!-- Pickup Options -->
     <div if="PickupOptions().length">
         <p>Pickup Options</p>
-        <each args="data: PickupOptions, as 'option'">
+        <each args="data: PickupOptions(), as 'option'">
             <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: option">
             </div>
         </each>
