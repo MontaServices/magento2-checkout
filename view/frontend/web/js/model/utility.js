@@ -2,8 +2,7 @@ define([], function () {
     'use strict';
 
     return {
-        /**
-         * Select the first item in the list by clicking
+        /** Select the first item in the list by clicking
          *
          * @param element
          */
@@ -23,7 +22,7 @@ define([], function () {
         /** Select a mode for the checkout
          *
          * @param mode - string
-         * @param event
+         * @param event - click event
          */
         clickMode: function (mode, event) {
             // Find element for this mode
@@ -39,7 +38,7 @@ define([], function () {
             }
         },
 
-        /** Apply class to element, remove that class from siblins
+        /** Apply class to element and remove that class from siblings
          *
          * @param element
          * @param targetClasses - string[]
@@ -60,25 +59,32 @@ define([], function () {
                         parent.childNodes.forEach(function (sibling) {
                             // Only same-tag siblings with a classlist
                             if (sibling.classList && sibling.tagName === element.tagName) {
-                                if (add) {
-                                    sibling.classList.remove.apply(sibling.classList, targetClasses);
-                                } else {
-                                    sibling.classList.add.apply(sibling.classList, targetClasses);
-                                }
+                                // Apply inverse on siblings
+                                self.applyClasses(sibling, targetClasses, !add);
                             }
                         });
                     }
 
                     // Add selection classes to the clicked tile
-                    if (add) {
-                        element.classList?.add.apply(element.classList, targetClasses);
-                    } else {
-                        element.classList?.remove.apply(element.classList, targetClasses);
-                    }
+                    self.applyClasses(element, targetClasses, add);
                 }
             } else {
                 console.warn("Cannot apply classes since no element was passed.");
             }
         },
+
+        /** Add or remove classes from an element
+         *
+         * @param element
+         * @param targetClasses
+         * @param add
+         */
+        applyClasses: function (element, targetClasses, add = true) {
+            if (add) {
+                element.classList?.add.apply(element.classList, targetClasses);
+            } else {
+                element.classList?.remove.apply(element.classList, targetClasses);
+            }
+        }
     };
 });
