@@ -2,13 +2,13 @@
      visible="isSelected">
     <!-- Buttons-->
     <div class="flex mx-auto mb-5" data-bind="afterRender: selectFirst">
-        <!-- TODO for some reason Tailwind doesn't work on button element -->
-        <button type="button" click="clickDelivery"
-                class="button action w-1/2 py-2 text-white mx-auto">Bezorgen
-        </button>
-        <button type="button" click="clickPickup"
-                class="button action w-1/2 py-2 bg-white mx-auto">Afhalen
-        </button>
+        <each args="data: tabButtons, as: 'tabButton'">
+            <!-- TODO for some reason Tailwind doesn't work on button element -->
+            <button type="button" data-bind="click: tabButton.callback, id: tabButton.identifier"
+                    class="button action w-1/2 py-2 text-white mx-auto"
+                    text="tabButton.label">
+            </button>
+        </each>
     </div>
     <!-- Delivery Options -->
     <div if="DeliveryOptions().length">

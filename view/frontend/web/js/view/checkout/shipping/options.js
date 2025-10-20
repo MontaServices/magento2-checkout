@@ -15,6 +15,22 @@ define([
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
+            tabButtons: [
+                {
+                    id: 'delivery',
+                    label: 'Bezorgen',
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+                {
+                    id: 'pickup',
+                    label: 'Afhalen',
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+            ],
         },
 
         initialize: function () {
@@ -59,18 +75,6 @@ define([
             delivery.focusSelection(event.currentTarget);
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
-        },
-
-        /**
-         * @param component - Event handlers always receive component itself as first argument
-         * @param event - Click event, including the clicked element
-         */
-        clickDelivery: function (component, event) {
-            utility.clickMode('delivery', event);
-        },
-
-        clickPickup: function (component, event) {
-            utility.clickMode('pickup', event);
         },
 
         selectFirst: function (element) {
