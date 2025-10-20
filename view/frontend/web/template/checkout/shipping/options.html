@@ -1,13 +1,13 @@
 <div id="block-shipping-options" class="max-w-md mx-auto"
      visible="isSelected">
     <!-- Buttons-->
-    <div class="flex mx-auto mb-5">
+    <div class="flex mx-auto mb-5" data-bind="afterRender: selectFirst">
         <!-- TODO for some reason Tailwind doesn't work on button element -->
         <button type="button" click="clickDelivery"
-                class="button action primary w-1/2 py-2 text-white mx-auto">Bezorgen
+                class="button action w-1/2 py-2 text-white mx-auto">Bezorgen
         </button>
         <button type="button" click="clickPickup"
-                class="button action secondary w-1/2 py-2 bg-white mx-auto">Afhalen
+                class="button action w-1/2 py-2 bg-white mx-auto">Afhalen
         </button>
     </div>
     <!-- Delivery Options -->
