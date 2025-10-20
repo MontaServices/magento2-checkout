@@ -37,7 +37,7 @@ define([
             return true;
         },
 
-        focusSelection: function (element){
+        focusSelection: function (element) {
             utility.applyAmongSiblings(element, [selectedTileStyle]);
         },
 

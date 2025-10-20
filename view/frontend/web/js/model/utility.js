@@ -3,12 +3,12 @@ define([], function () {
 
     return {
         /**
-         * Select the first item in the list
+         * Select the first item in the list by clicking
          *
          * @param element
          */
         selectFirst: function (element) {
-            // use timeout to wait for next click when all elements are rendered
+            // use timeout(zero) to wait for next click when all elements are rendered
             setTimeout(function () {
                 // Find first child element and click it
                 let firstChild = element.querySelector("*:first-of-type");

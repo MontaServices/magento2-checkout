@@ -1,44 +1,40 @@
 <div id="block-shipping-options" class="max-w-md mx-auto"
      visible="isSelected">
     <!-- Buttons-->
-    <div class="flex mx-auto mb-5" data-bind="afterRender: selectFirst">
-        <each args="data: tabButtons, as: 'tabButton'">
-            <!-- TODO for some reason Tailwind doesn't work on button element -->
-            <button type="button" data-bind="click: tabButton.callback, id: tabButton.identifier"
-                    class="button action w-1/2 py-2 text-white mx-auto"
-                    text="tabButton.label">
-            </button>
-        </each>
+    <div class="flex mx-auto mb-5" data-bind="afterRender: selectFirst, foreach: { data: tabButtons, as: 'tabButton' }">
+        <!-- TODO for some reason Tailwind doesn't work on button element -->
+        <button type="button" data-bind="click: tabButton.callback, id: tabButton.identifier"
+                class="button action w-1/2 py-2 text-white mx-auto"
+                text="tabButton.label">
+        </button>
     </div>
     <!-- Delivery Options -->
     <div if="DeliveryOptions().length">
-        <div class="flex max-w-md mx-auto justify-center gap-5 mb-5" data-bind="afterRender: selectFirst">
-            <!-- <each> is a Ko construct that copies the <div> below for each option. $this becomes that element, $parent becomes the current component -->
-            <each args="data: DeliveryOptions(), as: 'option'">
-                <div
-                        data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
-                        class="flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">
-                    <p class="font-semibold py-2" text="day"></p>
-                    <p class="text-sm text-gray-500" text="dateFormatted"></p>
-                </div>
-            </each>
+        <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
+             data-bind="afterRender: selectFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
+            <!-- $this becomes each element, $parent becomes the current component -->
+            <div
+                    data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
+                    class="flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">
+                <p class="font-semibold py-2" text="day"></p>
+                <p class="text-sm text-gray-500" text="dateFormatted"></p>
+            </div>
         </div>
-        <div data-bind="afterRender: selectFirst">
-            <each args="data: SelectedDateOptions, as: 'deliveryOption'">
-                <div
-                        data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
-                        class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
-                        template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
-                </div>
-            </each>
+        <div data-bind="afterRender: selectFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
+            <div
+                    data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
+                    class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
+                    template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+            </div>
         </div>
     </div>
     <!-- Pickup Options -->
     <div if="PickupOptions().length">
         <p>Pickup Options</p>
-        <each args="data: PickupOptions(), as: 'option'">
-            <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: option">
+        <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }">
+
+            <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
             </div>
-        </each>
+        </div>
     </div>
 </div>
