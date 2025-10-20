@@ -20,26 +20,36 @@ define([], function () {
             return true;
         },
 
-        /**
-         *  Select a mode for the checkout
-         * @param mode
+        /** Select a mode for the checkout
+         *
+         * @param mode - string
          * @param event
          */
         clickMode: function (mode, event) {
-            this.applyAmongSiblings(event.currentTarget, ['primary']);
+            // Find element for this mode
+            let element = document.querySelector("#" + mode);
+            if (element) {
+                // Remove 'hidden' class from this one, add to siblings
+                this.applyAmongSiblings(element, ['hidden'], false);
+                // Add 'primary' class to this button element, remove from siblings
+                this.applyAmongSiblings(event.currentTarget, ['primary']);
+            } else {
+                console.warn("Cannot find element for mode: " + mode);
+            }
         },
 
         /** Apply class to element, remove that class from siblins
          *
          * @param element
          * @param targetClasses - string[]
+         * @param add - Pass FALSE to remove classes instead
          */
-        applyAmongSiblings: function (element, targetClasses) {
+        applyAmongSiblings: function (element, targetClasses, add = true) {
             if (element && element.classList) {
                 let self = this;
                 if (Array.isArray(element)) {
                     element.forEach(function (subelement) {
-                        self.applyAmongSiblings(subelement, targetClasses);
+                        self.applyAmongSiblings(subelement, targetClasses, add);
                     })
                 } else {
                     let parent = element.parentElement;
@@ -49,13 +59,21 @@ define([], function () {
                         parent.childNodes.forEach(function (sibling) {
                             // Only same-tag siblings with a classlist
                             if (sibling.classList && sibling.tagName === element.tagName) {
-                                sibling.classList.remove.apply(sibling.classList, targetClasses);
+                                if (add) {
+                                    sibling.classList.remove.apply(sibling.classList, targetClasses);
+                                } else {
+                                    sibling.classList.add.apply(sibling.classList, targetClasses);
+                                }
                             }
                         });
                     }
 
                     // Add selection classes to the clicked tile
-                    element.classList?.add.apply(element.classList, targetClasses);
+                    if (add) {
+                        element.classList?.add.apply(element.classList, targetClasses);
+                    } else {
+                        element.classList?.remove.apply(element.classList, targetClasses);
+                    }
                 }
             } else {
                 console.warn("Cannot apply classes since no element was passed.");

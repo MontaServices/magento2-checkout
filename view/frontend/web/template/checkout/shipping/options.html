@@ -8,32 +8,34 @@
                 text="tabButton.label">
         </button>
     </div>
-    <!-- Delivery Options -->
-    <div if="DeliveryOptions().length">
-        <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
-             data-bind="afterRender: selectFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
-            <!-- $this becomes each element, $parent becomes the current component -->
-            <div
-                    data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
-                    class="flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">
-                <p class="font-semibold py-2" text="day"></p>
-                <p class="text-sm text-gray-500" text="dateFormatted"></p>
+    <div>
+        <!-- Delivery Options -->
+        <div if="DeliveryOptions().length" id="delivery" class="hidden">
+            <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
+                 data-bind="afterRender: selectFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
+                <!-- $this becomes each element, $parent becomes the current component -->
+                <div
+                        data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
+                        class="flex-col p-4 rounded-xl border border-gray-300 text-center hover:monta-blue-focus">
+                    <p class="font-semibold py-2" text="day"></p>
+                    <p class="text-sm text-gray-500" text="dateFormatted"></p>
+                </div>
+            </div>
+            <div data-bind="afterRender: selectFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
+                <div
+                        data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
+                        class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
+                        template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
+                </div>
             </div>
         </div>
-        <div data-bind="afterRender: selectFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
-            <div
-                    data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
-                    class="border border-gray-300 rounded-xl p-4 mb-5 max-w-lg mx-auto"
-                    template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
-            </div>
-        </div>
-    </div>
-    <!-- Pickup Options -->
-    <div if="PickupOptions().length">
-        <p>Pickup Options</p>
-        <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }">
+        <!-- Pickup Options -->
+        <div if="PickupOptions().length" id="pickup" class="hidden">
+            <p>Pickup Options</p>
+            <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }">
 
-            <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
+                <div template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
+                </div>
             </div>
         </div>
     </div>
