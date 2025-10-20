@@ -27,7 +27,8 @@ define([], function () {
          */
         clickMode: function (mode, event) {
             // Find element for this mode
-            let element = document.querySelector("#" + mode);
+            // TODO replace all this HTML logic with a observable 'mode' property on component
+            let element = document.querySelector(".tab-" + mode);
             if (element) {
                 // Remove 'hidden' class from this one, add to siblings
                 this.applyAmongSiblings(element, ['hidden'], false);

@@ -8,9 +8,9 @@
                 text="tabButton.label">
         </button>
     </div>
-    <div>
+    <div clas="tabs">
         <!-- Delivery Options -->
-        <div if="DeliveryOptions().length" id="delivery" class="hidden">
+        <div if="DeliveryOptions().length" class="tabcontent tab-delivery hidden">
             <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
                  data-bind="afterRender: selectFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
                 <!-- $this becomes each element, $parent becomes the current component -->
@@ -30,7 +30,7 @@
             </div>
         </div>
         <!-- Pickup Options -->
-        <div if="PickupOptions().length" id="pickup" class="hidden">
+        <div if="PickupOptions().length" class="tabcontent tab-pickup hidden">
             <p>Pickup Options</p>
             <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }">
 

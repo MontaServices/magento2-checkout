@@ -34,6 +34,7 @@ define([
         },
 
         initialize: function () {
+            // Unsure how, but this is necessary for the observables to work
             this._super().initObservable();
             return this;
         },
