@@ -7,7 +7,7 @@
                 <strong text="pickup.company"></strong>
                 <p class="text-sm text-gray-500" text="pickup.displayName"></p>
                 <p class="text-sm text-gray-600"
-                   text="pickup.straat + ' ' + pickup.houseNumber + ', ' + pickup.postalCode + ' ' + pickup.city"></p>
+                   text="pickup.formattedAddress ?? pickup.street + ' ' + pickup.houseNumber"></p>
             </div>
         </div>
         <p class="text-green font-medium" text="pickup.priceFormatted"></p>
