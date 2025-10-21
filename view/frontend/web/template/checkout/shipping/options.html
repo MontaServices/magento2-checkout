@@ -16,7 +16,7 @@
                 <!-- $this becomes each element, $parent becomes the current component -->
                 <div
                         data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
-                        class="flex-col monta-gray-tile text-center hover:monta-blue-focus">
+                        class="flex-col text-center rounded-tile monta-gray-tile hover:monta-blue-focus">
                     <p class="font-semibold py-2" text="day"></p>
                     <p class="text-sm text-gray-500" text="dateFormatted"></p>
                 </div>
@@ -24,7 +24,7 @@
             <div data-bind="afterRender: selectFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
                 <div
                         data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
-                        class="monta-gray-tile mb-5 max-w-lg mx-auto"
+                        class="rounded-tile monta-gray-tile mb-5 max-w-lg mx-auto"
                         template="name: 'Monta_Checkout/checkout/shipping/components/delivery', data: deliveryOption">
                 </div>
             </div>
@@ -32,7 +32,7 @@
         <!-- Pickup Options -->
         <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }"
              class="tabcontent tab-pickup hidden space-y-3">
-            <div class="monta-gray-tile w-full"
+            <div class="rounded-tile monta-gray-tile w-full"
                  data-bind="click: $parent.clickDeliveryOption"
                  template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
             </div>

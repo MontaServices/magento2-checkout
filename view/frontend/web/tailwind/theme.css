@@ -1,9 +1,13 @@
 @import 'tailwindcss';
 
+@utility rounded-tile {
+    @apply rounded-xl p-4 border;
+}
+
 @utility monta-blue-focus {
-    @apply border border-blue-400 bg-blue-50 rounded-xl p-4;
+    @apply border-blue-400 bg-blue-50;
 }
 
 @utility monta-gray-tile {
-    @apply border border-gray-300 rounded-xl p-4;
+    @apply border-gray-300;
 }
