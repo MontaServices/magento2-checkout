@@ -14,6 +14,7 @@
     <div class="extras" if="deliveryOption.deliveryOptions.length">
         <p class="font-semibold mb-2">Extra verzendopties:</p>
         <div class="space-y-2" data-bind="foreach: { data: deliveryOption.deliveryOptions, as: 'extra' }">
+            <!-- TODO border color should match tile border color -->
             <div class="flex justify-between p-2 rounded-xl border border-blue-400">
                 <div class="items-center space-x-2">
                     <input type="checkbox" class="" data-bind="name: extra.code"/>

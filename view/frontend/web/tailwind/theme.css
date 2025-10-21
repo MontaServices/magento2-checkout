@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
 @utility monta-blue-focus {
-    @apply bg-blue-50 border border-blue-400;
+    @apply border border-blue-400 bg-blue-50 rounded-xl p-4;
+}
+
+@utility monta-gray-tile {
+    @apply border border-gray-300 rounded-xl p-4;
 }
