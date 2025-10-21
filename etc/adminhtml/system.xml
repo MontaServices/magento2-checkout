@@ -11,20 +11,22 @@
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="name" translate="label" type="text" sortOrder="40" canRestore="1"
+                <field id="name" translate="label" type="text" sortOrder="30" canRestore="1"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Method Name</label>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="30" canRestore="1"
+                <field id="title" translate="label" type="text" sortOrder="40" canRestore="1"
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="enablepickuppoints" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0"  canRestore="1">
+                <field id="enablepickuppoints" translate="label" type="select" sortOrder="50" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Enable pickup points</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Show a map with pickup points near customer address]]></comment>
                 </field>
-                <field id="number_of_pickuppoints" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0"  canRestore="1">
+                <field id="number_of_pickuppoints" translate="label" type="text" sortOrder="55" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Max pickup points</label>
                     <depends>
                         <field id="enablepickuppoints">1</field>
