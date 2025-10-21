@@ -1,7 +1,7 @@
 <div id="block-shipping-options" class="max-w-lg mx-auto"
      visible="isSelected">
     <!-- Buttons-->
-    <div class="flex mx-auto mb-5" data-bind="afterRender: selectFirst, foreach: { data: tabButtons, as: 'tabButton' }">
+    <div class="flex mx-auto mb-5" data-bind="afterRender: clickFirst, foreach: { data: tabButtons, as: 'tabButton' }">
         <!-- TODO for some reason Tailwind doesn't work on button element -->
         <button type="button" data-bind="click: tabButton.callback, id: tabButton.identifier"
                 class="button action w-1/2 py-2 text-white mx-auto"
@@ -12,7 +12,7 @@
         <!-- Delivery Options -->
         <div if="DeliveryOptions().length" class="tabcontent tab-delivery hidden">
             <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
-                 data-bind="afterRender: selectFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
+                 data-bind="afterRender: clickFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
                 <!-- $this becomes each element, $parent becomes the current component -->
                 <div
                         data-bind="click: $parent.clickDayTile, class: $parent.dayButtonIdentifier"
@@ -21,7 +21,7 @@
                     <p class="text-sm text-gray-500" text="dateFormatted"></p>
                 </div>
             </div>
-            <div data-bind="afterRender: selectFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
+            <div data-bind="afterRender: clickFirst, foreach: { data: SelectedDateOptions, as: 'deliveryOption' }">
                 <div
                         data-bind="click: $parent.clickDeliveryOption, class: $parent.shippingOptionIdentifier"
                         class="rounded-tile monta-gray-tile mb-5 max-w-lg mx-auto"

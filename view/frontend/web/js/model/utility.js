@@ -6,8 +6,8 @@ define([], function () {
          *
          * @param element
          */
-        selectFirst: function (element) {
-            // use timeout(zero) to wait for next click when all elements are rendered
+        clickFirst: function (element) {
+            // use timeout(zero) to wait for next tick when all elements are rendered
             setTimeout(function () {
                 // Find first child element and click it
                 let firstChild = element.querySelector("*:first-of-type");

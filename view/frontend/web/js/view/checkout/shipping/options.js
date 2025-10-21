@@ -79,8 +79,8 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
-        selectFirst: function (element) {
-            return utility.selectFirst(element);
+        clickFirst: function (element) {
+            return utility.clickFirst(element);
         },
 
         setOptions: function (options) {
