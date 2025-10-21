@@ -34,7 +34,7 @@ define([
         },
 
         initialize: function () {
-            // Unsure how, but this is necessary for the observables to work
+            // This is necessary for the observables to work
             this._super().initObservable();
             return this;
         },
@@ -63,10 +63,11 @@ define([
 
         // Called from the template when a day tile is clicked
         clickDayTile: function (option, event, element) {
+            let el = event?.currentTarget ?? element;
             // Update observable array to trigger re-render
             self.SelectedDateOptions(
                 // extract delivery options from the selected day
-                delivery.selectDay(option, event, element)
+                delivery.selectDay(option, el)
             );
         },
 
@@ -88,7 +89,7 @@ define([
                 if (self.hasOwnProperty(key)) {
                     // Update observable property with new data
                     switch (typeof self[key]) {
-                        // ObservableArrays have this typeof
+                        // ObservableArrays are typeof function
                         case 'function':
                             self[key](responseProp);
                             break;
@@ -98,6 +99,6 @@ define([
                     }
                 }
             });
-        }.bind(this),
+        },
     });
 });
