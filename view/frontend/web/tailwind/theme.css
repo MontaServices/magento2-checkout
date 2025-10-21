@@ -5,7 +5,7 @@
 }
 
 @utility monta-blue-focus {
-    @apply border-blue-400 bg-blue-50;
+    @apply !border-blue-400 bg-blue-50;
 }
 
 @utility monta-gray-tile {
