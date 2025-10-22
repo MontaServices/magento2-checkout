@@ -3,7 +3,8 @@
     "description": "Monta Checkout for Magento2",
     "require": {
         "php": "^8.3",
-        "monta/checkout-api-wrapper": "^2.0"
+        "monta/checkout-api-wrapper": "^2.0",
+        "magento/module-page-builder": "*"
     },
     "type": "magento2-module",
     "license": "CC-BY-NC-ND-3.0",

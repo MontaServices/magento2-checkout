@@ -6,6 +6,9 @@
     </head>
     <body>
         <referenceContainer name="content">
+            <!-- Copy the same block from pagebuilder which loads everything -->
+            <block class="Magento\PageBuilder\Block\GoogleMapsApi"
+                   name="checkout.google.maps.api" template="Magento_PageBuilder::googlemaps.phtml" />
             <referenceBlock name="checkout.root">
                 <arguments>
                     <argument name="jsLayout" xsi:type="array">

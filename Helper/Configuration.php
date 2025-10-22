@@ -7,6 +7,7 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\PageBuilder\Block\GoogleMapsApi;
 use Monta\Checkout\Model\Carrier\Monta;
 
 class Configuration
@@ -57,7 +58,7 @@ class Configuration
      */
     public function getGoogleKey(): string
     {
-        return (string)$this->getShippingConfig(field: 'googleapikey', decrypt: true);
+        return (string)$this->scopeConfig->getValue(GoogleMapsApi::GOOGLE_MAPS_API_KEY_PATH);
     }
 
     /**
