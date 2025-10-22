@@ -13,16 +13,15 @@
     <!-- Extras -->
     <div class="extras" if="deliveryOption.deliveryOptions.length">
         <p class="font-semibold mb-2">Extra verzendopties:</p>
-        <div class="space-y-2">
-            <each args="data: deliveryOption.deliveryOptions, as: 'extra'">
-                <div class="flex justify-between p-2 rounded-xl border border-blue-400">
-                    <div class="items-center space-x-2">
-                        <input type="checkbox" class="" data-bind="name: extra.code"/>
-                        <span text="extra.description"></span>
-                    </div>
-                    <span class="text-md" text="'+' + extra.priceFormatted"></span>
+        <div class="space-y-2" data-bind="foreach: { data: deliveryOption.deliveryOptions, as: 'extra' }">
+            <!-- TODO border color should match tile border color -->
+            <div class="flex justify-between rounded-tile p-2 monta-gray-tile hover:monta-blue-focus">
+                <div class="items-center space-x-2">
+                    <input type="checkbox" class="" data-bind="name: extra.code"/>
+                    <span text="extra.description"></span>
                 </div>
-            </each>
+                <span class="text-md" text="'+' + extra.priceFormatted"></span>
+            </div>
         </div>
     </div>
 </div>

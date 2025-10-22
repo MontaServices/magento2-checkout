@@ -1,25 +1,18 @@
-define([], function () {
+define([
+    'Monta_Checkout/js/model/utility'
+], function (utility) {
     'use strict';
-    // Selected state
-    let selectedTileStyle = ["monta-blue-focus"];
 
     return {
-        isSelected: function () {
-            // in this context, $this is still the component
-        },
-
         /** Mark the clicked day as select and unselect siblings
          *
          * @param option - Timeframe object that was selected
-         * @param event - Click event
          * @param element - or the HTML element that was clicked
          * @returns {*[]}
          */
-        selectDay: function (option, event, element) {
-            // Pass click event or element
-            let el = event?.currentTarget ?? element;
-            if (el.classList) {
-                this.focusSelection(el);
+        selectDay: function (option, element) {
+            if (element.classList) {
+                this.focusSelection(element);
             }
             // option is the day, options is the list of carriers for that day
             return option.options ?? [];
@@ -32,6 +25,7 @@ define([], function () {
             if (address['extension_attributes'] === undefined) {
                 address['extension_attributes'] = {};
             }
+            // TODO save more than just option code (for Pickups this is only six digits
             address['extension_attributes']['shipping_option'] = option.code;
 
             // Return TRUE to propagate default click behavior
@@ -39,27 +33,10 @@ define([], function () {
         },
 
         focusSelection: function (element) {
-            let self = this;
-            if (Array.isArray(element)) {
-                element.forEach(function (subelement) {
-                    self.focusSelection(subelement);
-                })
-            } else {
-                let parent = element.parentElement;
-
-                // Remove focus from all sibling tiles
-                if (parent) {
-                    parent.childNodes.forEach(function (sibling) {
-                        // Only same-tag siblings with a classlist
-                        if (sibling.classList && sibling.tagName === element.tagName) {
-                            sibling.classList.remove.apply(sibling.classList, selectedTileStyle);
-                        }
-                    });
-                }
-
-                // Add selection classes to the clicked tile
-                element.classList?.add.apply(element.classList, selectedTileStyle);
-            }
+            // Apply blue focus to this element
+            utility.applyAmongSiblings(element, ["monta-blue-focus"]);
         },
+
+
     }
 });

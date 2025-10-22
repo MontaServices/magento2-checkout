@@ -8,6 +8,7 @@ namespace Monta\Checkout\Helper;
 use Composer\InstalledVersions;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Module\ResourceInterface;
 use Monta\CheckoutApiWrapper\Objects\Settings;
 
@@ -15,10 +16,12 @@ class System extends AbstractHelper
 {
     /**
      * @param Context $context
+     * @param ProductMetadataInterface $metadata
      * @param ResourceInterface $resource
      */
     public function __construct(
         Context $context,
+        protected readonly ProductMetadataInterface $metadata,
         protected readonly ResourceInterface $resource)
     {
         parent::__construct($context);
@@ -32,8 +35,8 @@ class System extends AbstractHelper
     {
         $moduleName = $this->_getModuleName();
         return [
-            Settings::CORE_SOFTWARE => 'Magento',
-            Settings::CORE_VERSION => $this->getComposerVersion('magento/product-community-edition'),
+            Settings::CORE_SOFTWARE => $this->metadata->getName() . " " . $this->metadata->getEdition(),
+            Settings::CORE_VERSION => $this->metadata->getVersion(),
             Settings::CHECKOUT_API_WRAPPER_VERSION => $this->getComposerVersion('monta/magento2-checkout'),
             Settings::MODULE_NAME => $moduleName,
             Settings::MODULE_VERSION => $this->resource->getDbVersion($moduleName),

@@ -1,14 +1,22 @@
-<div class="pickup-option">
-    <div class="pickup-header">
-        <div class="pickup-logo"></div>
-        <div class="pickup-container">
-            <strong class="title" text="option.shipper"></strong>
-            <span text="option.displayName"></span>
-            <span text="option.displayNameShort"></span>
-            <span class="price" text="option.priceFormatted"></span>
-            <div class="business-hours">
-                <p>Maandag: 09:00 - 17:00</p>
+<div class="pickup-option flex-col">
+    <div class="pickup-header flex justify-between space-x-2">
+        <div class="flex">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/PostNL_logo_outline.svg"
+                 class="pickup-logo w-16 h-16 pr-2">
+            <div class="pickup-container">
+                <strong text="pickup.company"></strong>
+                <p class="text-sm text-gray-500" text="pickup.displayName"></p>
+                <p class="text-sm text-gray-600"
+                   text="pickup.formattedAddress ?? pickup.street + ' ' + pickup.houseNumber"></p>
             </div>
+        </div>
+        <p class="text-green font-medium" text="pickup.priceFormatted"></p>
+    </div>
+    <div class="text-sm text-gray-500 mt-2" if="pickup.openingTimes.length">
+        <div class="business-hours"
+             data-bind="foreach: { data: pickup.openingTimes, as: 'slot' }">
+            <!-- TODO show opening times only on selected point -->
+            <p class="text-sm" text="slot.day + '\:\t ' + slot.from + ' - ' + slot.to"></p>
         </div>
     </div>
 </div>

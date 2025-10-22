@@ -2,8 +2,9 @@ define([
     'uiComponent',
     'ko',
     'Magento_Checkout/js/model/quote',
-    'Monta_Checkout/js/model/delivery'
-], function (Component, ko, quote, delivery) {
+    'Monta_Checkout/js/model/delivery',
+    'Monta_Checkout/js/model/utility'
+], function (Component, ko, quote, delivery, utility) {
     'use strict';
 
     return Component.extend({
@@ -14,15 +15,31 @@ define([
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
+            tabButtons: [
+                {
+                    id: 'delivery',
+                    label: 'Bezorgen',
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+                {
+                    id: 'pickup',
+                    label: 'Afhalen',
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+            ],
         },
 
         initialize: function () {
+            // This is necessary for the observables to work
             this._super().initObservable();
             return this;
         },
 
         initObservable: function () {
-            delivery.isSelected();
             // Determine if Monta popup should be shown
             this.isSelected = ko.computed(function () {
                 // Self references this component instead of Window
@@ -46,10 +63,11 @@ define([
 
         // Called from the template when a day tile is clicked
         clickDayTile: function (option, event, element) {
+            let el = event?.currentTarget ?? element;
             // Update observable array to trigger re-render
             self.SelectedDateOptions(
                 // extract delivery options from the selected day
-                delivery.selectDay(option, event, element)
+                delivery.selectDay(option, el)
             );
         },
 
@@ -60,31 +78,27 @@ define([
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
         },
-        /**
-         * Select the first timeframe in the list
-         *
-         * @param element
-         */
-        selectFirst: function (element) {
-            // use timeout to wait for next click when all elements are rendered
-            setTimeout(function () {
-                // Find first child element and click it
-                let firstChild = element.querySelector("*:first-of-type");
-                if (firstChild) {
-                    firstChild.click();
-                }
-            }, 0);
+
+        clickFirst: function (element) {
+            return utility.clickFirst(element);
         },
 
         setOptions: function (options) {
             // Copy each response property to component properties
             Object.entries(options).forEach(([key, responseProp]) => {
                 if (self.hasOwnProperty(key)) {
-                    // Update observable property with new array
-                    // TODO check if property is observable, or it will fail
-                    self[key](responseProp);
+                    // Update observable property with new data
+                    switch (typeof self[key]) {
+                        // ObservableArrays are typeof function
+                        case 'function':
+                            self[key](responseProp);
+                            break;
+                        default:
+                            // otherwise just set the property
+                            self[key] = responseProp;
+                    }
                 }
             });
-        }.bind(this),
+        },
     });
 });
