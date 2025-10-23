@@ -16,7 +16,7 @@ define([
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
-            mapIdentifier: 'monta-pickups-map',
+            mapIdentifier: 'montaPickupsMap',
             tabButtons: [
                 {
                     id: 'delivery',
@@ -85,9 +85,16 @@ define([
             return utility.clickFirst(element);
         },
 
+        /** Show the Pickups map
+         *
+         * @param component
+         * @param event
+         */
         showMap: function (component, event) {
-            let mapElement = event.currentTarget.parentElement.querySelector("#" + self.mapIdentifier);
-            let gmap = maps.showMap(mapElement);
+            let mapElement = event.currentTarget?.parentElement?.querySelector("#" + self.mapIdentifier);
+            if (mapElement) {
+                maps.showMap(mapElement);
+            }
         },
 
         setOptions: function (options) {
