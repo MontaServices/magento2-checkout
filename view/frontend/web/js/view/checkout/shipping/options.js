@@ -3,8 +3,9 @@ define([
     'ko',
     'Magento_Checkout/js/model/quote',
     'Monta_Checkout/js/model/delivery',
-    'Monta_Checkout/js/model/utility'
-], function (Component, ko, quote, delivery, utility) {
+    'Monta_Checkout/js/model/utility',
+    'Monta_Checkout/js/model/maps',
+], function (Component, ko, quote, delivery, utility, maps) {
     'use strict';
 
     return Component.extend({
@@ -15,6 +16,7 @@ define([
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
+            mapIdentifier: 'monta-pickups-map',
             tabButtons: [
                 {
                     id: 'delivery',
@@ -81,6 +83,11 @@ define([
 
         clickFirst: function (element) {
             return utility.clickFirst(element);
+        },
+
+        showMap: function (component, event) {
+            let mapElement = event.currentTarget.parentElement.querySelector("#" + self.mapIdentifier);
+            let gmap = maps.showMap(mapElement);
         },
 
         setOptions: function (options) {
