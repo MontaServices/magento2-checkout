@@ -5,7 +5,7 @@ define([
     return {
         /** Instantiate a Google Map
          *
-         * @param mapElement
+         * @param mapElement - HTML element to attach Google Map component on
          * @param customerLocation - Address of customer to center map on
          * @returns {null}
          */
@@ -13,13 +13,13 @@ define([
             let gmap = null;
             if (mapElement) {
                 let mapOptions = {
-                    zoom: 12,
-                    // center map on user house
+                    zoom: 10,
+                    // center map on customer address
                     center: new google.maps.LatLng(
-                        customerLocation.latitude,
-                        customerLocation.longitude
+                        parseFloat(customerLocation.latitude),
+                        parseFloat(customerLocation.longitude)
                     ),
-                    mapTypeControl: false
+                    async: true,
                 };
                 // Instantiate map on this element
                 gmap = new GoogleMap(mapElement, self.PickupOptions(), mapOptions);

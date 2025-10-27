@@ -30,9 +30,11 @@
             </div>
         </div>
         <!-- Pickup Options -->
-        <div class="tabcontent tab-pickup hidden">
+        <div class="tabcontent tab-pickup hidden space-y-3">
             <!-- Attach map to this element-->
-            <div data-bind="attr: {id: mapIdentifier}"></div>
+            <div class="relative w-full bg-gray-200 overflow-hidden rounded-b-md">
+                <div data-bind="attr: {id: mapIdentifier}" class="w-full h-[250px] bg-gray-100"></div>
+            </div>
             <!-- List of PickupOptions -->
             <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }"
                  class="space-y-3">
