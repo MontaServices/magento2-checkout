@@ -44,8 +44,9 @@
                 </div>
             </div>
             <!-- Button to open map popup with locations -->
-            <div class="text-center" click="showMap">
-                <p>Maps</p>
+            <div class="text-center" click="toggleMap">
+                <p if="!showingMap()">Kaart</p>
+                <p if="showingMap()">Lijst</p>
             </div>
         </div>
     </div>

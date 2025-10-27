@@ -18,6 +18,7 @@ define([
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
             mapIdentifier: 'montaPickupsMap',
+            showingMap: ko.observable(false),
             tabButtons: [
                 {
                     id: 'delivery',
@@ -102,14 +103,20 @@ define([
          * @param component
          * @param event
          */
-        showMap: function (component, event) {
+        toggleMap: function (component, event) {
+            // Change mode between list and map
+            self.showingMap(!self.showingMap());
+
             let mapElement = event.currentTarget?.parentElement?.querySelector("#" + self.mapIdentifier);
             if (mapElement) {
-                // Attach GoogleMap component to this element
-                maps.showMap(mapElement, self.CustomerLocation);
+                if (self.showingMap()) {
+                    // Attach GoogleMap component to this element TODO only once
+                    maps.showMap(mapElement, self.CustomerLocation);
+                    // TODO show only one (selected) pickup and Left/Right buttons
+                }
 
-                // Unhide the map
-                utility.applyClasses(mapElement.parentElement, ['hidden'], false);
+                // Toggle map display accordingly
+                utility.applyClasses(mapElement.parentElement, ['hidden'], !self.showingMap());
             }
         },
 
