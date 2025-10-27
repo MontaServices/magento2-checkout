@@ -81,9 +81,9 @@ define([], function () {
          */
         applyClasses: function (element, targetClasses, add = true) {
             if (add) {
-                element.classList?.add.apply(element.classList, targetClasses);
+                element?.classList?.add.apply(element.classList, targetClasses);
             } else {
-                element.classList?.remove.apply(element.classList, targetClasses);
+                element?.classList?.remove.apply(element.classList, targetClasses);
             }
         }
     };
