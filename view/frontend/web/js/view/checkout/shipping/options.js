@@ -105,7 +105,11 @@ define([
         showMap: function (component, event) {
             let mapElement = event.currentTarget?.parentElement?.querySelector("#" + self.mapIdentifier);
             if (mapElement) {
+                // Attach GoogleMap component to this element
                 maps.showMap(mapElement, self.CustomerLocation);
+
+                // Unhide the map
+                utility.applyClasses(mapElement.parentElement, ['hidden'], false);
             }
         },
 
