@@ -13,6 +13,7 @@ define([
             DeliveryOptions: ko.observableArray([]),
             PickupOptions: ko.observableArray([]),
             SelectedDateOptions: ko.observableArray([]),
+            CustomerLocation: {},
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
@@ -93,7 +94,7 @@ define([
         showMap: function (component, event) {
             let mapElement = event.currentTarget?.parentElement?.querySelector("#" + self.mapIdentifier);
             if (mapElement) {
-                maps.showMap(mapElement);
+                maps.showMap(mapElement, self.CustomerLocation);
             }
         },
 
