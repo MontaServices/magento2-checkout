@@ -76,8 +76,19 @@ define([
 
         // Called from the template when a delivery option is clicked
         clickDeliveryOption: function (option, event) {
-            // Focus on the selected option
-            delivery.focusSelection(event.currentTarget);
+            let element = event.currentTarget;
+            if (element) {
+                // Focus on the selected option
+                delivery.focusSelection(element);
+
+                // If this was a pickup, show business hours
+                // TODO hide business hours on every other Pickup option
+                utility.applyClasses(
+                    element.querySelector(".business-hours"),
+                    ['hidden'],
+                    false);
+            }
+
             // Select this day in quote
             return delivery.selectDeliveryOption(option, quote);
         },
