@@ -6,6 +6,7 @@
             <values>
                 <!-- TODO remove when carrier images issue is resolved-->
                 <value id="Wikimedia temp" type="host">*.wikimedia.org</value>
+                <value id="google_maps" type="host">maps.googleapis.com</value>
             </values>
         </policy>
         <policy id="script-src">
