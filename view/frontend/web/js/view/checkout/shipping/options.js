@@ -83,11 +83,11 @@ define([
                 delivery.focusSelection(element);
 
                 // If this was a pickup, show business hours
-                // TODO hide business hours on every other Pickup option
-                utility.applyClasses(
-                    element.querySelector(".business-hours"),
-                    ['hidden'],
-                    false);
+                let hoursSelector = ".business-hours";
+                // Hide every Business Hours element
+                utility.applyClasses(element.parentElement?.querySelectorAll(hoursSelector), ['hidden']);
+                // Then show the current one
+                utility.applyClasses(element.querySelector(hoursSelector), ['hidden'], false);
             }
 
             // Select this day in quote
