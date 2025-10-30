@@ -112,7 +112,12 @@ define([
                 if (self.showingMap()) {
                     // Attach GoogleMap component to this element TODO only once
                     maps.showMap(mapElement, self.CustomerLocation);
-                    // TODO show only one (selected) pickup and Left/Right buttons
+
+                    // Update observableArray to show only the selected pickup (index 0 is first item)
+                    self.PickupOptions([maps.getPickup(0)])
+                } else {
+                    // Show all pickups again
+                    self.PickupOptions(maps.allPickups);
                 }
 
                 // Toggle map display accordingly
@@ -136,6 +141,9 @@ define([
                     }
                 }
             });
+
+            // Specifically keep PickupPoints in separate array
+            maps.allPickups = options.PickupOptions;
         },
     });
 });

@@ -3,6 +3,10 @@ define([
 ], function (GoogleMap) {
     'use strict';
     return {
+        allPickups: [],
+        // On Map view, show only one Pickuppoint
+        selectedPickupKey: 0,
+
         /** Instantiate a Google Map
          *
          * @param mapElement - HTML element to attach Google Map component on
@@ -27,6 +31,18 @@ define([
             }
             return gmap;
         },
+
+        /** Return a single Pickup
+         *
+         * @param incrementer - change index to retrieve from there
+         * @returns {*}
+         */
+        getPickup: function (incrementer) {
+            // Increment key
+            this.selectedPickupKey += incrementer;
+            // Return pickup point at that index
+            return this.allPickups[this.selectedPickupKey];
+        }
     };
 
 });
