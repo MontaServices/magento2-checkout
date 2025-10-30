@@ -47,7 +47,7 @@ define([], function () {
         applyAmongSiblings: function (element, targetClasses, add = true) {
             if (element && element.classList) {
                 let self = this;
-                if (Array.isArray(element)) {
+                if (Symbol.iterator in Object(element)) {
                     element.forEach(function (subelement) {
                         self.applyAmongSiblings(subelement, targetClasses, add);
                     })
@@ -75,15 +75,24 @@ define([], function () {
 
         /** Add or remove classes from an element
          *
-         * @param element
+         * @param element - Node or NodeList
          * @param targetClasses
          * @param add
          */
         applyClasses: function (element, targetClasses, add = true) {
-            if (add) {
-                element?.classList?.add.apply(element.classList, targetClasses);
+            let self = this;
+            // If passed element is iterable
+            if (Symbol.iterator in Object(element)) {
+                element.forEach(function (subelement) {
+                    // Call self recursively with each element
+                    self.applyClasses(subelement, targetClasses, add);
+                })
             } else {
-                element?.classList?.remove.apply(element.classList, targetClasses);
+                if (add) {
+                    element?.classList?.add.apply(element.classList, targetClasses);
+                } else {
+                    element?.classList?.remove.apply(element.classList, targetClasses);
+                }
             }
         }
     };
