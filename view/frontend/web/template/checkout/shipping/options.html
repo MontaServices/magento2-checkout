@@ -44,9 +44,16 @@
                 </div>
             </div>
             <!-- Button to open map popup with locations -->
-            <div class="text-center" click="toggleMap">
+            <div class="text-center text-blue-500" click="toggleMap">
+                <!-- When in list mode-->
                 <p if="!showingMap()">Kaart</p>
-                <p if="showingMap()">Lijst</p>
+
+                <!-- When in Maps mode -->
+                <div if="showingMap()" class="flex items-center justify-between mb-4">
+                    <span>&larr;</span>
+                    <span>Lijst</span>
+                    <span>&rarr;</span>
+                </div>
             </div>
         </div>
     </div>
