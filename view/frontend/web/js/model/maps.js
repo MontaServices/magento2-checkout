@@ -13,7 +13,6 @@ define([
             let gmap = null;
             if (mapElement) {
                 let mapOptions = {
-                    zoom: 10,
                     // center map on customer address
                     center: new google.maps.LatLng(
                         parseFloat(customerLocation.latitude),
