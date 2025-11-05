@@ -107,7 +107,7 @@ define([
             // Change mode between list and map
             self.showingMap(!self.showingMap());
 
-            let mapElement = event.currentTarget?.parentElement?.querySelector("#" + self.mapIdentifier);
+            let mapElement = document.querySelector("#" + self.mapIdentifier);
             if (mapElement) {
                 if (self.showingMap()) {
                     // Attach GoogleMap component to this element TODO only once
