@@ -124,6 +124,26 @@ define([
                 utility.applyClasses(mapElement.parentElement, ['hidden'], !self.showingMap());
             }
         },
+        /** Browse through pickuppoints on map
+         *
+         * @param component
+         * @param event
+         */
+        nextPickup: function (component, event) {
+            return self.getPickup(1);
+        },
+        prevPickup: function (component, event) {
+            return self.getPickup(-1);
+        },
+        getPickup: function (incrementer) {
+            // Get the next pickup from list
+            let pickup = maps.getPickup(incrementer);
+            // Update filtered list with only this pickup
+            self.PickupOptions([pickup]);
+            // TODO when next item does not exist, hide Next button
+            // TODO update Map to show Marker details
+        },
+
 
         setOptions: function (options) {
             // Copy each response property to component properties

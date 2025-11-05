@@ -14,8 +14,8 @@ define([
          * @returns {null}
          */
         showMap: function (mapElement, customerLocation) {
-            let gmap = null;
             if (mapElement) {
+                let gmap = null;
                 let mapOptions = {
                     // center map on customer address
                     center: new google.maps.LatLng(
@@ -38,9 +38,12 @@ define([
          * @returns {*}
          */
         getPickup: function (incrementer) {
-            // Increment key
-            this.selectedPickupKey += incrementer;
-            // Return pickup point at that index
+            // If a pickup exists at that index
+            if (this.allPickups.hasOwnProperty(this.selectedPickupKey + incrementer)) {
+                // Increment index to retrieve different pickup
+                this.selectedPickupKey += incrementer;
+            }
+            // Otherwise return again the same item
             return this.allPickups[this.selectedPickupKey];
         }
     };
