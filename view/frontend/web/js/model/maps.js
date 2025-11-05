@@ -3,6 +3,7 @@ define([
 ], function (GoogleMap) {
     'use strict';
     return {
+        // @var AdvancedMarkerElement[]
         allPickups: [],
         // On Map view, show only one Pickuppoint
         selectedPickupKey: 0,
@@ -55,13 +56,13 @@ define([
         setPickupMarkers: function (pickupOptions) {
             let markers = [];
             pickupOptions.forEach(function (pickup) {
-                let marker = pickup;
+                // TODO $position should be a LatLng object
+                pickup.position = null;
                 // Attempt to copy all properties
-                // TODO implement AdvancedMarkerElement instead of Object
-                // let marker = new AdvancedMarkerElement(...pickup);
+                let marker = Object.assign(new google.maps.marker.AdvancedMarkerElement(), pickup);
                 marker.map = self.gmap;
                 marker.title = pickup.displayName;
-                marker.content = pickup.formattedAddress;
+                // marker.content = pickup.formattedAddress; // TODO Errors when setting
                 marker.gmpClickable = true;
                 // TODO open infoWindow on click
                 markers.push(pickup);

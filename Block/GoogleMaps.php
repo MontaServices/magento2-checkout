@@ -23,6 +23,8 @@ class GoogleMaps extends GoogleMapsApi
                 // get recent, stable version
                 'v' => 'quarterly',
                 'key' => $this->getApiKey(),
+                // Include Marker library for custom elements
+                'libraries' => 'marker',
             ]);
     }
 
