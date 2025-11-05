@@ -11,6 +11,7 @@ define([
     return Component.extend({
         defaults: {
             DeliveryOptions: ko.observableArray([]),
+            // Filtered list of PickupPoints
             PickupOptions: ko.observableArray([]),
             SelectedDateOptions: ko.observableArray([]),
             CustomerLocation: {},
@@ -113,8 +114,8 @@ define([
                     // Attach GoogleMap component to this element TODO only once
                     maps.showMap(mapElement, self.CustomerLocation);
 
-                    // Update observableArray to show only the selected pickup (index 0 is first item)
-                    self.PickupOptions([maps.getPickup(0)])
+                    // Update observableArray to show only the selected pickup
+                    self.PickupOptions([maps.getPickup()])
                 } else {
                     // Show all pickups again
                     self.PickupOptions(maps.allPickups);
@@ -163,7 +164,7 @@ define([
             });
 
             // Specifically keep PickupPoints in separate array
-            maps.allPickups = options.PickupOptions;
+            maps.setPickupMarkers(options.PickupOptions);
         },
     });
 });

@@ -6,6 +6,8 @@ define([
         allPickups: [],
         // On Map view, show only one Pickuppoint
         selectedPickupKey: 0,
+        // Google Map component
+        gmap: null,
 
         /** Instantiate a Google Map
          *
@@ -15,7 +17,6 @@ define([
          */
         showMap: function (mapElement, customerLocation) {
             if (mapElement) {
-                let gmap = null;
                 let mapOptions = {
                     // center map on customer address
                     center: new google.maps.LatLng(
@@ -25,11 +26,11 @@ define([
                     async: true,
                 };
                 // Instantiate map on this element
-                gmap = new GoogleMap(mapElement, self.PickupOptions(), mapOptions);
+                this.gmap = new GoogleMap(mapElement, this.allPickups, mapOptions);
             } else {
                 console.warn("Could not instantiate Map, element not found.");
             }
-            return gmap;
+            return this.gmap;
         },
 
         /** Return a single Pickup
@@ -37,7 +38,7 @@ define([
          * @param incrementer - change index to retrieve from there
          * @returns {*}
          */
-        getPickup: function (incrementer) {
+        getPickup: function (incrementer = 0) {
             // If a pickup exists at that index
             if (this.allPickups.hasOwnProperty(this.selectedPickupKey + incrementer)) {
                 // Increment index to retrieve different pickup
@@ -45,6 +46,27 @@ define([
             }
             // Otherwise return again the same item
             return this.allPickups[this.selectedPickupKey];
+        },
+
+        /** Convert PickupPoints to Maps Markers
+         *
+         * @param pickupOptions
+         */
+        setPickupMarkers: function (pickupOptions) {
+            let markers = [];
+            pickupOptions.forEach(function (pickup) {
+                let marker = pickup;
+                // Attempt to copy all properties
+                // TODO implement AdvancedMarkerElement instead of Object
+                // let marker = new AdvancedMarkerElement(...pickup);
+                marker.map = self.gmap;
+                marker.title = pickup.displayName;
+                marker.content = pickup.formattedAddress;
+                marker.gmpClickable = true;
+                // TODO open infoWindow on click
+                markers.push(pickup);
+            })
+            this.allPickups = markers;
         }
     };
 
