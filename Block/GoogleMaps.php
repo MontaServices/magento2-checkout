@@ -20,7 +20,8 @@ class GoogleMaps extends GoogleMapsApi
             strtok(string: self::GOOGLE_MAPS_LIBRARY_URL, token: '?')
             // Append parameters properly from array
             . "?" . http_build_query([
-                'v' => '3.56',
+                // get recent, stable version
+                'v' => 'quarterly',
                 'key' => $this->getApiKey(),
             ]);
     }
