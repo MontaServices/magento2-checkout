@@ -63,17 +63,19 @@ define([
          */
         getMarkers: function () {
             let markers = [];
-            pickupOptions.forEach(function (pickup) {
-                // TODO $position should be a LatLng object
-                pickup.position = null;
+            this.allPickups.forEach(function (pickup) {
                 // Attempt to copy all properties
-                let marker = Object.assign(new google.maps.marker.AdvancedMarkerElement(), pickup);
-                marker.map = self.gmap;
-                marker.title = pickup.displayName;
-                // marker.content = pickup.formattedAddress; // TODO Errors when setting
-                marker.gmpClickable = true;
-                // TODO open infoWindow on click
-                markers.push(pickup);
+                markers.push(
+                    new google.maps.marker.AdvancedMarkerElement({
+                        map: self.gmap,
+                        title: pickup.displayName,
+                        position: {
+                            lat: parseFloat(pickup.latitude),
+                            lng: parseFloat(pickup.longitude)
+                        },
+                        gmpClickable: true,
+                    })
+                );
             })
             return markers;
         }
