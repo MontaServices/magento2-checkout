@@ -62,17 +62,24 @@ define([
          * @returns AdvancedMarkerElement[]
          */
         getMarkers: function () {
+            // TODO I give up, just return the pickups objects array. These become Marker which is deprecated.
+            return this.allPickups;
+
+            // TODO get AdvancedMarkerElement to work to get rid of deprecated warning
+            // https://developers.google.com/maps/documentation/javascript/advanced-markers/migration
+            // library is present and loaded, but examples from documentation simply don't work
             let markers = [];
             this.allPickups.forEach(function (pickup) {
-                // Attempt to copy all properties
+                // Add Marker element to markers array
                 markers.push(
+                    // new google.maps.Marker({
                     new google.maps.marker.AdvancedMarkerElement({
                         map: self.gmap,
                         title: pickup.displayName,
-                        position: {
-                            lat: parseFloat(pickup.latitude),
-                            lng: parseFloat(pickup.longitude)
-                        },
+                        position: new google.maps.LatLng(
+                            parseFloat(pickup.latitude),
+                            parseFloat(pickup.longitude)
+                        ),
                         gmpClickable: true,
                     })
                 );
