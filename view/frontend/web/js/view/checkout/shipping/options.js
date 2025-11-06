@@ -19,6 +19,7 @@ define([
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
             mapIdentifier: 'montaPickupsMap',
+            pickupsIdentifier: 'pickup-points-list',
             showingMap: ko.observable(false),
             tabButtons: [
                 {
@@ -131,6 +132,7 @@ define([
                 utility.applyClasses(mapElement.parentElement, ['hidden'], !self.showingMap());
             }
         },
+
         /** Browse through pickuppoints on map
          *
          * @param component
@@ -148,7 +150,11 @@ define([
             // Update filtered list with only this pickup
             self.PickupOptions([pickup]);
             // TODO when next item does not exist, hide Next button
-            // TODO update Map to show Marker details
+            // After updating the list, click the (only) first item to select this pickup
+            let pickupsList = document.getElementById(self.pickupsIdentifier);
+            if (pickupsList) {
+                utility.clickFirst(pickupsList);
+            }
         },
 
 
