@@ -122,7 +122,7 @@ define([
                     maps.showMap(mapElement, self.CustomerLocation);
 
                     // Update observableArray to show only the selected pickup
-                    self.PickupOptions([maps.getPickup()])
+                    self.getPickup();
                 } else {
                     // Show all pickups again
                     self.PickupOptions(maps.allPickups);
