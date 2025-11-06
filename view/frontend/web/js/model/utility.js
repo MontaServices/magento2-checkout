@@ -33,8 +33,6 @@ define([], function () {
                 this.applyAmongSiblings(element, ['hidden'], false);
                 // Add 'primary' class to this button element, remove from siblings
                 this.applyAmongSiblings(event.currentTarget, ['primary']);
-            } else {
-                console.warn("Cannot find element for mode: " + mode);
             }
         },
 
