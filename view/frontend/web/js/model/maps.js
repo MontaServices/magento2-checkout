@@ -27,7 +27,7 @@ define([
                     async: true,
                 };
                 // Instantiate map on this element
-                this.gmap = new GoogleMap(mapElement, this.allPickups, mapOptions);
+                this.gmap = new GoogleMap(mapElement, this.getMarkers(), mapOptions);
             } else {
                 console.warn("Could not instantiate Map, element not found.");
             }
@@ -49,11 +49,19 @@ define([
             return this.allPickups[this.selectedPickupKey];
         },
 
-        /** Convert PickupPoints to Maps Markers
+        /**
          *
          * @param pickupOptions
          */
         setPickupMarkers: function (pickupOptions) {
+            this.allPickups = pickupOptions;
+        },
+
+        /** Get PickupPoints as Google Map markers
+         *
+         * @returns AdvancedMarkerElement[]
+         */
+        getMarkers: function () {
             let markers = [];
             pickupOptions.forEach(function (pickup) {
                 // TODO $position should be a LatLng object
@@ -67,7 +75,7 @@ define([
                 // TODO open infoWindow on click
                 markers.push(pickup);
             })
-            this.allPickups = markers;
+            return markers;
         }
     };
 
