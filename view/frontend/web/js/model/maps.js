@@ -3,7 +3,6 @@ define([
 ], function (GoogleMap) {
     'use strict';
     return {
-        // @var AdvancedMarkerElement[]
         allPickups: [],
         // On Map view, show only one Pickuppoint
         selectedPickupKey: 0,
@@ -17,26 +16,26 @@ define([
          * @returns {null}
          */
         showMap: function (mapElement, customerLocation) {
-            if (mapElement) {
+            // if mapElement exists and Google Map not yet instantiated
+            // TODO what if customer address was changed
+            if (mapElement && !this.gmap) {
                 let mapOptions = {
                     // center map on customer address
-                    center: new google.maps.LatLng(
-                        parseFloat(customerLocation.latitude),
-                        parseFloat(customerLocation.longitude)
-                    ),
+                    center: {
+                        lat: customerLocation.latitude,
+                        lng: customerLocation.longitude,
+                    },
                     async: true,
                 };
                 // Instantiate map on this element
                 this.gmap = new GoogleMap(mapElement, this.getMarkers(), mapOptions);
-            } else {
-                console.warn("Could not instantiate Map, element not found.");
             }
             return this.gmap;
         },
 
         /** Return a single Pickup
          *
-         * @param incrementer - change index to retrieve from there
+         * @param incrementer - change index to retrieve by
          * @returns {*}
          */
         getPickup: function (incrementer = 0) {
@@ -49,10 +48,6 @@ define([
             return this.allPickups[this.selectedPickupKey];
         },
 
-        /**
-         *
-         * @param pickupOptions
-         */
         setPickupMarkers: function (pickupOptions) {
             this.allPickups = pickupOptions;
         },
@@ -80,6 +75,7 @@ define([
                             parseFloat(pickup.latitude),
                             parseFloat(pickup.longitude)
                         ),
+                        icon: pickup.imageUrl,
                         gmpClickable: true,
                     })
                 );

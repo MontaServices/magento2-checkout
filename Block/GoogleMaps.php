@@ -16,14 +16,14 @@ class GoogleMaps extends GoogleMapsApi
     public function getLibraryUrl(): string
     {
         return
-            // trim parameters from constant
+            // get base URL from constant until query starts
             strtok(string: self::GOOGLE_MAPS_LIBRARY_URL, token: '?')
             // Append parameters properly from array
             . "?" . http_build_query([
                 // get recent, stable version
                 'v' => 'quarterly',
                 'key' => $this->getApiKey(),
-                // Include Marker library for custom elements
+                // Include Marker library for AdvancedMarkerElement
                 'libraries' => 'marker',
             ]);
     }

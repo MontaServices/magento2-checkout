@@ -16,6 +16,7 @@ define([], function () {
                 }
             }, 0);
 
+            // Return true to continue default click behavior
             return true;
         },
 
@@ -38,13 +39,14 @@ define([], function () {
 
         /** Apply class to element and remove that class from siblings
          *
-         * @param element
-         * @param targetClasses - string[]
-         * @param add - Pass FALSE to remove classes instead
+         * @param element - HtmlElement, HtmlElement[], Nodelist
+         * @param targetClasses - string[] - classes to add or remove
+         * @param add - TRUE to add classes, FALSE to remove classes
          */
         applyAmongSiblings: function (element, targetClasses, add = true) {
             if (element && element.classList) {
                 let self = this;
+                // Iterate if parameter is iterable
                 if (Symbol.iterator in Object(element)) {
                     element.forEach(function (subelement) {
                         self.applyAmongSiblings(subelement, targetClasses, add);
@@ -72,8 +74,9 @@ define([], function () {
         },
 
         /** Add or remove classes from an element
+         * TODO merge these two methods for simplicity, use new `amongSiblings` parameter
          *
-         * @param element - Node or NodeList
+         * @param element - HtmlElement, HtmlElement[], Nodelist
          * @param targetClasses
          * @param add
          */

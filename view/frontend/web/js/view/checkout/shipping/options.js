@@ -53,7 +53,7 @@ define([
                 if (method && method.carrier_code === 'monta') {
                     let options = JSON.parse(method.extension_attributes?.monta_shipping_options);
                     // If object is not empty
-                    if (options && options.DeliveryOptions?.length > 0) {
+                    if (options && (options.DeliveryOptions?.length > 0 || options.PickupOptions?.length > 0)) {
                         this.setOptions(options);
 
                         // Show block now
@@ -84,6 +84,7 @@ define([
                 delivery.focusSelection(element);
 
                 // If this was a pickup, show business hours
+                // TODO move identifier to property but child template pickup.html has no access
                 let hoursSelector = ".business-hours";
                 // Hide every Business Hours element
                 utility.applyClasses(element.parentElement?.querySelectorAll(hoursSelector), ['hidden']);
@@ -95,6 +96,11 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
+        /** Click the first child element of this element
+         *
+         * @param element
+         * @returns {boolean|*}
+         */
         clickFirst: function (element) {
             return utility.clickFirst(element);
         },
@@ -163,7 +169,7 @@ define([
                 }
             });
 
-            // Specifically keep PickupPoints in separate array
+            // Also keep PickupPoints in Maps component
             maps.setPickupMarkers(options.PickupOptions);
         },
     });
