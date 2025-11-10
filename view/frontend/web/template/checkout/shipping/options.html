@@ -53,7 +53,10 @@
                 <!-- When in Maps mode -->
                 <div if="showingMap()" class="flex items-center justify-between mb-4">
                     <p click="prevPickup">&larr;</p>
-                    <span click="toggleMap">&equiv; Lijst</span>
+                    <div>
+                        <p class="text-gray-500" text="listButtonText()"></p>
+                        <span click="toggleMap">&equiv; Lijst</span>
+                    </div>
                     <p click="nextPickup">&rarr;</p>
                 </div>
             </div>
