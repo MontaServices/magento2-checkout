@@ -25,6 +25,7 @@ define([
                 {
                     id: 'delivery',
                     label: 'Bezorgen',
+                    active: true,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
                     },
@@ -32,6 +33,7 @@ define([
                 {
                     id: 'pickup',
                     label: 'Afhalen',
+                    active: true,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
                     },
