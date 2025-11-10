@@ -12,7 +12,7 @@
     </div>
     <div clas="tabs">
         <!-- Delivery Options -->
-        <div if="DeliveryOptions().length" class="tabcontent tab-delivery hidden">
+        <div if="DeliveryOptions().length" class="tabcontent tab-DeliveryOptions hidden">
             <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
                  data-bind="afterRender: clickFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
                 <!-- $this becomes each element, $parent becomes the current component -->
@@ -32,7 +32,7 @@
             </div>
         </div>
         <!-- Pickup Options -->
-        <div class="tabcontent tab-pickup hidden space-y-3">
+        <div class="tabcontent tab-PickupOptions hidden space-y-3">
             <!-- Attach map to this element-->
             <div class="relative w-full bg-gray-200 overflow-hidden rounded-b-md hidden">
                 <div data-bind="attr: {id: mapIdentifier}" class="w-full h-[250px] bg-gray-100"></div>

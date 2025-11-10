@@ -23,7 +23,8 @@ define([
             showingMap: ko.observable(false),
             tabButtons: ko.observableArray([
                 {
-                    id: 'delivery',
+                    // id is also the name of the property this corresponds to
+                    id: 'DeliveryOptions',
                     label: 'Bezorgen',
                     active: true,
                     callback: function (tabButton, event) {
@@ -31,7 +32,7 @@ define([
                     },
                 },
                 {
-                    id: 'pickup',
+                    id: 'PickupOptions',
                     label: 'Afhalen',
                     active: true,
                     callback: function (tabButton, event) {
@@ -178,9 +179,7 @@ define([
             });
 
             // Also keep PickupPoints in Maps component
-            if (options.PickupOptions.length) {
-                maps.setPickupMarkers(options.PickupOptions);
-            }
+            maps.setPickupMarkers(options.PickupOptions);
         },
     });
 });
