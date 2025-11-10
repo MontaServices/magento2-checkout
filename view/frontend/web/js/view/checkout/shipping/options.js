@@ -26,7 +26,7 @@ define([
                     // id is also the name of the property this corresponds to
                     id: 'DeliveryOptions',
                     label: 'Bezorgen',
-                    active: true,
+                    active: false,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
                     },
@@ -34,7 +34,7 @@ define([
                 {
                     id: 'PickupOptions',
                     label: 'Afhalen',
-                    active: true,
+                    active: false,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
                     },
@@ -169,7 +169,13 @@ define([
                     switch (typeof self[key]) {
                         // ObservableArrays are typeof function
                         case 'function':
+                            // Update this observable property with this value
                             self[key](responseProp);
+
+                            // When setting array, activate its corresponding Tab button
+                            if (Array.isArray(responseProp) && responseProp.length) {
+                                self.tabButtons().find(button => button.id === key).active = true;
+                            }
                             break;
                         default:
                             // otherwise just set the property
