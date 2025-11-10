@@ -143,17 +143,16 @@ define([
          * @param event
          */
         nextPickup: function (component, event) {
-            return self.getPickup(1);
+            return self.getPickup(1, event);
         },
         prevPickup: function (component, event) {
-            return self.getPickup(-1);
+            return self.getPickup(-1, event);
         },
-        getPickup: function (incrementer) {
+        getPickup: function (incrementer, event = null) {
             // Get the next pickup from list
             let pickup = maps.getPickup(incrementer);
             // Update filtered list with only this pickup
             self.PickupOptions([pickup]);
-            // TODO when next item does not exist, hide Next button
             // After updating the list, click the (only) first item to select this pickup
             let pickupsList = document.getElementById(self.pickupsIdentifier);
             if (pickupsList) {
@@ -166,6 +165,17 @@ define([
                 .replace("%s", nth)
                 .replace("%t", maps.allPickups.length)
             );
+
+            /** Determine if this arrow button should be disabled */
+            if (event) {
+                // Add to this one to remove from siblings (every arrow button should enable their opposite)
+                utility.applyAmongSiblings(event.currentTarget, ['text-gray-500'], true);
+
+                // Then hide or show this one depending on next availability
+                utility.applyClasses(event.currentTarget, ['text-gray-500'],
+                    // when limit is reached OR this is the first one and we are going backwards
+                    (nth >= maps.allPickups.length || (nth === 1 && incrementer < 1)));
+            }
         },
 
         setOptions: function (options) {
