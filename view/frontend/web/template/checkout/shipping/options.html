@@ -1,9 +1,9 @@
 <div id="block-shipping-options" class="max-w-lg mx-auto"
      visible="isSelected">
     <!-- Buttons-->
-    <div class="flex mx-auto mb-5" data-bind="afterRender: clickFirst, foreach: { data: tabButtons, as: 'tabButton' }">
+    <div class="flex mx-auto mb-5" data-bind="afterRender: clickFirst, foreach: { data: tabButtons(), as: 'tabButton' }">
         <!-- TODO for some reason Tailwind doesn't work on button element -->
-        <button type="button" data-bind="click: tabButton.callback, id: tabButton.identifier"
+        <button type="button" data-bind="click: tabButton.callback, attr: {id: tabButton.id}"
                 class="button action w-1/2 py-2 text-white mx-auto"
                 text="tabButton.label">
         </button>

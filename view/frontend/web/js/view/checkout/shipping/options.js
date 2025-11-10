@@ -21,7 +21,7 @@ define([
             mapIdentifier: 'montaPickupsMap',
             pickupsIdentifier: 'pickup-points-list',
             showingMap: ko.observable(false),
-            tabButtons: [
+            tabButtons: ko.observableArray([
                 {
                     id: 'delivery',
                     label: 'Bezorgen',
@@ -36,7 +36,7 @@ define([
                         utility.clickMode(this.id, event);
                     },
                 },
-            ],
+            ]),
         },
 
         initialize: function () {
@@ -176,7 +176,9 @@ define([
             });
 
             // Also keep PickupPoints in Maps component
-            maps.setPickupMarkers(options.PickupOptions);
+            if (options.PickupOptions.length) {
+                maps.setPickupMarkers(options.PickupOptions);
+            }
         },
     });
 });
