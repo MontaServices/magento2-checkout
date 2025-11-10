@@ -19,7 +19,7 @@ define([
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
             mapIdentifier: 'montaPickupsMap',
-            pickupsIdentifier: 'pickup-points-list',
+            pickupsIdentifier: 'pickupPointsList',
             showingMap: ko.observable(false),
             tabButtons: ko.observableArray([
                 {
