@@ -17,4 +17,6 @@
         <plugin name="MontaOrderRepository"
                 type="Monta\Checkout\Plugin\Order\Repository"/>
     </type>
+    <preference for="Magento\PageBuilder\Block\GoogleMapsApi"
+                type="Monta\Checkout\Block\GoogleMaps"/>
 </config>

@@ -16,6 +16,7 @@ define([], function () {
                 }
             }, 0);
 
+            // Return true to continue default click behavior
             return true;
         },
 
@@ -33,21 +34,20 @@ define([], function () {
                 this.applyAmongSiblings(element, ['hidden'], false);
                 // Add 'primary' class to this button element, remove from siblings
                 this.applyAmongSiblings(event.currentTarget, ['primary']);
-            } else {
-                console.warn("Cannot find element for mode: " + mode);
             }
         },
 
         /** Apply class to element and remove that class from siblings
          *
-         * @param element
-         * @param targetClasses - string[]
-         * @param add - Pass FALSE to remove classes instead
+         * @param element - HtmlElement, HtmlElement[], Nodelist
+         * @param targetClasses - string[] - classes to add or remove
+         * @param add - TRUE to add classes, FALSE to remove classes
          */
         applyAmongSiblings: function (element, targetClasses, add = true) {
             if (element && element.classList) {
                 let self = this;
-                if (Array.isArray(element)) {
+                // Iterate if parameter is iterable
+                if (Symbol.iterator in Object(element)) {
                     element.forEach(function (subelement) {
                         self.applyAmongSiblings(subelement, targetClasses, add);
                     })
@@ -74,16 +74,26 @@ define([], function () {
         },
 
         /** Add or remove classes from an element
+         * TODO merge these two methods for simplicity, use new `amongSiblings` parameter
          *
-         * @param element
+         * @param element - HtmlElement, HtmlElement[], Nodelist
          * @param targetClasses
          * @param add
          */
         applyClasses: function (element, targetClasses, add = true) {
-            if (add) {
-                element.classList?.add.apply(element.classList, targetClasses);
+            let self = this;
+            // If passed element is iterable
+            if (Symbol.iterator in Object(element)) {
+                element.forEach(function (subelement) {
+                    // Call self recursively with each element
+                    self.applyClasses(subelement, targetClasses, add);
+                })
             } else {
-                element.classList?.remove.apply(element.classList, targetClasses);
+                if (add) {
+                    element?.classList?.add.apply(element.classList, targetClasses);
+                } else {
+                    element?.classList?.remove.apply(element.classList, targetClasses);
+                }
             }
         }
     };

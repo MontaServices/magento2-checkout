@@ -66,10 +66,11 @@
                        showInDefault="1" showInWebsite="1">
                     <frontend_model>Monta\Checkout\Block\Adminhtml\TestCredentials</frontend_model>
                 </field>
-                <field id="googleapikey" translate="label" type="obscure" showInDefault="1" showInWebsite="1">
+                <field id="googleapikey" translate="label" type="text" showInDefault="1" showInWebsite="1">
                     <label>Google API Key</label>
+                    <!-- Hook into the existing Pagebuilder functionality -->
+                    <config_path>cms/pagebuilder/google_maps_api_key</config_path>
                     <comment><![CDATA[Your Google API key required for loading Pickup points on map.]]></comment>
-                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
             </group>
         </section>

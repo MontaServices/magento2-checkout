@@ -30,11 +30,30 @@
             </div>
         </div>
         <!-- Pickup Options -->
-        <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }"
-             class="tabcontent tab-pickup hidden space-y-3">
-            <div class="rounded-tile monta-gray-tile w-full"
-                 data-bind="click: $parent.clickDeliveryOption"
-                 template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
+        <div class="tabcontent tab-pickup hidden space-y-3">
+            <!-- Attach map to this element-->
+            <div class="relative w-full bg-gray-200 overflow-hidden rounded-b-md hidden">
+                <div data-bind="attr: {id: mapIdentifier}" class="w-full h-[250px] bg-gray-100"></div>
+            </div>
+            <!-- List of PickupOptions -->
+            <div data-bind="foreach: { data: PickupOptions(), as: 'pickup' }, attr: {id: pickupsIdentifier}"
+                 class="space-y-3">
+                <div class="rounded-tile monta-gray-tile w-full"
+                     data-bind="click: $parent.clickDeliveryOption"
+                     template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
+                </div>
+            </div>
+            <!-- Button to open map popup with locations -->
+            <div class="text-center text-blue-500">
+                <!-- When in list mode-->
+                <p if="!showingMap()" click="toggleMap">&#128205; Kaart</p>
+
+                <!-- When in Maps mode -->
+                <div if="showingMap()" class="flex items-center justify-between mb-4">
+                    <p click="prevPickup">&larr;</p>
+                    <span click="toggleMap">&equiv; Lijst</span>
+                    <p click="nextPickup">&rarr;</p>
+                </div>
             </div>
         </div>
     </div>

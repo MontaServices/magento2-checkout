@@ -12,9 +12,8 @@
         </div>
         <p class="text-green font-medium" text="pickup.priceFormatted"></p>
     </div>
-    <div class="text-sm text-gray-500 mt-2" if="pickup.openingTimes.length">
-        <div class="business-hours"
-             data-bind="foreach: { data: pickup.openingTimes, as: 'slot' }">
+    <div class="business-hours text-sm text-gray-500 mt-2 hidden" if="pickup.openingTimes.length">
+        <div data-bind="foreach: { data: pickup.openingTimes, as: 'slot' }">
             <!-- TODO show opening times only on selected point -->
             <p class="text-sm" text="slot.day + '\:\t ' + slot.from + ' - ' + slot.to"></p>
         </div>
