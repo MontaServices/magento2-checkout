@@ -21,25 +21,6 @@ define([
             mapIdentifier: 'montaPickupsMap',
             pickupsIdentifier: 'pickupPointsList',
             showingMap: ko.observable(false),
-            tabButtons: ko.observableArray([
-                {
-                    // id is also the name of the property this corresponds to
-                    id: 'DeliveryOptions',
-                    label: 'Bezorgen',
-                    active: false,
-                    callback: function (tabButton, event) {
-                        utility.clickMode(this.id, event);
-                    },
-                },
-                {
-                    id: 'PickupOptions',
-                    label: 'Afhalen',
-                    active: false,
-                    callback: function (tabButton, event) {
-                        utility.clickMode(this.id, event);
-                    },
-                },
-            ]),
             listButtonText: ko.observable(""),
         },
 
@@ -68,6 +49,26 @@ define([
                 return false;
             }, this);
 
+            // Define this during initialize
+            this.tabButtons = ko.observableArray([
+                {
+                    // id is also the name of the property this corresponds to
+                    id: 'DeliveryOptions',
+                    label: 'Bezorgen',
+                    active: false,
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+                {
+                    id: 'PickupOptions',
+                    label: 'Afhalen',
+                    active: false,
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+            ]);
             return this;
         },
 
