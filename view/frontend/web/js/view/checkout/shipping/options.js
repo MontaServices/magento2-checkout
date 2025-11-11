@@ -184,14 +184,15 @@ define([
                 if (self.hasOwnProperty(key)) {
                     // Update observable property with new data
                     switch (typeof self[key]) {
-                        // ObservableArrays are typeof function
+                        // ObservableArrays have type function
                         case 'function':
                             // Update this observable property with this value
                             self[key](responseProp);
 
                             // When setting array, activate its corresponding Tab button
                             if (Array.isArray(responseProp) && responseProp.length) {
-                                self.tabButtons().find(button => button.id === key).active = true;
+                                // Find button for this property key and activate it (catch empty with OR operator)
+                                (self.tabButtons().find(button => button.id === key) || {}).active = true;
                             }
                             break;
                         default:
