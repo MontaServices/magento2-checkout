@@ -33,7 +33,7 @@
             </div>
         </div>
         <!-- Pickup Options -->
-        <div class="tabcontent tab-PickupOptions hidden space-y-3"
+        <div class="tabcontent hidden space-y-3"
              data-bind="class: 'tab-' + pickupOptionsIdentifier">
             <!-- Attach map to this element-->
             <div class="relative w-full bg-gray-200 overflow-hidden rounded-b-md hidden">
@@ -47,9 +47,9 @@
                      template="name: 'Monta_Checkout/checkout/shipping/components/pickup', data: pickup">
                 </div>
             </div>
-            <!-- Button to open map popup with locations -->
+            <!-- Button to switch map or list -->
             <div class="text-center text-blue-500">
-                <!-- When in list mode-->
+                <!-- When in List mode-->
                 <p if="!showingMap()" click="toggleMap">&#128205; Kaart</p>
 
                 <!-- When in Maps mode -->

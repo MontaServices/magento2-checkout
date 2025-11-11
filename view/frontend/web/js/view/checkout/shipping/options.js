@@ -167,7 +167,7 @@ define([
             // Update text to show status
             self.listButtonText("%s van de %t afhaalpunten"
                 .replace("%s", nth)
-                .replace("%t", maps.allPickups.length)
+                .replace("%t", maps.allPickups.length.toString())
             );
 
             /** Determine if this arrow button should be disabled */

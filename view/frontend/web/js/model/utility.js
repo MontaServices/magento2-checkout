@@ -41,7 +41,7 @@ define([], function () {
          *
          * @param element - HtmlElement, HtmlElement[], Nodelist
          * @param targetClasses - string[] - classes to add or remove
-         * @param add - TRUE to add classes to subject and remove from siblings, FALSE to remove classes from subject
+         * @param add - TRUE to add classes to subject and remove from siblings, FALSE to remove classes from subject and add to siblings
          */
         applyAmongSiblings: function (element, targetClasses, add = true) {
             if (element && element.classList) {
