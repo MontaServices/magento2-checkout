@@ -11,8 +11,11 @@ define([
     return Component.extend({
         defaults: {
             DeliveryOptions: ko.observableArray([]),
+            // Name of the property that corresponds with this tab
+            deliveryOptionsIdentifier: "DeliveryOptions",
             // Filtered list of PickupPoints
             PickupOptions: ko.observableArray([]),
+            pickupOptionsIdentifier: "PickupOptions",
             SelectedDateOptions: ko.observableArray([]),
             CustomerLocation: {},
             template: 'Monta_Checkout/checkout/shipping/options',
@@ -53,7 +56,7 @@ define([
             this.tabButtons = ko.observableArray([
                 {
                     // id is also the name of the property this corresponds to
-                    id: 'DeliveryOptions',
+                    id: self.deliveryOptionsIdentifier,
                     label: 'Bezorgen',
                     active: false,
                     callback: function (tabButton, event) {
@@ -61,7 +64,7 @@ define([
                     },
                 },
                 {
-                    id: 'PickupOptions',
+                    id: self.pickupOptionsIdentifier,
                     label: 'Afhalen',
                     active: false,
                     callback: function (tabButton, event) {
