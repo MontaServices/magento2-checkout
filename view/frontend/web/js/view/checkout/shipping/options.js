@@ -11,32 +11,20 @@ define([
     return Component.extend({
         defaults: {
             DeliveryOptions: ko.observableArray([]),
+            // Name of the property that corresponds with this tab
+            deliveryOptionsIdentifier: "DeliveryOptions",
             // Filtered list of PickupPoints
             PickupOptions: ko.observableArray([]),
+            pickupOptionsIdentifier: "PickupOptions",
             SelectedDateOptions: ko.observableArray([]),
             CustomerLocation: {},
             template: 'Monta_Checkout/checkout/shipping/options',
             dayButtonIdentifier: 'selectDayButton',
             shippingOptionIdentifier: 'selectShippingOption',
             mapIdentifier: 'montaPickupsMap',
-            pickupsIdentifier: 'pickup-points-list',
+            pickupsIdentifier: 'pickupPointsList',
             showingMap: ko.observable(false),
-            tabButtons: [
-                {
-                    id: 'delivery',
-                    label: 'Bezorgen',
-                    callback: function (tabButton, event) {
-                        utility.clickMode(this.id, event);
-                    },
-                },
-                {
-                    id: 'pickup',
-                    label: 'Afhalen',
-                    callback: function (tabButton, event) {
-                        utility.clickMode(this.id, event);
-                    },
-                },
-            ],
+            listButtonText: ko.observable(""),
         },
 
         initialize: function () {
@@ -64,6 +52,26 @@ define([
                 return false;
             }, this);
 
+            // Define this during initialize
+            this.tabButtons = ko.observableArray([
+                {
+                    // id is also the name of the property this corresponds to
+                    id: self.deliveryOptionsIdentifier,
+                    label: 'Bezorgen',
+                    active: false,
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+                {
+                    id: self.pickupOptionsIdentifier,
+                    label: 'Afhalen',
+                    active: false,
+                    callback: function (tabButton, event) {
+                        utility.clickMode(this.id, event);
+                    },
+                },
+            ]);
             return this;
         },
 
@@ -139,24 +147,40 @@ define([
          * @param event
          */
         nextPickup: function (component, event) {
-            return self.getPickup(1);
+            return self.getPickup(1, event);
         },
         prevPickup: function (component, event) {
-            return self.getPickup(-1);
+            return self.getPickup(-1, event);
         },
-        getPickup: function (incrementer) {
+        getPickup: function (incrementer, event = null) {
             // Get the next pickup from list
             let pickup = maps.getPickup(incrementer);
             // Update filtered list with only this pickup
             self.PickupOptions([pickup]);
-            // TODO when next item does not exist, hide Next button
             // After updating the list, click the (only) first item to select this pickup
             let pickupsList = document.getElementById(self.pickupsIdentifier);
             if (pickupsList) {
                 utility.clickFirst(pickupsList);
             }
-        },
+            // Index of selected key is one lower than the nominal index because arrays are zero-based
+            let nth = maps.selectedPickupKey + 1;
+            // Update text to show status
+            self.listButtonText("%s van de %s afhaalpunten"
+                .replace("%s", nth)
+                .replace("%s", maps.allPickups.length.toString())
+            );
 
+            /** Determine if this arrow button should be disabled */
+            if (event) {
+                // Add to this one to remove from siblings (every arrow button should enable their opposite)
+                utility.applyAmongSiblings(event.currentTarget, ['text-gray-500'], true);
+
+                // Then hide or show this one depending on next availability
+                utility.applyClasses(event.currentTarget, ['text-gray-500'],
+                    // when limit is reached OR this is the first one and we are going backwards
+                    (nth >= maps.allPickups.length || (nth === 1 && incrementer < 1)));
+            }
+        },
 
         setOptions: function (options) {
             // Copy each response property to component properties
@@ -164,9 +188,16 @@ define([
                 if (self.hasOwnProperty(key)) {
                     // Update observable property with new data
                     switch (typeof self[key]) {
-                        // ObservableArrays are typeof function
+                        // ObservableArrays have type function
                         case 'function':
+                            // Update this observable property with this value
                             self[key](responseProp);
+
+                            // When setting array, activate its corresponding Tab button
+                            if (Array.isArray(responseProp) && responseProp.length) {
+                                // Find button for this property key and activate it (catch empty with OR operator)
+                                (self.tabButtons().find(button => button.id === key) || {}).active = true;
+                            }
                             break;
                         default:
                             // otherwise just set the property
