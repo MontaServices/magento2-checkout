@@ -44,7 +44,8 @@ class Monta extends AbstractCarrier implements CarrierInterface
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
     }
 
-    /**
+    /** Function runs before loading shipping methods for checkout, and after selecting one
+     *
      * @param RateRequest $request
      * @return Result|bool
      */
@@ -55,15 +56,16 @@ class Monta extends AbstractCarrier implements CarrierInterface
         }
         $result = $this->rateResultFactory->create();
 
-        $result->append($this->createResultMethod());
+        $result->append($this->createResultMethod($request));
 
         return $result;
     }
 
     /**
+     * @param bool $limitCarrier
      * @return Method
      */
-    protected function createResultMethod(): Method
+    protected function createResultMethod(RateRequest $request): Method
     {
         $rateMethod = $this->rateMethodFactory->create();
 
@@ -75,6 +77,19 @@ class Monta extends AbstractCarrier implements CarrierInterface
 
         $rateMethod->setPrice($this->getHandlingFee());
         $rateMethod->setCost($this->getHandlingFee());
+
+        // When this Carrier was selected and rates are now being recalculated
+        if (($request->getLimitCarrier() == $this->_code)) {
+            // Get Quote via Items because loading CheckoutSession would cause infinite loop
+            $allItems = $request->getAllItems();
+
+            if (!empty($allItems)) {
+                $quote = reset($allItems)->getQuote();
+                if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
+                    // TODO decode JSON and calculate price
+                }
+            }
+        }
 
         return $rateMethod;
     }
