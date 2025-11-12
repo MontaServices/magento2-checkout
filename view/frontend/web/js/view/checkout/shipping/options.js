@@ -165,9 +165,9 @@ define([
             // Index of selected key is one lower than the nominal index because arrays are zero-based
             let nth = maps.selectedPickupKey + 1;
             // Update text to show status
-            self.listButtonText("%s van de %t afhaalpunten"
+            self.listButtonText("%s van de %s afhaalpunten"
                 .replace("%s", nth)
-                .replace("%t", maps.allPickups.length.toString())
+                .replace("%s", maps.allPickups.length.toString())
             );
 
             /** Determine if this arrow button should be disabled */
