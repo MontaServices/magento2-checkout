@@ -14,6 +14,7 @@ use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
+use Monta\CheckoutApiWrapper\Service\Options;
 use Psr\Log\LoggerInterface;
 
 class Monta extends AbstractCarrier implements CarrierInterface
@@ -30,6 +31,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
      * @param LoggerInterface $logger
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
+     * @param Options $optionService
      * @param array $data
      */
     public function __construct(
@@ -38,6 +40,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
         LoggerInterface $logger,
         protected readonly ResultFactory $rateResultFactory,
         protected readonly MethodFactory $rateMethodFactory,
+        protected readonly Options $optionService,
         array $data = []
     )
     {
@@ -86,7 +89,11 @@ class Monta extends AbstractCarrier implements CarrierInterface
             if (!empty($allItems)) {
                 $quote = reset($allItems)->getQuote();
                 if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-                    // TODO decode JSON and calculate price
+                    // Decode JSON and calculate price
+                    if ($option = $this->optionService->convertOption($montaData)) {
+                        $rateMethod->setPrice($option->getPrice());
+                        $rateMethod->setCost($option->getPrice());
+                    }
                 }
             }
         }
