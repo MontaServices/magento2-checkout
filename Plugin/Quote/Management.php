@@ -8,6 +8,7 @@ namespace Monta\Checkout\Plugin\Quote;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Monta\CheckoutApiWrapper\Objects\Option;
 
 readonly class Management
 {
@@ -37,9 +38,13 @@ readonly class Management
 
         // Get monta shipping data from Quote
         if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
+            // Convert JSON to object
+            $convertedObject = Option::constructFromJson($montaData);
+
             $order = $this->orderRepository->get($orderId);
 
-            $order->setMontaShippingData($montaData);
+            /** Save converted JSON in proper JSON structure for export */
+            $order->setMontaShippingData($convertedObject->toJson());
             $this->orderRepository->save($order);
         }
 

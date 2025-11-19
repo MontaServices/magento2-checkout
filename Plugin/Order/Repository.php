@@ -59,7 +59,10 @@ readonly class Repository
      */
     protected function extendOrder(OrderInterface $order): OrderInterface
     {
-        $montaShipData = $order->getMontaShippingData();
+        $montaShipData = $order->getMontaShippingData()
+            // old modules placed with old Magento module have data in this attribute
+            // TODO remove this in 2028 when old module is discontinued
+            ?? $order->getMontapackingMontacheckoutData();
 
         $extensionAttributes = $order->getExtensionAttributes() ?? $this->extensionFactory->create();
         $extensionAttributes->setData(self::MONTA_SHIPPING_DATA, $montaShipData);

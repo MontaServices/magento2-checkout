@@ -5,7 +5,8 @@ options.
 
 ## Configuration
 
-API credentials can be configured and tested under: `Stores > Configuration > Sales > Shipping Settings > Monta API`
+API credentials can be configured and tested under:
+`Stores > Configuration > Sales > Shipping Settings > Monta API`
 
 The Monta shipping method can be configured under:
 `Stores > Configuration > Sales > Delivery Methods > Monta`.

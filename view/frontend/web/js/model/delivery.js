@@ -25,8 +25,10 @@ define([
             if (address['extension_attributes'] === undefined) {
                 address['extension_attributes'] = {};
             }
-            // TODO save more than just option code (for Pickups this is only six digits
-            address['extension_attributes']['shipping_option'] = option.code;
+
+            // Save the selected Option object to address
+            // TODO What about selected ShipperOptions?
+            address['extension_attributes']['shipping_option'] = JSON.stringify(option);
 
             // Return TRUE to propagate default click behavior
             return true;
