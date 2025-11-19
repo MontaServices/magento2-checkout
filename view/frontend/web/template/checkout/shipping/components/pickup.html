@@ -1,8 +1,7 @@
 <div class="pickup-option flex-col">
     <div class="pickup-header flex justify-between space-x-2">
         <div class="flex">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/PostNL_logo_outline.svg"
-                 class="pickup-logo w-16 h-16 pr-2">
+            <img data-bind="attr: {src: pickup.imageUrl}" class="pickup-logo w-16 h-16 pr-2">
             <div class="pickup-container">
                 <strong text="pickup.company"></strong>
                 <p class="text-sm text-gray-500" text="pickup.displayName"></p>
