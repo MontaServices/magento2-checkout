@@ -41,7 +41,7 @@ define([
 
         clickExtra: function (extra, event) {
             // When checkbox was checked
-            // TODO when clicking the extra element instead of the checkbox, this runs but
+            // TODO click now runs twice, on <label> and on <input>
             if (event.target.checked) {
                 console.log("Click Extra, box was checked, add this extra", extra);
                 // Box was checked, add this extra
@@ -50,6 +50,7 @@ define([
                 console.log("Click Extra, box was unchecked, remove this extra", this.extras);
                 // TODO when event clicked "uncheck", remove this extra
             }
+            // TODO after clicking this, rerun `selectDelvieryOption` because that saves the selected Option to session
             return true;
         },
 
