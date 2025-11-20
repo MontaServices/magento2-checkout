@@ -105,6 +105,10 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
+        clickExtra(extra, event) {
+            return delivery.clickExtra(extra, event);
+        },
+
         /** Click the first child element of this element
          *
          * @param element
