@@ -34,23 +34,25 @@ define([
             // When checkbox was checked
             // TODO click now runs twice, on <label> and on <input>. Second one is the real one so that just works
             if (event.target.checked) {
-                console.log("Click Extra, box was checked, add this extra", extra);
                 // Box was checked, add this extra
                 this.extras.push(extra);
             } else {
-                console.log("Click Extra, box was unchecked, remove this extra", this.extras);
                 // TODO when event clicked "uncheck", remove this extra
             }
-            // TODO after clicking this, rerun `selectDelvieryOption` because that saves the selected Option to session
+
+            // After updating extras, set extras to quote
+            this.updateQuote(quote, null, this.extras);
+
             return true;
         },
 
         /**
-         * Update quote with selected option
+         * Update quote with selected option and/or extras
          * @param quote
          * @param option
+         * @param extras
          */
-        updateQuote(quote, option = null) {
+        updateQuote(quote, option = null, extras = []) {
             // Set selected option code in quote as string
             let address = quote.shippingAddress();
             // create extension attributes if not present
@@ -63,8 +65,10 @@ define([
             }
 
             if (option) {
+                // Overwrite extras in quote
+                option['extras'] = extras;
+
                 // Save the selected Option object to address
-                // TODO add this.extras to option object, first check if they belong to this option
                 address['extension_attributes']['shipping_option'] = JSON.stringify(option);
             } else {
                 console.warn("Something went wrong, no option present to update");
