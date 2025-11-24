@@ -36,8 +36,8 @@ define([
                 // Box was checked, add this extra
                 this.extras.push(extra);
             } else {
-                // TODO when event clicked "uncheck", remove this extra by code
-                this.extras = [];
+                // Remove this extra by code
+                this.extras = this.extras.filter(e => e.code !== extra.code);
             }
 
             // After updating extras, update quote (to reload extras)
