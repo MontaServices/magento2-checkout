@@ -37,22 +37,22 @@ define([
                 // Box was checked, add this extra
                 this.extras.push(extra);
             } else {
-                // TODO when event clicked "uncheck", remove this extra
+                // TODO when event clicked "uncheck", remove this extra by code
+                this.extras = [];
             }
 
-            // After updating extras, set extras to quote
-            this.updateQuote(quote, null, this.extras);
+            // After updating extras, update quote (to reload extras)
+            this.updateQuote(quote);
 
             return true;
         },
 
-        /**
-         * Update quote with selected option and/or extras
+        /** Update quote with selected option and/or extras
+         *
          * @param quote
-         * @param option
-         * @param extras
+         * @param option - Selected option, or keep empty to reuse existing saved one
          */
-        updateQuote(quote, option = null, extras = []) {
+        updateQuote(quote, option = null) {
             // Set selected option code in quote as string
             let address = quote.shippingAddress();
             // create extension attributes if not present
@@ -66,7 +66,7 @@ define([
 
             if (option) {
                 // Overwrite extras in quote
-                option['extras'] = extras;
+                option.extras = this.extras;
 
                 // Save the selected Option object to address
                 address['extension_attributes']['shipping_option'] = JSON.stringify(option);
