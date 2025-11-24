@@ -24,24 +24,15 @@ define([
         },
 
         selectDeliveryOption: function (option, quote) {
-            // Set selected option code in quote as string
-            let address = quote.shippingAddress();
-            // create extension attributes if not present
-            if (address['extension_attributes'] === undefined) {
-                address['extension_attributes'] = {};
-            }
-
-            // Save the selected Option object to address
-            // TODO add this.extras to option object, first check if they belong to this option
-            address['extension_attributes']['shipping_option'] = JSON.stringify(option);
+            this.updateQuote(quote, option);
 
             // Return TRUE to propagate default click behavior
             return true;
         },
 
-        clickExtra: function (extra, event) {
+        clickExtra: function (extra, event, quote) {
             // When checkbox was checked
-            // TODO click now runs twice, on <label> and on <input>
+            // TODO click now runs twice, on <label> and on <input>. Second one is the real one so that just works
             if (event.target.checked) {
                 console.log("Click Extra, box was checked, add this extra", extra);
                 // Box was checked, add this extra
@@ -52,6 +43,32 @@ define([
             }
             // TODO after clicking this, rerun `selectDelvieryOption` because that saves the selected Option to session
             return true;
+        },
+
+        /**
+         * Update quote with selected option
+         * @param quote
+         * @param option
+         */
+        updateQuote(quote, option = null) {
+            // Set selected option code in quote as string
+            let address = quote.shippingAddress();
+            // create extension attributes if not present
+            if (address['extension_attributes'] === undefined) {
+                address['extension_attributes'] = {};
+            }
+            // When Option was not passed, presume it's an update and Option was already set
+            if (!option && address['extension_attributes']['shipping_option']) {
+                option = JSON.parse(address['extension_attributes']['shipping_option']);
+            }
+
+            if (option) {
+                // Save the selected Option object to address
+                // TODO add this.extras to option object, first check if they belong to this option
+                address['extension_attributes']['shipping_option'] = JSON.stringify(option);
+            } else {
+                console.warn("Something went wrong, no option present to update");
+            }
         },
 
         focusSelection: function (element) {

@@ -106,7 +106,7 @@ define([
         },
 
         clickExtra(extra, event) {
-            return delivery.clickExtra(extra, event);
+            return delivery.clickExtra(extra, event, quote);
         },
 
         /** Click the first child element of this element
