@@ -32,7 +32,6 @@ define([
 
         clickExtra: function (extra, event, quote) {
             // When checkbox was checked
-            // TODO click now runs twice, on <label> and on <input>. Second one is the real one so that just works
             if (event.target.checked) {
                 // Box was checked, add this extra
                 this.extras.push(extra);
