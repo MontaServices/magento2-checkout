@@ -9,18 +9,18 @@
         </div>
         <p class="text-md font-medium" text="deliveryOption.priceFormatted"></p>
     </div>
-    <!-- Extras -->
-    <div class="extras" if="deliveryOption.deliveryOptions.length">
+    <!-- ShipperOptions -->
+    <div class="shipperoptions" if="deliveryOption.deliveryOptions.length">
         <p class="font-semibold mb-2">Extra verzendopties:</p>
-        <div class="space-y-2" data-bind="foreach: { data: deliveryOption.deliveryOptions, as: 'extra' }">
+        <div class="space-y-2" data-bind="foreach: { data: deliveryOption.deliveryOptions, as: 'shipperOption' }">
             <!-- TODO border color should match tile border color -->
-            <div class="flex justify-between rounded-tile p-2 monta-gray-tile hover:monta-blue-focus">
+            <label class="flex justify-between rounded-tile p-2 monta-gray-tile hover:monta-blue-focus">
                 <div class="items-center space-x-2">
-                    <input type="checkbox" class="" data-bind="name: extra.code"/>
-                    <span text="extra.description"></span>
+                    <input type="checkbox" click="$parents[2].clickShipperOption" data-bind="name: shipperOption.code"/>
+                    <span text="shipperOption.description"></span>
                 </div>
-                <span class="text-md" text="'+' + extra.priceFormatted"></span>
-            </div>
+                <span class="text-md" text="'+' + shipperOption.priceFormatted"></span>
+            </label>
         </div>
     </div>
 </div>
