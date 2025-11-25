@@ -105,8 +105,8 @@ define([
             return delivery.selectDeliveryOption(option, quote);
         },
 
-        clickExtra(extra, event) {
-            return delivery.clickExtra(extra, event, quote);
+        clickShipperOption(shipperOption, event) {
+            return delivery.clickShipperOption(shipperOption, event, quote);
         },
 
         /** Click the first child element of this element

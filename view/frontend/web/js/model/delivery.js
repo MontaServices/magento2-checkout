@@ -7,7 +7,7 @@ define([
         /**
          * Array of selected shipper options
          */
-        extras: [],
+        shipperOptions: [],
 
         /** Mark the clicked day as select and unselect siblings
          *
@@ -30,23 +30,23 @@ define([
             return true;
         },
 
-        clickExtra: function (extra, event, quote) {
+        clickShipperOption: function (shipperOption, event, quote) {
             // When checkbox was checked
             if (event.target.checked) {
-                // Box was checked, add this extra
-                this.extras.push(extra);
+                // Box was checked, add this shipperOption
+                this.shipperOptions.push(shipperOption);
             } else {
-                // Remove this extra by code
-                this.extras = this.extras.filter(e => e.code !== extra.code);
+                // Remove this shipperOption by code
+                this.shipperOptions = this.shipperOptions.filter(e => e.code !== shipperOption.code);
             }
 
-            // After updating extras, update quote (to reload extras)
+            // After updating shipperOptions, update quote
             this.updateQuote(quote);
 
             return true;
         },
 
-        /** Update quote with selected option and/or extras
+        /** Update quote with selected ShippingOption and/or shipperOptions
          *
          * @param quote
          * @param option - Selected option, or keep empty to reuse existing saved one
@@ -64,8 +64,8 @@ define([
             }
 
             if (option) {
-                // Overwrite extras in quote
-                option.extras = this.extras;
+                // Set to quote
+                option.shipperOptions = this.shipperOptions;
 
                 // Save the selected Option object to address
                 address['extension_attributes']['shipping_option'] = JSON.stringify(option);
