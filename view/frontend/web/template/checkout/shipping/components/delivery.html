@@ -1,8 +1,7 @@
 <div class="flex-col">
     <div class="flex justify-between space-x-2">
         <div class="flex">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/PostNL_logo_outline.svg"
-                 class="w-16 h-16 pr-2"/>
+            <img data-bind="attr: {src: deliveryOption.imageUrl}" class="w-16 h-16 pr-2"/>
             <div>
                 <p class="font-semibold" text="deliveryOption.shipper"></p>
                 <p class="text-sm text-gray-600" text="deliveryOption.displayNameShort"></p>

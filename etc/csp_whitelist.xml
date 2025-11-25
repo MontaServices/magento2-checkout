@@ -4,8 +4,7 @@
     <policies>
         <policy id="img-src">
             <values>
-                <!-- TODO remove when carrier images issue is resolved-->
-                <value id="Wikimedia temp" type="host">*.wikimedia.org</value>
+                <value id="monta_cnd" type="host">cdn.monta.nl</value>
                 <!-- For Map background and icons -->
                 <value id="google_maps" type="host">maps.googleapis.com</value>
             </values>
