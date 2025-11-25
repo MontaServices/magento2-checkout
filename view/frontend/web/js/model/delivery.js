@@ -33,8 +33,10 @@ define([
         clickShipperOption: function (shipperOption, event, quote) {
             // When checkbox was checked
             if (event.target.checked) {
-                // Box was checked, add this shipperOption
-                this.shipperOptions.push(shipperOption);
+                // Box was checked, add this shipperOption (if not already in list)
+                if (this.shipperOptions.filter(e => e.code === shipperOption.code).length < 1) {
+                    this.shipperOptions.push(shipperOption);
+                }
             } else {
                 // Remove this shipperOption by code
                 this.shipperOptions = this.shipperOptions.filter(e => e.code !== shipperOption.code);
