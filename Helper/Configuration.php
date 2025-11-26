@@ -7,6 +7,7 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Monta\Checkout\Block\GoogleMaps;
 use Monta\Checkout\Model\Carrier\Monta;
 
@@ -18,11 +19,13 @@ class Configuration
     /**
      * @param Monta $carrier
      * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      * @param EncryptorInterface $encryptor
      */
     public function __construct(
         protected readonly Monta $carrier,
         protected readonly ScopeConfigInterface $scopeConfig,
+        protected readonly StoreManagerInterface $storeManager,
         protected readonly EncryptorInterface $encryptor,
     )
     {
@@ -83,6 +86,14 @@ class Configuration
     public function getHandlingFee(): float
     {
         return $this->carrier->getHandlingFee();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrenySymbol(): string
+    {
+        return $this->storeManager->getStore()->getCurrentCurrency()->getCurrencySymbol();
     }
 
     /**
