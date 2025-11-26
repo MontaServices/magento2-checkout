@@ -52,7 +52,7 @@ class Api
             googleKey: $this->montaConfiguration->getGoogleKey(),
             defaultCosts: $this->montaConfiguration->getHandlingFee(),
             webshopLanguage: $this->localeResolver->getLocale(),
-            currency: $this->montaConfiguration->getCurrenySymbol(),
+            currency: $this->montaConfiguration->getStore()->getCurrentCurrency()->getCurrencySymbol(),
         );
     }
 

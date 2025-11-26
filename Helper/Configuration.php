@@ -7,6 +7,7 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Monta\Checkout\Block\GoogleMaps;
 use Monta\Checkout\Model\Carrier\Monta;
@@ -88,12 +89,13 @@ class Configuration
         return $this->carrier->getHandlingFee();
     }
 
-    /**
-     * @return string
+    /** Get the current store
+     *
+     * @return StoreInterface
      */
-    public function getCurrenySymbol(): string
+    public function getStore(): StoreInterface
     {
-        return $this->storeManager->getStore()->getCurrentCurrency()->getCurrencySymbol();
+        return $this->storeManager->getStore();
     }
 
     /**
