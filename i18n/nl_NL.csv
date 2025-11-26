@@ -4,3 +4,6 @@
 "Delivery","Bezorgen"
 "Pickup","Afhalen"
 "%s of %s pickup points","%s van de %s afhaalpunten"
+"Test credentials","Credentials testen"
+"Credentials are valid!","Credentials zijn geldig!"
+"Credentials are not valid! Did you save before testing?","Credentials ongeldig! Zijn deze goed opgeslagen?"
