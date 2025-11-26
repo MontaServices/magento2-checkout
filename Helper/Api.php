@@ -5,6 +5,7 @@
  */
 namespace Monta\Checkout\Helper;
 
+use Magento\Framework\Locale\ResolverInterface;
 use Monta\CheckoutApiWrapper\MontapackingShipping;
 use Monta\CheckoutApiWrapper\Objects\Settings;
 use Monta\CheckoutApiWrapper\Service\ApiFactory;
@@ -15,11 +16,13 @@ class Api
      * @param ApiFactory $apiFactory
      * @param Configuration $montaConfiguration
      * @param System $systemHelper
+     * @param ResolverInterface $localeResolver
      */
     public function __construct(
         protected readonly ApiFactory $apiFactory,
         protected readonly Configuration $montaConfiguration,
         protected readonly System $systemHelper,
+        protected readonly ResolverInterface $localeResolver,
     )
     {
     }
@@ -48,6 +51,7 @@ class Api
             maxPickupPoints: $this->montaConfiguration->getMaxPickupPoints(),
             googleKey: $this->montaConfiguration->getGoogleKey(),
             defaultCosts: $this->montaConfiguration->getHandlingFee(),
+            webshopLanguage: $this->localeResolver->getLocale(),
         );
     }
 
