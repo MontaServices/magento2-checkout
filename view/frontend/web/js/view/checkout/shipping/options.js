@@ -1,11 +1,12 @@
 define([
     'uiComponent',
     'ko',
+    'mage/translate',
     'Magento_Checkout/js/model/quote',
     'Monta_Checkout/js/model/delivery',
     'Monta_Checkout/js/model/utility',
     'Monta_Checkout/js/model/maps',
-], function (Component, ko, quote, delivery, utility, maps) {
+], function (Component, ko, $t, quote, delivery, utility, maps) {
     'use strict';
 
     return Component.extend({
@@ -57,7 +58,7 @@ define([
                 {
                     // id is also the name of the property this corresponds to
                     id: self.deliveryOptionsIdentifier,
-                    label: 'Bezorgen',
+                    label: $t('Delivery'),
                     active: false,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
@@ -65,7 +66,7 @@ define([
                 },
                 {
                     id: self.pickupOptionsIdentifier,
-                    label: 'Afhalen',
+                    label: $t('Pickup'),
                     active: false,
                     callback: function (tabButton, event) {
                         utility.clickMode(this.id, event);
@@ -169,7 +170,7 @@ define([
             // Index of selected key is one lower than the nominal index because arrays are zero-based
             let nth = maps.selectedPickupKey + 1;
             // Update text to show status
-            self.listButtonText("%s van de %s afhaalpunten"
+            self.listButtonText($t('%s of %s pickup points')
                 .replace("%s", nth)
                 .replace("%s", maps.allPickups.length.toString())
             );
