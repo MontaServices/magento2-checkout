@@ -33,13 +33,10 @@ readonly class Management
     public function afterPlaceOrder(QuoteManagement $subject, int $orderId, int $quoteId): int
     {
         // Get monta shipping data from Quote
-        if ($montaData = $this->getShippingData($quoteId)) {
-            // Convert JSON to object
-            $convertedObject = Option::constructFromJson($montaData);
-
+        if ($convertedObject = $this->getShippingData($quoteId)) {
             $order = $this->orderRepository->get($orderId);
 
-            /** Save converted JSON in proper JSON structure for export */
+            /** Save converted JSON back to JSON, in proper format for export */
             $order->setMontaShippingData($convertedObject->toJson());
             $this->orderRepository->save($order);
         }
@@ -47,17 +44,22 @@ readonly class Management
         return $orderId;
     }
 
-    /**
+    /** Get Selected shipping option from Quote
+     *
      * @param int $quoteId
-     * @return ?string - selected shipping option or NULL
+     * @return Option|null - Selected shipping option or NULL
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function getShippingData(int $quoteId): ?string
+    protected function getShippingData(int $quoteId): ?Option
     {
-        /** @var \Magento\Quote\Model\Quote $quote - Inactive quote after placement */
+        $option = null;
         $quote = $this->quoteRepository->get($quoteId);
         // TODO only when Monta was selected as carrier
-        return $quote->getShippingAddress()->getMontaShippingData();
+        if ($montaShippingData = $quote->getShippingAddress()->getMontaShippingData()) {
+            // Convert JSON to object
+            $option = Option::constructFromJson($montaShippingData);
+        }
+        return $option;
     }
 
 }
