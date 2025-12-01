@@ -23,6 +23,21 @@ readonly class Management
     {
     }
 
+    /** Validate selected Option before placing order
+     *
+     * @param QuoteManagement $subject
+     * @param int $cartId
+     * @param \Magento\Payment\Model\InfoInterface|null $paymentMethod
+     * @return void
+     * @throws \Exception
+     */
+    public function beforePlaceOrder(QuoteManagement $subject, int $cartId, ?\Magento\Payment\Model\InfoInterface $paymentMethod = null): void
+    {
+        if ($montaShippingData = $this->getShippingData($cartId)) {
+            $montaShippingData->validate();
+        }
+    }
+
     /**
      * @param QuoteManagement $subject
      * @param int $orderId
