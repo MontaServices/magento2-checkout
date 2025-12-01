@@ -7,6 +7,8 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Monta\Checkout\Block\GoogleMaps;
 use Monta\Checkout\Model\Carrier\Monta;
 
@@ -18,11 +20,13 @@ class Configuration
     /**
      * @param Monta $carrier
      * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      * @param EncryptorInterface $encryptor
      */
     public function __construct(
         protected readonly Monta $carrier,
         protected readonly ScopeConfigInterface $scopeConfig,
+        protected readonly StoreManagerInterface $storeManager,
         protected readonly EncryptorInterface $encryptor,
     )
     {
@@ -83,6 +87,15 @@ class Configuration
     public function getHandlingFee(): float
     {
         return $this->carrier->getHandlingFee();
+    }
+
+    /** Get the current store
+     *
+     * @return StoreInterface
+     */
+    public function getStore(): StoreInterface
+    {
+        return $this->storeManager->getStore();
     }
 
     /**

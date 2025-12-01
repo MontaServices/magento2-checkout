@@ -50,14 +50,16 @@
             <!-- Button to switch map or list -->
             <div class="text-center text-blue-500">
                 <!-- When in List mode-->
-                <p if="!showingMap()" click="toggleMap">&#128205; Kaart</p>
+                <div if="!showingMap()" click="toggleMap">
+                    <span>&#128205; </span><span data-bind="i18n: 'Map'"></span>
+                </div>
 
                 <!-- When in Maps mode -->
                 <div if="showingMap()" class="flex items-center justify-between mb-4">
                     <p click="prevPickup">&larr;</p>
                     <div>
                         <p class="text-gray-500" text="listButtonText()"></p>
-                        <span click="toggleMap">&equiv; Lijst</span>
+                        <span>&equiv; </span><span click="toggleMap" data-bind="i18n: 'List'"></span>
                     </div>
                     <p click="nextPickup">&rarr;</p>
                 </div>

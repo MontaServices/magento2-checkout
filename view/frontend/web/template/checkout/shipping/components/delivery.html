@@ -11,7 +11,7 @@
     </div>
     <!-- ShipperOptions -->
     <div class="shipperoptions" if="deliveryOption.deliveryOptions.length">
-        <p class="font-semibold mb-2">Extra verzendopties:</p>
+        <p class="font-semibold mb-2" data-bind="i18n: 'Extra shipperoptions:'"></p>
         <div class="space-y-2" data-bind="foreach: { data: deliveryOption.deliveryOptions, as: 'shipperOption' }">
             <!-- TODO border color should match tile border color -->
             <label class="flex justify-between rounded-tile p-2 monta-gray-tile hover:monta-blue-focus">
