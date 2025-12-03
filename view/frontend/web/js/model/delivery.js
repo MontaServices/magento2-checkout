@@ -67,6 +67,7 @@ define([
 
             if (option) {
                 // Set to quote
+                // TODO Unless $option is a PickupOption, which cannot have shipperoptions (already handled in backend tho)
                 option.shipperOptions = this.shipperOptions;
 
                 // Save the selected Option object to address
