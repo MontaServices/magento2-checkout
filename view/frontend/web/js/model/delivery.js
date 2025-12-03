@@ -7,7 +7,7 @@ define([
         /**
          * Array of selected shipper options
          */
-        shipperOptions: [],
+        selectedShipperOptions: [],
 
         /** Mark the clicked day as select and unselect siblings
          *
@@ -34,21 +34,21 @@ define([
             // When checkbox was checked
             if (event.target.checked) {
                 // Box was checked, add this shipperOption (if not already in list)
-                if (this.shipperOptions.filter(e => e.code === shipperOption.code).length < 1) {
-                    this.shipperOptions.push(shipperOption);
+                if (this.selectedShipperOptions.filter(e => e.code === shipperOption.code).length < 1) {
+                    this.selectedShipperOptions.push(shipperOption);
                 }
             } else {
                 // Remove this shipperOption by code
-                this.shipperOptions = this.shipperOptions.filter(e => e.code !== shipperOption.code);
+                this.selectedShipperOptions = this.selectedShipperOptions.filter(e => e.code !== shipperOption.code);
             }
 
-            // After updating shipperOptions, update quote
+            // After updating selectedShipperOptions, update quote
             this.updateQuote(quote);
 
             return true;
         },
 
-        /** Update quote with selected ShippingOption and/or shipperOptions
+        /** Update quote with selected ShippingOption and/or selected ShipperOptions
          *
          * @param quote
          * @param option - Selected option, or keep empty to reuse existing saved one
@@ -68,7 +68,7 @@ define([
             if (option) {
                 // Set to quote
                 // TODO Unless $option is a PickupOption, which cannot have shipperoptions (already handled in backend tho)
-                option.shipperOptions = this.shipperOptions;
+                option.selectedShipperOptions = this.selectedShipperOptions;
 
                 // Save the selected Option object to address
                 address['extension_attributes']['shipping_option'] = JSON.stringify(option);

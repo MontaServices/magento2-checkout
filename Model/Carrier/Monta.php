@@ -89,6 +89,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
                 if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
                     // Decode JSON and calculate price
                     if ($option = Option::constructFromJson($montaData)) {
+                        // sometimes $option might be PickupPoint which `getPrice` has no arguments
                         $rateMethod->setPrice($option->getPrice(true));
                         $rateMethod->setCost($option->getPrice());
                     }
