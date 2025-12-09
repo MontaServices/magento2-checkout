@@ -6,10 +6,10 @@
             <monta>
                 <active>0</active>
                 <name>Monta</name>
-                <title>Verzending via Monta</title>
+                <title>Shipping with Monta</title>
                 <model>Monta\Checkout\Model\Carrier\Monta</model>
-                <enablepickuppoints>0</enablepickuppoints>
-                <number_of_pickuppoints>3</number_of_pickuppoints>
+                <enablepickuppoints>1</enablepickuppoints>
+                <number_of_pickuppoints>5</number_of_pickuppoints>
                 <handling_fee>9.95</handling_fee>
                 <sort_order>50</sort_order>
             </monta>

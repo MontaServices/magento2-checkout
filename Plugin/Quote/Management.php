@@ -23,6 +23,21 @@ readonly class Management
     {
     }
 
+    /** Validate selected Option before placing order
+     *
+     * @param QuoteManagement $subject
+     * @param int $cartId
+     * @param \Magento\Payment\Model\InfoInterface|null $paymentMethod
+     * @return void
+     * @throws \Exception
+     */
+    public function beforePlaceOrder(QuoteManagement $subject, int $cartId, ?\Magento\Payment\Model\InfoInterface $paymentMethod = null): void
+    {
+        if ($montaShippingData = $this->getShippingData($cartId)) {
+            $montaShippingData->validate();
+        }
+    }
+
     /**
      * @param QuoteManagement $subject
      * @param int $orderId
@@ -32,23 +47,34 @@ readonly class Management
      */
     public function afterPlaceOrder(QuoteManagement $subject, int $orderId, int $quoteId): int
     {
-        // Quote is inactive after placement
-        /** @var \Magento\Quote\Model\Quote $quote - Inactive quote after placement */
-        $quote = $this->quoteRepository->get($quoteId);
-
         // Get monta shipping data from Quote
-        if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-            // Convert JSON to object
-            $convertedObject = Option::constructFromJson($montaData);
-
+        if ($convertedObject = $this->getShippingData($quoteId)) {
             $order = $this->orderRepository->get($orderId);
 
-            /** Save converted JSON in proper JSON structure for export */
+            /** Save converted JSON back to JSON, in proper format for export */
             $order->setMontaShippingData($convertedObject->toJson());
             $this->orderRepository->save($order);
         }
 
         return $orderId;
+    }
+
+    /** Get Selected shipping option from Quote
+     *
+     * @param int $quoteId
+     * @return Option|null - Selected shipping option or NULL
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    protected function getShippingData(int $quoteId): ?Option
+    {
+        $option = null;
+        $quote = $this->quoteRepository->get($quoteId);
+        // TODO only when Monta was selected as carrier
+        if ($montaShippingData = $quote->getShippingAddress()->getMontaShippingData()) {
+            // Convert JSON to object
+            $option = Option::constructFromJson($montaShippingData);
+        }
+        return $option;
     }
 
 }

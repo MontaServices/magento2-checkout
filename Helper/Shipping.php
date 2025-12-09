@@ -35,7 +35,10 @@ class Shipping extends Api
             }
 
             // Call the API, get formatted shipping options
-            $shippingOptions = $api->getShippingOptions(computeKm: true);
+            $shippingOptions = $api->getShippingOptions(
+                computeKm: true, // Convert API distances to kilometers
+                cacheResults: true, // Keep results in cache for later checking
+            );
             /*
             TODO from old module: if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
             if shippingOptions.StoreLocation{

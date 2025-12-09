@@ -33,6 +33,8 @@ readonly class MethodConverter
     }
 
     /**
+     * TODO this already runs once while loading Checkout page, even before `estimate-shipping-methods`
+     *
      * @param ShippingMethodConverter $subject
      * @param ShippingMethod $result
      * @param Rate $rate
