@@ -37,7 +37,7 @@ class Shipping extends Api
             // Call the API, get formatted shipping options
             $shippingOptions = $api->getShippingOptions(
                 computeKm: true, // Convert API distances to kilometers
-                remember: true, // Keep results in session for later use
+                cacheResults: true, // Keep results in cache for later checking
             );
             /*
             TODO from old module: if config.disableDeliverydays: unset $shippingOptions[DeliveryOptions]
