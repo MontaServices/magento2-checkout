@@ -3,6 +3,7 @@
  * @author Jacco.Amersfoort <jacco.amersfoort@monta.nl>
  * @created 06/08/2025 13:20
  */
+
 namespace Monta\Checkout\Model\Carrier;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -39,7 +40,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
         LoggerInterface $logger,
         protected readonly ResultFactory $rateResultFactory,
         protected readonly MethodFactory $rateMethodFactory,
-        array $data = []
+        array $data = [],
     )
     {
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);

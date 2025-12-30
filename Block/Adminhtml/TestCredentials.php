@@ -71,6 +71,7 @@ class TestCredentials extends Field
     }
 
     /** Get the route for the credentials validation
+     *
      * @return string
      */
     public function getRoute(): string

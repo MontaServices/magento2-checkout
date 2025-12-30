@@ -31,7 +31,11 @@ readonly class Management
      * @return void
      * @throws \Exception
      */
-    public function beforePlaceOrder(QuoteManagement $subject, int $cartId, ?\Magento\Payment\Model\InfoInterface $paymentMethod = null): void
+    public function beforePlaceOrder(
+        QuoteManagement $subject,
+        int $cartId,
+        ?\Magento\Payment\Model\InfoInterface $paymentMethod = null,
+    ): void
     {
         if ($montaShippingData = $this->getShippingData($cartId)) {
             $montaShippingData->validate();

@@ -22,7 +22,8 @@ class System extends AbstractHelper
     public function __construct(
         Context $context,
         protected readonly ProductMetadataInterface $metadata,
-        protected readonly ResourceInterface $resource)
+        protected readonly ResourceInterface $resource,
+    )
     {
         parent::__construct($context);
     }

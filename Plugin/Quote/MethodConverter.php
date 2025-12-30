@@ -34,6 +34,7 @@ readonly class MethodConverter
 
     /**
      * TODO this already runs once while loading Checkout page, even before `estimate-shipping-methods`
+     * TODO this feels like the code belongs in Carrier\Monta class
      *
      * @param ShippingMethodConverter $subject
      * @param ShippingMethod $result
@@ -41,7 +42,11 @@ readonly class MethodConverter
      * @return ShippingMethod
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function afterModelToDataObject(ShippingMethodConverter $subject, ShippingMethod $result, Rate $rate): ShippingMethod
+    public function afterModelToDataObject(
+        ShippingMethodConverter $subject,
+        ShippingMethod $result,
+        Rate $rate,
+    ): ShippingMethod
     {
         if ($rate->getMethod() == Monta::METHOD_CODE) {
             $ext = $result->getExtensionAttributes() ?? $this->extensionFactory->create();
@@ -49,8 +54,8 @@ readonly class MethodConverter
             $ext->setData(Shipping::MONTA_SHIPPING_OPTIONS,
                 // Encode JSON to pass to frontend
                 $this->serializer->serialize(
-                    $this->shippingHelper->getOptions($rate->getAddress()->getQuote())
-                )
+                    $this->shippingHelper->getOptions($rate->getAddress()->getQuote()),
+                ),
             );
             $result->setExtensionAttributes($ext);
         }

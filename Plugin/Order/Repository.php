@@ -43,7 +43,10 @@ readonly class Repository
      * @param OrderSearchResultInterface $searchResult
      * @return OrderSearchResultInterface
      */
-    public function afterGetList(OrderRepositoryInterface $subject, OrderSearchResultInterface $searchResult): OrderSearchResultInterface
+    public function afterGetList(
+        OrderRepositoryInterface $subject,
+        OrderSearchResultInterface $searchResult,
+    ): OrderSearchResultInterface
     {
         $orders = $searchResult->getItems();
 

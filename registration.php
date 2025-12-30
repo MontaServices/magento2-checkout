@@ -9,5 +9,5 @@ use Magento\Framework\Component\ComponentRegistrar;
 ComponentRegistrar::register(
     ComponentRegistrar::MODULE,
     'Monta_Checkout',
-    __DIR__
+    __DIR__,
 );
