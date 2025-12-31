@@ -1,3 +1,5 @@
+'use strict';
+
 window.sharedUtils = {
     /** Select the first item in the list by clicking
      *
