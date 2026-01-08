@@ -15,6 +15,8 @@
         <div if="DeliveryOptions().length" class="tabcontent hidden"
              data-bind="class: 'tab-' + deliveryOptionsIdentifier">
             <!-- Day buttons -->
+            <!-- TODO we might replace all the `afterRender: clickFirst` logic
+            with `.click-first` class like Hyva module in scripts.phtml -->
             <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
                  data-bind="afterRender: clickFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
                 <!-- $this becomes each element, $parent becomes the current component -->

@@ -34,6 +34,8 @@ window.sharedUtils = {
             // Add 'primary' class to this button element, remove from siblings
             this.applyAmongSiblings(event.currentTarget, ['primary']);
         }
+        // Return true to propagate click
+        return true;
     },
 
     /** Apply class to element and remove that class from siblings
@@ -94,5 +96,11 @@ window.sharedUtils = {
                 element?.classList?.remove.apply(element.classList, targetClasses);
             }
         }
-    }
+        return true;
+    },
+
+    focusSelection: function (element) {
+        // Apply blue Monta focus to this element
+        return this.applyAmongSiblings(element, ['monta-blue-focus']);
+    },
 }
