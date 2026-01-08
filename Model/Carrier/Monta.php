@@ -15,7 +15,7 @@ use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
-use Monta\CheckoutApiWrapper\Objects\Option;
+use Monta\Checkout\Helper\Quote;
 use Psr\Log\LoggerInterface;
 
 class Monta extends AbstractCarrier implements CarrierInterface
@@ -32,6 +32,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
      * @param LoggerInterface $logger
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
+     * @param Quote $quoteHelper
      * @param array $data
      */
     public function __construct(
@@ -40,6 +41,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
         LoggerInterface $logger,
         protected readonly ResultFactory $rateResultFactory,
         protected readonly MethodFactory $rateMethodFactory,
+        protected readonly Quote $quoteHelper,
         array $data = [],
     )
     {
@@ -87,13 +89,11 @@ class Monta extends AbstractCarrier implements CarrierInterface
 
             if (!empty($allItems)) {
                 $quote = reset($allItems)->getQuote();
-                if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-                    // Decode JSON and calculate price
-                    if ($option = Option::constructFromJson($montaData)) {
-                        // sometimes $option might be PickupPoint which `getPrice` has no arguments
-                        $rateMethod->setPrice($option->getPrice(true));
-                        $rateMethod->setCost($option->getPrice());
-                    }
+                // Get Option and calculate price
+                if ($option = $this->quoteHelper->getOptionFromQuote($quote)) {
+                    // sometimes $option might be PickupPoint whose `getPrice` has no arguments
+                    $rateMethod->setPrice($option->getPrice(true));
+                    $rateMethod->setCost($option->getPrice());
                 }
             }
         }
