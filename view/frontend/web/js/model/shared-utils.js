@@ -34,6 +34,10 @@ window.sharedUtils = {
             // Add 'primary' class to this button element, remove from siblings
             this.applyAmongSiblings(event.currentTarget, ['primary']);
         }
+
+        // Hyva companion module listens to this event
+        window.dispatchEvent(new Event('monta:mode:' + mode));
+
         // Return true to propagate click
         return true;
     },
