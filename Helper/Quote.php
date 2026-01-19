@@ -55,15 +55,23 @@ readonly class Quote
 
     /** Retrieve the current selected Shipping option from Quote
      *
-     * @param \Magento\Quote\Model\Quote $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
+     * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
      * @return Option|null
      */
-    public function getOptionFromQuote(\Magento\Quote\Model\Quote $quote): ?Option
+    public function getOptionFromQuote(?\Magento\Quote\Model\Quote $quote = null): ?Option
     {
         $option = null;
-        if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-            // Decode JSON into object
-            $option = Option::constructFromJson($montaData);
+        try {
+            if (!$quote) {
+                $quote = $this->checkoutSession->getQuote();
+            }
+            if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
+                // Decode JSON into object
+                $option = Option::constructFromJson($montaData);
+            }
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $exception) {
+        } catch (\Magento\Framework\Exception\LocalizedException $exception) {
+            // Ignore exceptions, return null
         }
         return $option;
     }
