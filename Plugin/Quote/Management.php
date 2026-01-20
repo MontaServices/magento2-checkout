@@ -9,6 +9,7 @@ use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Monta\CheckoutApiWrapper\Objects\Option;
+use Monta\CheckoutApiWrapper\Objects\PickupPoint;
 
 readonly class Management
 {
@@ -39,6 +40,19 @@ readonly class Management
     {
         if ($montaShippingData = $this->getShippingData($cartId)) {
             $montaShippingData->validate();
+
+            // In case of pickup, set Pickup address as Shipping address
+            if ($montaShippingData->getShippingType() == Option::PICKUP_TYPE) {
+                /** @var PickupPoint $montaShippingData */
+                $shippingAddress = $this->quoteRepository->get($cartId)->getShippingAddress();
+
+                // Update Shipping address, saved later in `placeOrder`
+                $shippingAddress->setStreet($montaShippingData->getStreet());
+                $shippingAddress->setCompany($montaShippingData->getCompany());
+                $shippingAddress->setPostcode($montaShippingData->getPostalCode());
+                $shippingAddress->setCity($montaShippingData->getCity());
+                $shippingAddress->setCountryId($montaShippingData->getCountryCode());
+            }
         }
     }
 
