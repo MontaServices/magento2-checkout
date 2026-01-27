@@ -6,7 +6,7 @@
         <!-- TODO for some reason Tailwind doesn't work on button element -->
         <button type="button" data-bind="click: tabButton.callback, attr: {id: tabButton.id}"
                 if="tabButton.active"
-                class="button btn options-tab-button action btn w-1/2 py-2 text-white mx-auto"
+                class="button btn options-tab-button action w-1/2 py-2 text-white mx-auto"
                 text="tabButton.label">
         </button>
     </div>
@@ -15,8 +15,7 @@
         <div if="DeliveryOptions().length" class="tabcontent hidden"
              data-bind="class: 'tab-' + deliveryOptionsIdentifier">
             <!-- Day buttons -->
-            <!-- TODO we might replace all the `afterRender: clickFirst` logic
-            with `.click-first` class like Hyva module in scripts.phtml -->
+            <!-- TODO we could replace all the `afterRender: clickFirst` logic with `.click-first` class like Hyva module in scripts.phtml -->
             <div class="flex max-w-md mx-auto justify-center gap-5 mb-5"
                  data-bind="afterRender: clickFirst, foreach: { data: DeliveryOptions(), as: 'option' }">
                 <!-- $this becomes each element, $parent becomes the current component -->
