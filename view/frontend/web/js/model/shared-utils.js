@@ -1,0 +1,110 @@
+'use strict';
+
+window.sharedUtils = {
+    /** Select the first item in the list by clicking
+     *
+     * @param element
+     */
+    clickFirst: function (element) {
+        // use timeout(zero) to wait for next tick when all elements are rendered
+        setTimeout(function () {
+            // Find first child element and click it
+            let firstChild = element.querySelector("*:first-of-type");
+            if (firstChild) {
+                firstChild.click();
+            }
+        }, 0);
+
+        // Return true to continue default click behavior
+        return true;
+    },
+
+    /** Select a mode for the checkout
+     *
+     * @param mode - string
+     * @param event - click event
+     */
+    clickMode: function (mode, event) {
+        // Find element for this mode
+        // TODO replace all this HTML logic with a observable 'mode' property on component
+        let element = document.querySelector(".tab-" + mode);
+        if (element) {
+            // Remove 'hidden' class from this one, add to siblings
+            this.applyAmongSiblings(element, ['hidden'], false);
+            // Add 'primary' class to this button element, remove from siblings
+            this.applyAmongSiblings(event.currentTarget, ['primary']);
+        }
+
+        // Hyva companion module listens to this event
+        window.dispatchEvent(new Event('monta:mode:' + mode));
+
+        // Return true to propagate click
+        return true;
+    },
+
+    /** Apply class to element and remove that class from siblings
+     *
+     * @param element - HtmlElement, HtmlElement[], Nodelist
+     * @param targetClasses - string[] - classes to add or remove
+     * @param add - TRUE to add classes to subject and remove from siblings, FALSE to remove classes from subject and add to siblings
+     */
+    applyAmongSiblings: function (element, targetClasses, add = true) {
+        if (element && element.classList) {
+            let self = this;
+            // Iterate if parameter is iterable
+            if (Symbol.iterator in Object(element)) {
+                element.forEach(function (subelement) {
+                    self.applyAmongSiblings(subelement, targetClasses, add);
+                })
+            } else {
+                let parent = element.parentElement;
+
+                // Remove focus from all sibling tiles
+                if (parent) {
+                    parent.childNodes.forEach(function (sibling) {
+                        // Only same-tag siblings with a classlist
+                        if (sibling.classList && sibling.tagName === element.tagName) {
+                            // Apply inverse on siblings
+                            self.applyClasses(sibling, targetClasses, !add);
+                        }
+                    });
+                }
+
+                // Add selection classes to the clicked tile
+                self.applyClasses(element, targetClasses, add);
+            }
+        } else {
+            console.warn("Cannot apply classes since no element was passed.");
+        }
+    },
+
+    /** Add or remove classes from an element
+     * TODO merge these two methods for simplicity, use new `amongSiblings` parameter
+     *
+     * @param element - HtmlElement, HtmlElement[], Nodelist
+     * @param targetClasses
+     * @param add
+     */
+    applyClasses: function (element, targetClasses, add = true) {
+        let self = this;
+        // If passed element is iterable
+        if (Symbol.iterator in Object(element)) {
+            element.forEach(function (subelement) {
+                // Call self recursively with each element
+                self.applyClasses(subelement, targetClasses, add);
+            })
+        } else {
+            if (add) {
+                element?.classList?.add.apply(element.classList, targetClasses);
+            } else {
+                element?.classList?.remove.apply(element.classList, targetClasses);
+            }
+        }
+        return true;
+    },
+
+    focusSelection: function (element) {
+        // Apply blue Monta focus to this element
+        return this.applyAmongSiblings(element, ['monta-blue-focus']);
+    },
+}

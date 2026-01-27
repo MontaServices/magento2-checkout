@@ -31,10 +31,27 @@ readonly class Management
      * @return void
      * @throws \Exception
      */
-    public function beforePlaceOrder(QuoteManagement $subject, int $cartId, ?\Magento\Payment\Model\InfoInterface $paymentMethod = null): void
+    public function beforePlaceOrder(
+        QuoteManagement $subject,
+        int $cartId,
+        ?\Magento\Payment\Model\InfoInterface $paymentMethod = null,
+    ): void
     {
         if ($montaShippingData = $this->getShippingData($cartId)) {
             $montaShippingData->validate();
+
+            // In case of pickup, set Pickup address as Shipping address
+            if ($montaShippingData->isPickup()) {
+                /** @var \Monta\CheckoutApiWrapper\Objects\PickupPoint $montaShippingData */
+                $shippingAddress = $this->quoteRepository->get($cartId)->getShippingAddress();
+
+                // Update Shipping address, saved later in `placeOrder`
+                $shippingAddress->setStreet($montaShippingData->getStreet());
+                $shippingAddress->setCompany($montaShippingData->getCompany());
+                $shippingAddress->setPostcode($montaShippingData->getPostalCode());
+                $shippingAddress->setCity($montaShippingData->getCity());
+                $shippingAddress->setCountryId($montaShippingData->getCountryCode());
+            }
         }
     }
 

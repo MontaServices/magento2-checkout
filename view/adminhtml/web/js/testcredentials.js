@@ -10,6 +10,8 @@ define(['underscore'], function (_) {
         buttonElement.onclick = function (event) {
             // Avoid double click
             buttonElement.disabled = true;
+            // Notify user API is calling
+            updateButton('Checking ⏳');
             let retry = true;
 
             let orderData = new FormData();
@@ -19,18 +21,27 @@ define(['underscore'], function (_) {
                 headers: {contentType: 'application/json'},
                 body: orderData,
             }).then(response => response.json()).then(data => {
-                buttonElement.querySelector('label').innerHTML = data.message;
+                updateButton(data.message);
                 // Disable button to avoid spam after success
                 retry = !data.success;
             })
                 .catch(error => {
                     console.warn("Error", error);
+                    updateButton(error.message);
                 }).finally(() => {
                 // Whatever happens, enable button again
                 if (retry) {
                     buttonElement.disabled = false;
                 }
             });
+
+            /** Update button label
+             *
+             * @param text
+             */
+            function updateButton(text) {
+                buttonElement.querySelector('label').innerHTML = text;
+            }
         }.bind(config);
     }
 })

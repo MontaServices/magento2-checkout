@@ -3,6 +3,7 @@
  * @author Jacco.Amersfoort <jacco.amersfoort@monta.nl>
  * @created 06/08/2025 13:20
  */
+
 namespace Monta\Checkout\Model\Carrier;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -14,7 +15,7 @@ use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
-use Monta\CheckoutApiWrapper\Objects\Option;
+use Monta\Checkout\Helper\Quote;
 use Psr\Log\LoggerInterface;
 
 class Monta extends AbstractCarrier implements CarrierInterface
@@ -31,6 +32,7 @@ class Monta extends AbstractCarrier implements CarrierInterface
      * @param LoggerInterface $logger
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
+     * @param Quote $quoteHelper
      * @param array $data
      */
     public function __construct(
@@ -39,7 +41,8 @@ class Monta extends AbstractCarrier implements CarrierInterface
         LoggerInterface $logger,
         protected readonly ResultFactory $rateResultFactory,
         protected readonly MethodFactory $rateMethodFactory,
-        array $data = []
+        protected readonly Quote $quoteHelper,
+        array $data = [],
     )
     {
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
@@ -79,20 +82,21 @@ class Monta extends AbstractCarrier implements CarrierInterface
         $rateMethod->setPrice($this->getHandlingFee());
         $rateMethod->setCost($this->getHandlingFee());
 
-        // When this Carrier was selected and rates are now being recalculated
-        if (($request->getLimitCarrier() == $this->_code)) {
-            // Get Quote via Items, loading CheckoutSession would cause an infinite loop
-            $allItems = $request->getAllItems();
+        // Get Quote via Items, loading CheckoutSession would cause an infinite loop
+        $allItems = $request->getAllItems();
 
-            if (!empty($allItems)) {
-                $quote = reset($allItems)->getQuote();
-                if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-                    // Decode JSON and calculate price
-                    if ($option = Option::constructFromJson($montaData)) {
-                        // sometimes $option might be PickupPoint which `getPrice` has no arguments
-                        $rateMethod->setPrice($option->getPrice(true));
-                        $rateMethod->setCost($option->getPrice());
-                    }
+        if (!empty($allItems)) {
+            /** @var \Magento\Quote\Model\Quote $quote */
+            $quote = reset($allItems)->getQuote();
+            $quote->getShippingAddress()->getShippingMethod();
+
+            // When this Carrier was selected and rates are now being recalculated
+            if (str_starts_with($quote->getShippingAddress()->getShippingMethod(), $this->_code)) {
+                // Get Option and calculate price
+                if ($option = $this->quoteHelper->getOptionFromQuote($quote)) {
+                    // sometimes $option might be PickupPoint whose `getPrice` has no arguments
+                    $rateMethod->setPrice($option->getPrice(true));
+                    $rateMethod->setCost($option->getPrice());
                 }
             }
         }

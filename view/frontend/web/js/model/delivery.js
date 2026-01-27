@@ -78,8 +78,7 @@ define([
         },
 
         focusSelection: function (element) {
-            // Apply blue focus to this element
-            utility.applyAmongSiblings(element, ["monta-blue-focus"]);
+            return utility.focusSelection(element);
         },
     }
 });

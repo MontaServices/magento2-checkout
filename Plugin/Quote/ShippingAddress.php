@@ -19,7 +19,7 @@ class ShippingAddress
     public function beforeAssign(
         ShippingAddressManagement $subject,
         ?int $cartId,
-        AddressInterface $address
+        AddressInterface $address,
     ): void
     {
         // If selected shipping option was passed
