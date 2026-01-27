@@ -88,15 +88,15 @@ class Monta extends AbstractCarrier implements CarrierInterface
         if (!empty($allItems)) {
             /** @var \Magento\Quote\Model\Quote $quote */
             $quote = reset($allItems)->getQuote();
-            $quote->getShippingAddress()->getShippingMethod();
-
-            // When this Carrier was selected and rates are now being recalculated
-            if (str_starts_with($quote->getShippingAddress()->getShippingMethod(), $this->_code)) {
-                // Get Option and calculate price
-                if ($option = $this->quoteHelper->getOptionFromQuote($quote)) {
-                    // sometimes $option might be PickupPoint whose `getPrice` has no arguments
-                    $rateMethod->setPrice($option->getPrice(true));
-                    $rateMethod->setCost($option->getPrice());
+            if ($quote->getShippingAddress()->getShippingMethod()) {
+                // If this method is the quote's selected method
+                if (str_starts_with(haystack: $quote->getShippingAddress()->getShippingMethod(), needle: $this->_code)) {
+                    // Get Option and calculate price
+                    if ($option = $this->quoteHelper->getOptionFromQuote($quote)) {
+                        // sometimes $option might be PickupPoint whose `getPrice` has no arguments
+                        $rateMethod->setPrice($option->getPrice(true));
+                        $rateMethod->setCost($option->getPrice());
+                    }
                 }
             }
         }
