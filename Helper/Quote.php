@@ -53,6 +53,27 @@ readonly class Quote
         return $option;
     }
 
+    /** Set ShipperOptions to selected ShippingOption
+     * Similar to frontend `updateQuote` method
+     *
+     * @param array $shipperOptions
+     * @return void
+     */
+    public function setShipperOptions(array $shipperOptions)
+    {
+        // Can only update ShipperOptions when it's set in Quote
+        if ($option = $this->getOptionFromQuote()) {
+            // Frontend sets this field the same way
+            $option->updateOriginalData(['selectedShipperOptions' => $shipperOptions]);
+
+            try {
+                $this->setOption(json_encode($option));
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                // Catch and ignore exception
+            }
+        }
+    }
+
     /** Retrieve the current selected Shipping option from Quote
      *
      * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
