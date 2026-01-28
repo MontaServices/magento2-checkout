@@ -59,17 +59,20 @@ readonly class Quote
      * @param array $shipperOptions
      * @return void
      */
-    public function setShipperOptions(array $shipperOptions)
+    public function setShipperOptions(array $shipperOptions): void
     {
-        // Can only update ShipperOptions when it's set in Quote
+        // Can only update ShipperOptions if it's set in Quote
         if ($option = $this->getOptionFromQuote()) {
-            // Frontend sets this field the same way
-            $option->updateOriginalData(['selectedShipperOptions' => $shipperOptions]);
+            // Shipper options not valid for Pickup, do nothing then
+            if (!$option->isPickup()) {
+                // Frontend sets this field the same way in delivery.js
+                $option->setSelectedShipperOptions($shipperOptions);
 
-            try {
-                $this->setOption(json_encode($option));
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                // Catch and ignore exception
+                try {
+                    $this->setOption(json_encode($option));
+                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                    // Catch and ignore exception
+                }
             }
         }
     }
