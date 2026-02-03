@@ -32,7 +32,6 @@
                         <field id="enablepickuppoints">1</field>
                     </depends>
                     <validate>validate-number validate-number-range number-range-1-10</validate>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Max number of pickup points to show (between 1 and 10)]]></comment>
                 </field>
                 <field id="handling_fee" translate="label comment" type="text" sortOrder="80" canRestore="1"
