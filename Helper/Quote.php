@@ -61,20 +61,13 @@ readonly class Quote
      */
     public function setShipperOptions(array $shipperOptions): void
     {
-        // Can only update ShipperOptions if it's set in Quote
-        if ($option = $this->getOptionFromQuote()) {
+        $this->updateOption(function (Option $option) use ($shipperOptions) {
             // Shipper options not valid for Pickup, do nothing then
             if (!$option->isPickup()) {
                 // Frontend sets this field the same way in delivery.js
                 $option->setSelectedShipperOptions($shipperOptions);
-
-                try {
-                    $this->setOption(json_encode($option));
-                } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                    // Catch and ignore exception
-                }
             }
-        }
+        });
     }
 
     /** Update Postnumber in selected Pickup option in Quote
@@ -84,16 +77,31 @@ readonly class Quote
      */
     public function updatePackstation(string $selectedPostnumber): void
     {
-        // Can only update postnumebr if Option is set in quote
-        if ($option = $this->getOptionFromQuote()) {
+        $this->updateOption(function (Option $option) use ($selectedPostnumber) {
             // Only Pickup points can have Postnumber
             if ($option->isPickup()) {
                 $option->addShipperOptionsWithValue($selectedPostnumber);
-                try {
-                    $this->setOption(json_encode($option));
-                } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                    // Catch and ignore
-                }
+            }
+        });
+    }
+
+    /** Generic method for updating Option in Quote
+     *
+     * @param callable $callback - Mutate the Option in quote
+     * @return void
+     */
+    protected function updateOption(callable $callback): void
+    {
+        // Can only update data if Option is set in quote
+        if ($option = $this->getOptionFromQuote()) {
+            // Perform callback on option
+            $callback($option);
+
+            // Then save it
+            try {
+                $this->setOption(json_encode($option));
+            } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                // Catch and ignore TODO write log somewhere
             }
         }
     }
