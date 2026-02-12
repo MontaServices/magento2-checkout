@@ -77,6 +77,27 @@ readonly class Quote
         }
     }
 
+    /** Update Postnumber in selected Pickup option in Quote
+     *
+     * @param string $selectedPostnumber - Customer's Postnumber for packstation
+     * @return void
+     */
+    public function updatePackstation(string $selectedPostnumber): void
+    {
+        // Can only update postnumebr if Option is set in quote
+        if ($option = $this->getOptionFromQuote()) {
+            // Only Pickup points can have Postnumber
+            if ($option->isPickup()) {
+                $option->addShipperOptionsWithValue($selectedPostnumber);
+                try {
+                    $this->setOption(json_encode($option));
+                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                    // Catch and ignore
+                }
+            }
+        }
+    }
+
     /** Retrieve the current selected Shipping option from Quote
      *
      * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
