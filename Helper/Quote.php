@@ -80,7 +80,7 @@ readonly class Quote
         $this->updateOption(function (Option $option) use ($selectedPostnumber) {
             // Only Pickup points can have Postnumber
             if ($option->isPickup()) {
-                $option->addShipperOptionsWithValue($selectedPostnumber);
+                $option->setPostnumber($selectedPostnumber);
             }
         });
     }
