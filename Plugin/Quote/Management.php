@@ -8,6 +8,7 @@ namespace Monta\Checkout\Plugin\Quote;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Monta\Checkout\Helper\Shipping;
 use Monta\CheckoutApiWrapper\Objects\Option;
 
 readonly class Management
@@ -15,10 +16,12 @@ readonly class Management
     /**
      * @param OrderRepositoryInterface $orderRepository
      * @param CartRepositoryInterface $quoteRepository
+     * @param Shipping $shippingHelper
      */
     public function __construct(
         protected OrderRepositoryInterface $orderRepository,
         protected CartRepositoryInterface $quoteRepository,
+        protected Shipping $shippingHelper,
     )
     {
     }
@@ -86,10 +89,14 @@ readonly class Management
     {
         $option = null;
         $quote = $this->quoteRepository->get($quoteId);
-        // TODO only when Monta was selected as carrier
-        if ($montaShippingData = $quote->getShippingAddress()->getMontaShippingData()) {
-            // Convert JSON to object
-            $option = Option::constructFromJson($montaShippingData);
+        $shippingAddress = $quote->getShippingAddress();
+
+        // Only if the method is active
+        if ($this->shippingHelper->isMonta($shippingAddress->getShippingMethod())) {
+            if ($montaShippingData = $shippingAddress->getMontaShippingData()) {
+                // Convert JSON to object
+                $option = Option::constructFromJson($montaShippingData);
+            }
         }
         return $option;
     }
