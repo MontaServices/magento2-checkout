@@ -3,7 +3,7 @@
     <!-- Buttons-->
     <div class="flex mx-auto mb-5"
          data-bind="afterRender: clickFirst, foreach: { data: tabButtons(), as: 'tabButton' }">
-        <!-- TODO for some reason Tailwind doesn't work on button element -->
+        <!-- TODO convert to input/label combo like in the Hyva module -->
         <button type="button" data-bind="click: tabButton.callback, attr: {id: tabButton.id}"
                 if="tabButton.active"
                 class="button btn options-tab-button action w-1/2 py-2 text-white mx-auto"
