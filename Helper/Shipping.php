@@ -6,6 +6,7 @@
 namespace Monta\Checkout\Helper;
 
 use Magento\Quote\Api\Data\CartInterface;
+use Monta\Checkout\Model\Carrier\Monta;
 
 class Shipping extends Api
 {
@@ -47,5 +48,16 @@ class Shipping extends Api
             */
         }
         return $shippingOptions;
+    }
+
+    /** Check if this method is the Monta method
+     *
+     * @param string $method
+     * @return bool
+     */
+    public function isMonta(string $method): bool
+    {
+        // Throughout Magento, method might be 'method' or 'carrier_method' alone but both are Monta
+        return ($method == Monta::METHOD_CODE || $method == Monta::METHOD_CODE . "_" . Monta::METHOD_CODE);
     }
 }

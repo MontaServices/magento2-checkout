@@ -1,13 +1,14 @@
 @import 'tailwindcss';
 
 @utility rounded-tile {
-    @apply rounded-xl p-4 border;
+    @apply rounded-xl p-4;
 }
 
 @utility monta-blue-focus {
-    @apply !border-blue-400 bg-blue-50;
+    /* important ring-color to override gray ring below */
+    @apply !ring-blue-400 ring-inset ring-1 bg-blue-50;
 }
 
 @utility monta-gray-tile {
-    @apply border-gray-300;
+    @apply ring-gray-300 ring-inset ring-1;
 }
