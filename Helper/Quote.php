@@ -58,6 +58,7 @@ readonly class Quote
      *
      * @param array $shipperOptions
      * @return void
+     * @deprecated - Currently not in use anywhere
      */
     public function setShipperOptions(array $shipperOptions): void
     {
@@ -119,8 +120,11 @@ readonly class Quote
                 $quote = $this->checkoutSession->getQuote();
             }
             if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-                // Decode JSON into object
-                $option = Option::constructFromJson($montaData);
+                // Check if data is valid (every option always must have a code)
+                if (!empty(json_decode($montaData, true)['code'])) {
+                    // Decode JSON into object
+                    $option = Option::constructFromJson($montaData);
+                }
             }
         } catch (\Magento\Framework\Exception\NoSuchEntityException $exception) {
         } catch (\Magento\Framework\Exception\LocalizedException $exception) {
