@@ -5,11 +5,14 @@
  */
 namespace Monta\Checkout\Plugin\Quote;
 
+use Magento\Payment\Model\InfoInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Monta\Checkout\Helper\Shipping;
 use Monta\CheckoutApiWrapper\Objects\Option;
+use Monta\CheckoutApiWrapper\Objects\PickupPoint;
+use Monta\CheckoutApiWrapper\Objects\ShippingOption;
 
 readonly class Management
 {
@@ -30,14 +33,14 @@ readonly class Management
      *
      * @param QuoteManagement $subject
      * @param int $cartId
-     * @param \Magento\Payment\Model\InfoInterface|null $paymentMethod
+     * @param InfoInterface|null $paymentMethod
      * @return void
      * @throws \Exception
      */
     public function beforePlaceOrder(
         QuoteManagement $subject,
         int $cartId,
-        ?\Magento\Payment\Model\InfoInterface $paymentMethod = null,
+        ?InfoInterface $paymentMethod = null,
     ): void
     {
         if ($montaShippingData = $this->getShippingData($cartId)) {
@@ -65,7 +68,11 @@ readonly class Management
      * @return int
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function afterPlaceOrder(QuoteManagement $subject, int $orderId, int $quoteId): int
+    public function afterPlaceOrder(
+        QuoteManagement $subject,
+        int $orderId,
+        int $quoteId,
+    ): int
     {
         // Get monta shipping data from Quote
         if ($convertedObject = $this->getShippingData($quoteId)) {
@@ -85,7 +92,7 @@ readonly class Management
      * @return Option|null - Selected shipping option or NULL
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function getShippingData(int $quoteId): ?Option
+    protected function getShippingData(int $quoteId): null|Option|ShippingOption|PickupPoint
     {
         $option = null;
         $quote = $this->quoteRepository->get($quoteId);
