@@ -1,3 +1,5 @@
+"%1 of %2 pickup points","%1 von %2 Abholpunkten"
+"Collect","Abheben"
 "Credentials are not valid! Did you save before testing?","Die Zugangsdaten sind ungültig! Haben Sie vor dem Testen gespeichert?"
 "Credentials are valid!","Die Zugangsdaten sind gültig!"
 "Delivery","Lieferung"
@@ -5,7 +7,5 @@
 "List","Liste"
 "Map","Karte"
 "Pickup","Abholen"
-"%1 of %2 pickup points",%1 von %2 Abholpunkten
-"Test credentials","Zugangsdaten testen"
 "Post number","Postnummer"
-"Collect","Abheben"
+"Test credentials","Zugangsdaten testen"
