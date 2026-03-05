@@ -99,11 +99,24 @@ class Configuration
     }
 
     /**
-     * @return string
+     * @return string - Full path to image
      */
     public function getCollectLogo(): string
     {
-        return $this->getShippingConfig('collect_logo');
+        $imagePath = $this->getShippingConfig('collect_logo') ?? '';
+        if ($imagePath) {
+            try {
+                // Create the whole image path
+                $imagePath = $this->storeManager->getStore()
+                        ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
+                    // image is inside this folder
+                    . "sales/store/collect_logo/"
+                    . $imagePath;
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                // catch and ignore
+            }
+        }
+        return $imagePath;
     }
 
     /**
