@@ -110,7 +110,7 @@ class Configuration
                 $imagePath = $this->storeManager->getStore()
                         ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
                     // image is inside this folder
-                    . "sales/store/collect_logo/"
+                    . "sales/monta/collect/"
                     . $imagePath;
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
                 // catch and ignore
