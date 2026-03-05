@@ -113,7 +113,8 @@ class Configuration
                     . "sales/monta/collect/"
                     . $imagePath;
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-                // catch and ignore
+                // On failure to get the store, do not return a partial/invalid image path
+                $imagePath = '';
             }
         }
         return $imagePath;
