@@ -1,8 +1,8 @@
-<div class="pickup-option flex-col">
-    <div class="pickup-header flex justify-between space-x-2">
+<div class="flex-col">
+    <div class="flex justify-between space-x-2">
         <div class="flex">
             <img data-bind="attr: {src: pickup.imageUrl}" class="pickup-logo w-16 h-16 pr-2">
-            <div class="pickup-container">
+            <div class="">
                 <strong text="pickup.company"></strong>
                 <p class="text-sm text-gray-500" text="pickup.displayName"></p>
                 <p class="text-sm text-gray-600"
@@ -13,7 +13,10 @@
     </div>
     <div class="business-hours text-sm text-gray-500 mt-2 hidden" if="pickup.openingTimes.length">
         <div data-bind="foreach: { data: pickup.openingTimes, as: 'slot' }">
-            <p class="text-sm" text="slot.day + '\:\t ' + slot.from + ' - ' + slot.to"></p>
+            <p class="text-sm flex">
+                <span class="w-32 shrink-0" text="slot.day"></span>
+                <span text="'\: ' + slot.from + ' - ' + slot.to"></span>
+            </p>
         </div>
     </div>
 </div>
