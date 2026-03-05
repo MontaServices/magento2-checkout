@@ -5,9 +5,12 @@
  */
 namespace Monta\Checkout\Helper;
 
-use Magento\Checkout\Model\Session;
+use Magento\Checkout\Model\Session\Proxy as Session;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Monta\CheckoutApiWrapper\Objects\Option;
+use Monta\CheckoutApiWrapper\Objects\PickupPoint;
+use Monta\CheckoutApiWrapper\Objects\ShippingOption;
 
 readonly class Quote
 {
@@ -58,6 +61,7 @@ readonly class Quote
      *
      * @param array $shipperOptions
      * @return void
+     * @deprecated - Currently not in use anywhere
      */
     public function setShipperOptions(array $shipperOptions): void
     {
@@ -111,7 +115,8 @@ readonly class Quote
      * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
      * @return Option|null
      */
-    public function getOptionFromQuote(?\Magento\Quote\Model\Quote $quote = null): ?Option
+    public function getOptionFromQuote(?\Magento\Quote\Model\Quote $quote = null,
+    ): null|Option|ShippingOption|PickupPoint
     {
         $option = null;
         try {
@@ -119,11 +124,13 @@ readonly class Quote
                 $quote = $this->checkoutSession->getQuote();
             }
             if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
-                // Decode JSON into object
-                $option = Option::constructFromJson($montaData);
+                // Check if data is valid (every option always must have a code)
+                if (!empty(json_decode($montaData, true)['code'])) {
+                    // Decode JSON into object
+                    $option = Option::constructFromJson($montaData);
+                }
             }
-        } catch (\Magento\Framework\Exception\NoSuchEntityException $exception) {
-        } catch (\Magento\Framework\Exception\LocalizedException $exception) {
+        } catch (\Magento\Framework\Exception\NoSuchEntityException|LocalizedException $exception) {
             // Ignore exceptions, return null
         }
         return $option;

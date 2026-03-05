@@ -52,12 +52,12 @@ class Shipping extends Api
 
     /** Check if this method is the Monta method
      *
-     * @param string $method
+     * @param string|null $method - Method might be NULL before user selects one
      * @return bool
      */
-    public function isMonta(string $method): bool
+    public function isMonta(?string $method = null): bool
     {
         // Throughout Magento, method might be 'method' or 'carrier_method' alone but both are Monta
-        return ($method == Monta::METHOD_CODE || $method == Monta::METHOD_CODE . "_" . Monta::METHOD_CODE);
+        return $method && ($method == Monta::METHOD_CODE || $method == Monta::METHOD_CODE . "_" . Monta::METHOD_CODE);
     }
 }
