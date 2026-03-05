@@ -99,6 +99,14 @@ class Configuration
     }
 
     /**
+     * @return string
+     */
+    public function getCollectLogo(): string
+    {
+        return $this->getShippingConfig('collect_logo');
+    }
+
+    /**
      * @param string $field
      * @param bool $decrypt - If value is encrypted, decrypt it
      * @return mixed|string
