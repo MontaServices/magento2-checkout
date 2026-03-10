@@ -53,6 +53,7 @@ class Api
             defaultCosts: $this->montaConfiguration->getHandlingFee(),
             webshopLanguage: $this->localeResolver->getLocale(),
             currency: $this->montaConfiguration->getStore()->getCurrentCurrency()->getCurrencySymbol(),
+            storeCollectLogo: $this->montaConfiguration->getCollectLogo(),
         );
     }
 

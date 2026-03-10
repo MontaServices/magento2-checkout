@@ -81,6 +81,14 @@ class Configuration
         return (int)$this->carrier->getConfigData('number_of_pickuppoints');
     }
 
+    /** Configured carrier title
+     * @return string
+     */
+    public function getCarrierTitle(): string
+    {
+        return $this->carrier->getConfigData('title');
+    }
+
     /**
      * @return float
      */
@@ -96,6 +104,28 @@ class Configuration
     public function getStore(): StoreInterface
     {
         return $this->storeManager->getStore();
+    }
+
+    /**
+     * @return string - Full path to image
+     */
+    public function getCollectLogo(): string
+    {
+        $imagePath = $this->getShippingConfig('collect_logo') ?? '';
+        if ($imagePath) {
+            try {
+                // Create the whole image path
+                $imagePath = $this->storeManager->getStore()
+                        ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA)
+                    // image is inside this folder
+                    . "sales/monta/collect/"
+                    . $imagePath;
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                // On failure to get the store, do not return a partial/invalid image path
+                $imagePath = '';
+            }
+        }
+        return $imagePath;
     }
 
     /**

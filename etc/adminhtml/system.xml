@@ -71,6 +71,13 @@
                     <config_path>cms/pagebuilder/google_maps_api_key</config_path>
                     <comment><![CDATA[Your Google API key required for loading Pickup points on map.]]></comment>
                 </field>
+                <field id="collect_logo" translate="label" type="image"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Collect logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">sales/monta/collect</upload_dir>
+                    <base_url type="media" scope_info="1">sales/monta/collect</base_url>
+                </field>
             </group>
         </section>
     </system>
