@@ -82,15 +82,13 @@ class Monta extends AbstractCarrier implements CarrierInterface
         $rateMethod->setPrice($this->getHandlingFee());
         $rateMethod->setCost($this->getHandlingFee());
 
-        // Get Quote via Items, loading CheckoutSession would cause an infinite loop
         $allItems = $request->getAllItems();
 
-        if (!empty($allItems)) {
-            /** @var \Magento\Quote\Model\Quote $quote */
-            $quote = reset($allItems)->getQuote();
-            if ($quote->getShippingAddress()->getShippingMethod()) {
+        /** @var \Magento\Quote\Model\Quote $quote - Get Quote via Items, avoid infinite loop */
+        if (!empty($allItems) && ($quote = array_first($allItems)?->getQuote())) {
+            if ($method = $quote->getShippingAddress()->getShippingMethod()) {
                 // If this method is the quote's selected method
-                if (str_starts_with(haystack: $quote->getShippingAddress()->getShippingMethod(), needle: $this->_code)) {
+                if (str_starts_with(haystack: $method, needle: $this->_code)) {
                     // Get Option and calculate price
                     if ($option = $this->quoteHelper->getOptionFromQuote($quote)) {
                         // sometimes $option might be PickupPoint whose `getPrice` has no arguments

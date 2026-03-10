@@ -39,6 +39,7 @@ readonly class Quote
      */
     public function setOption(string $optionJson, bool $return = false): ?Option
     {
+        /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $this->checkoutSession->getQuote();
         $option = null;
 
