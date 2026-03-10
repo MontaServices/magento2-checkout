@@ -81,6 +81,14 @@ class Configuration
         return (int)$this->carrier->getConfigData('number_of_pickuppoints');
     }
 
+    /** Configured carrier title
+     * @return string
+     */
+    public function getCarrierTitle(): string
+    {
+        return $this->carrier->getConfigData('title');
+    }
+
     /**
      * @return float
      */
