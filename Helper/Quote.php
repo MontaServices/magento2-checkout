@@ -142,12 +142,14 @@ readonly class Quote
      * @param Address|null $shippingAddress
      * @param Option|null $option
      * @param int|null $cartId
+     * @param bool $onlyPickup - Return nothing if not a Pickup Option
      * @return ?Address
      */
     public function convertShippingAddress(
         Address $shippingAddress = null,
         Option $option = null,
         ?int $cartId = null,
+        bool $onlyPickup = false,
     ): ?Address
     {
         try {
@@ -168,6 +170,9 @@ readonly class Quote
                 $shippingAddress->setPostcode($option->getPostalCode());
                 $shippingAddress->setCity($option->getCity());
                 $shippingAddress->setCountryId($option->getCountryCode());
+            } elseif ($onlyPickup) {
+                // Return NULL instead of an unchanged Address
+                $shippingAddress = null;
             }
         } catch (NoSuchEntityException|LocalizedException $exception) {
             // Catch and ignore
