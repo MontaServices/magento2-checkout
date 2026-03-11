@@ -123,13 +123,7 @@ readonly class Quote
     {
         $option = null;
         try {
-            // When cartId is passed, load from repository
-            if (is_int($quote)) {
-                $quote = $this->quoteRepository->get($quote);
-            }
-            if (!$quote) {
-                $quote = $this->checkoutSession->getQuote();
-            }
+            $quote = $this->getQuote($quote);
             if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
                 // Check if data is valid (every option always must have a code)
                 if (!empty(json_decode($montaData, true)['code'])) {
@@ -149,7 +143,6 @@ readonly class Quote
      * @param Option|null $option
      * @param int|null $cartId
      * @return ?Address
-     * @throws NoSuchEntityException
      */
     public function convertShippingAddress(
         Address $shippingAddress = null,
@@ -157,15 +150,16 @@ readonly class Quote
         ?int $cartId = null,
     ): ?Address
     {
+        $quote = $this->getQuote($cartId);
         // When not passed, load from repository
-        if (!$shippingAddress && $cartId) {
-            $shippingAddress = $this->quoteRepository->get($cartId)?->getShippingAddress();
+        if (!$shippingAddress) {
+            $shippingAddress = $quote->getShippingAddress();
         }
         // Same for option
         if (!$option) {
             $option = $this->getOptionFromQuote();
         }
-        // If all are set, and it's a Pickup point
+        // If all are found and it is a Pickup point
         if ($shippingAddress && $option && $option->isPickup()) {
             // Update Shipping address, saved later in `placeOrder`
             $shippingAddress->setStreet($option->getStreet());
@@ -176,4 +170,24 @@ readonly class Quote
         }
         return $shippingAddress;
     }
+
+    /** Load the Quote from arguments or from session
+     *
+     * @param \Magento\Quote\Model\Quote|int|null $quote - Quote object, or ID, or null
+     * @return \Magento\Quote\Model\Quote - The resolved Quote object
+     * @throws NoSuchEntityException
+     */
+    protected function getQuote(\Magento\Quote\Model\Quote|int|null $quote = null): \Magento\Quote\Model\Quote
+    {
+        // When cartId is passed, load from repository
+        if (is_int($quote)) {
+            $quote = $this->quoteRepository->get($quote);
+        }
+        // When not found from arguments, get from checkoutSession (could lead to circular errors)
+        if (!$quote) {
+            $quote = $this->checkoutSession->getQuote();
+        }
+        return $quote;
+    }
+
 }
