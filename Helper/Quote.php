@@ -150,23 +150,27 @@ readonly class Quote
         ?int $cartId = null,
     ): ?Address
     {
-        $quote = $this->getQuote($cartId);
-        // When not passed, load from repository
-        if (!$shippingAddress) {
-            $shippingAddress = $quote->getShippingAddress();
-        }
-        // Same for option
-        if (!$option) {
-            $option = $this->getOptionFromQuote();
-        }
-        // If all are found and it is a Pickup point
-        if ($shippingAddress && $option && $option->isPickup()) {
-            // Update Shipping address, saved later in `placeOrder`
-            $shippingAddress->setStreet($option->getStreet());
-            $shippingAddress->setCompany($option->getCompany());
-            $shippingAddress->setPostcode($option->getPostalCode());
-            $shippingAddress->setCity($option->getCity());
-            $shippingAddress->setCountryId($option->getCountryCode());
+        try {
+            $quote = $this->getQuote($cartId);
+            // When not passed, load from repository
+            if (!$shippingAddress) {
+                $shippingAddress = $quote->getShippingAddress();
+            }
+            // Same for option
+            if (!$option) {
+                $option = $this->getOptionFromQuote();
+            }
+            // If all are found and it is a Pickup point
+            if ($shippingAddress && $option && $option->isPickup()) {
+                // Update Shipping address, saved later in `placeOrder`
+                $shippingAddress->setStreet($option->getStreet());
+                $shippingAddress->setCompany($option->getCompany());
+                $shippingAddress->setPostcode($option->getPostalCode());
+                $shippingAddress->setCity($option->getCity());
+                $shippingAddress->setCountryId($option->getCountryCode());
+            }
+        } catch (NoSuchEntityException|LocalizedException $exception) {
+            // Catch and ignore
         }
         return $shippingAddress;
     }
