@@ -116,11 +116,15 @@ readonly class Quote
      * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
      * @return Option|null
      */
-    public function getOptionFromQuote(?\Magento\Quote\Model\Quote $quote = null,
+    public function getOptionFromQuote(\Magento\Quote\Model\Quote|int|null $quote = null,
     ): null|Option|ShippingOption|PickupPoint
     {
         $option = null;
         try {
+            // When cartId is passed, load from repository
+            if (is_int($quote)) {
+                $quote = $this->quoteRepository->get($quote);
+            }
             if (!$quote) {
                 $quote = $this->checkoutSession->getQuote();
             }
