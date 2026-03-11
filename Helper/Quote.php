@@ -7,7 +7,9 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Checkout\Model\Session\Proxy as Session;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\Quote\Address;
 use Monta\CheckoutApiWrapper\Objects\Option;
 use Monta\CheckoutApiWrapper\Objects\PickupPoint;
 use Monta\CheckoutApiWrapper\Objects\ShippingOption;
@@ -139,5 +141,39 @@ readonly class Quote
             // Ignore exceptions, return null
         }
         return $option;
+    }
+
+    /** Get Shipping address converted for Pickup
+     *
+     * @param Address|null $shippingAddress
+     * @param Option|null $option
+     * @param int|null $cartId
+     * @return ?Address
+     * @throws NoSuchEntityException
+     */
+    public function convertShippingAddress(
+        Address $shippingAddress = null,
+        Option $option = null,
+        ?int $cartId = null,
+    ): ?Address
+    {
+        // When not passed, load from repository
+        if (!$shippingAddress && $cartId) {
+            $shippingAddress = $this->quoteRepository->get($cartId)?->getShippingAddress();
+        }
+        // Same for option
+        if (!$option) {
+            $option = $this->getOptionFromQuote();
+        }
+        // If all are set, and it's a Pickup point
+        if ($shippingAddress && $option && $option->isPickup()) {
+            // Update Shipping address, saved later in `placeOrder`
+            $shippingAddress->setStreet($option->getStreet());
+            $shippingAddress->setCompany($option->getCompany());
+            $shippingAddress->setPostcode($option->getPostalCode());
+            $shippingAddress->setCity($option->getCity());
+            $shippingAddress->setCountryId($option->getCountryCode());
+        }
+        return $shippingAddress;
     }
 }

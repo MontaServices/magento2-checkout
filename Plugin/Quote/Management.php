@@ -54,11 +54,10 @@ readonly class Management
                 $shippingAddress = $this->quoteRepository->get($cartId)->getShippingAddress();
 
                 // Update Shipping address, saved later in `placeOrder`
-                $shippingAddress->setStreet($montaShippingData->getStreet());
-                $shippingAddress->setCompany($montaShippingData->getCompany());
-                $shippingAddress->setPostcode($montaShippingData->getPostalCode());
-                $shippingAddress->setCity($montaShippingData->getCity());
-                $shippingAddress->setCountryId($montaShippingData->getCountryCode());
+                $this->quoteHelper->convertShippingAddress(
+                    $shippingAddress,
+                    $montaShippingData,
+                );
             }
         }
     }
