@@ -165,7 +165,7 @@ readonly class Quote
             // If all are found and it is a Pickup point
             if ($shippingAddress && $option && $option->isPickup()) {
                 // Update Shipping address, saved later in `placeOrder`
-                $shippingAddress->setStreet($option->getStreet());
+                $shippingAddress->setStreet(trim($option->getStreet() . " " . $option->getHouseNumber()));
                 $shippingAddress->setCompany($option->getCompany());
                 $shippingAddress->setPostcode($option->getPostalCode());
                 $shippingAddress->setCity($option->getCity());
