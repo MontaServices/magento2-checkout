@@ -7,7 +7,9 @@ namespace Monta\Checkout\Helper;
 
 use Magento\Checkout\Model\Session\Proxy as Session;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\Quote\Address;
 use Monta\CheckoutApiWrapper\Objects\Option;
 use Monta\CheckoutApiWrapper\Objects\PickupPoint;
 use Monta\CheckoutApiWrapper\Objects\ShippingOption;
@@ -39,6 +41,7 @@ readonly class Quote
      */
     public function setOption(string $optionJson, bool $return = false): ?Option
     {
+        /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $this->checkoutSession->getQuote();
         $option = null;
 
@@ -115,14 +118,12 @@ readonly class Quote
      * @param \Magento\Quote\Model\Quote|null $quote - Pass quote because getting from session can cause loops (e.g. from Carrier)
      * @return Option|null
      */
-    public function getOptionFromQuote(?\Magento\Quote\Model\Quote $quote = null,
+    public function getOptionFromQuote(\Magento\Quote\Model\Quote|int|null $quote = null,
     ): null|Option|ShippingOption|PickupPoint
     {
         $option = null;
         try {
-            if (!$quote) {
-                $quote = $this->checkoutSession->getQuote();
-            }
+            $quote = $this->getQuote($quote);
             if ($montaData = $quote->getShippingAddress()->getMontaShippingData()) {
                 // Check if data is valid (every option always must have a code)
                 if (!empty(json_decode($montaData, true)['code'])) {
@@ -135,4 +136,67 @@ readonly class Quote
         }
         return $option;
     }
+
+    /** Get Shipping address converted for Pickup
+     *
+     * @param Address|null $shippingAddress
+     * @param Option|null $option
+     * @param int|null $cartId
+     * @param bool $onlyPickup - Return nothing if not a Pickup Option
+     * @return ?Address
+     */
+    public function convertShippingAddress(
+        Address $shippingAddress = null,
+        Option $option = null,
+        ?int $cartId = null,
+        bool $onlyPickup = false,
+    ): ?Address
+    {
+        try {
+            $quote = $this->getQuote($cartId);
+            // When not passed, load from repository
+            if (!$shippingAddress) {
+                $shippingAddress = $quote->getShippingAddress();
+            }
+            // Same for option
+            if (!$option) {
+                $option = $this->getOptionFromQuote();
+            }
+            // If all are found and it is a Pickup point
+            if ($shippingAddress && $option && $option->isPickup()) {
+                // Update Shipping address, saved later in `placeOrder`
+                $shippingAddress->setStreet(trim($option->getStreet() . " " . $option->getHouseNumber()));
+                $shippingAddress->setCompany($option->getCompany());
+                $shippingAddress->setPostcode($option->getPostalCode());
+                $shippingAddress->setCity($option->getCity());
+                $shippingAddress->setCountryId($option->getCountryCode());
+            } elseif ($onlyPickup) {
+                // Return NULL instead of an unchanged Address
+                $shippingAddress = null;
+            }
+        } catch (NoSuchEntityException|LocalizedException $exception) {
+            // Catch and ignore
+        }
+        return $shippingAddress;
+    }
+
+    /** Load the Quote from arguments or from session
+     *
+     * @param \Magento\Quote\Model\Quote|int|null $quote - Quote object, or ID, or null
+     * @return \Magento\Quote\Model\Quote - The resolved Quote object
+     * @throws NoSuchEntityException
+     */
+    protected function getQuote(\Magento\Quote\Model\Quote|int|null $quote = null): \Magento\Quote\Model\Quote
+    {
+        // When cartId is passed, load from repository
+        if (is_int($quote)) {
+            $quote = $this->quoteRepository->get($quote);
+        }
+        // When not found from arguments, get from checkoutSession (could lead to circular errors)
+        if (!$quote) {
+            $quote = $this->checkoutSession->getQuote();
+        }
+        return $quote;
+    }
+
 }

@@ -9,6 +9,7 @@ use Magento\Payment\Model\InfoInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Monta\Checkout\Helper\Quote;
 use Monta\Checkout\Helper\Shipping;
 use Monta\CheckoutApiWrapper\Objects\Option;
 use Monta\CheckoutApiWrapper\Objects\PickupPoint;
@@ -25,6 +26,7 @@ readonly class Management
         protected OrderRepositoryInterface $orderRepository,
         protected CartRepositoryInterface $quoteRepository,
         protected Shipping $shippingHelper,
+        protected Quote $quoteHelper,
     )
     {
     }
@@ -52,11 +54,10 @@ readonly class Management
                 $shippingAddress = $this->quoteRepository->get($cartId)->getShippingAddress();
 
                 // Update Shipping address, saved later in `placeOrder`
-                $shippingAddress->setStreet($montaShippingData->getStreet());
-                $shippingAddress->setCompany($montaShippingData->getCompany());
-                $shippingAddress->setPostcode($montaShippingData->getPostalCode());
-                $shippingAddress->setCity($montaShippingData->getCity());
-                $shippingAddress->setCountryId($montaShippingData->getCountryCode());
+                $this->quoteHelper->convertShippingAddress(
+                    $shippingAddress,
+                    $montaShippingData,
+                );
             }
         }
     }
@@ -86,10 +87,10 @@ readonly class Management
         return $orderId;
     }
 
-    /** Get Selected shipping option from Quote
+    /** Get selected shipping option from Quote
      *
      * @param int $quoteId
-     * @return Option|null - Selected shipping option or NULL
+     * @return Option|ShippingOption|PickupPoint|null - Selected Shipping option or NULL
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function getShippingData(int $quoteId): null|Option|ShippingOption|PickupPoint
@@ -99,11 +100,9 @@ readonly class Management
         $shippingAddress = $quote->getShippingAddress();
 
         // Only if the method is active
+        // TODO move 'isMonta' check to inside Quotehelper method, but there would be a circular dependency
         if ($this->shippingHelper->isMonta($shippingAddress->getShippingMethod())) {
-            if ($montaShippingData = $shippingAddress->getMontaShippingData()) {
-                // Convert JSON to object
-                $option = Option::constructFromJson($montaShippingData);
-            }
+            $option = $this->quoteHelper->getOptionFromQuote($quote);
         }
         return $option;
     }
