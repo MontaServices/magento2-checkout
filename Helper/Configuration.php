@@ -82,6 +82,7 @@ class Configuration
     }
 
     /** Configured carrier title
+     *
      * @return string
      */
     public function getCarrierTitle(): string
@@ -104,6 +105,16 @@ class Configuration
     public function getStore(): StoreInterface
     {
         return $this->storeManager->getStore();
+    }
+
+    /** Hide Timeframes without a day value
+     * TODO API should never return those Timeframes in the first place, but as fallback this config can hide them from the frontend
+     *
+     * @return bool
+     */
+    public function getHideEmptyTimeframes(): bool
+    {
+        return (bool)$this->getShippingConfig('hide_empty_timeframes');
     }
 
     /**
