@@ -79,7 +79,7 @@
                     <base_url type="media" scope_info="1">sales/monta/collect</base_url>
                 </field>
                 <field id="hide_empty_timeframes" translate="label comment" type="select"
-                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                       showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Hide empty Timeframes</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[When enabled, delivery timeframes without a day value are not shown.]]></comment>
