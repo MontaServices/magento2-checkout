@@ -54,6 +54,7 @@ class Api
             webshopLanguage: $this->localeResolver->getLocale(),
             currency: $this->montaConfiguration->getStore()->getCurrentCurrency()->getCurrencySymbol(),
             storeCollectLogo: $this->montaConfiguration->getCollectLogo(),
+            hideEmptyTimeframes: $this->montaConfiguration->getHideEmptyTimeframes(),
         );
     }
 
