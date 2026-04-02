@@ -143,7 +143,7 @@ readonly class Quote
      * @param Option|null $option
      * @param int|null $cartId
      * @param bool $onlyPickup - Return nothing if not a Pickup Option
-     * @return ?Address
+     * @return Address|null
      */
     public function convertShippingAddress(
         ?Address $shippingAddress = null,
@@ -198,5 +198,4 @@ readonly class Quote
         }
         return $quote;
     }
-
 }
