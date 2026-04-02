@@ -21,6 +21,7 @@ readonly class Management
      * @param OrderRepositoryInterface $orderRepository
      * @param CartRepositoryInterface $quoteRepository
      * @param Shipping $shippingHelper
+     * @param Quote $quoteHelper
      */
     public function __construct(
         protected OrderRepositoryInterface $orderRepository,

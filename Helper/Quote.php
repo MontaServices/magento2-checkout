@@ -146,8 +146,8 @@ readonly class Quote
      * @return ?Address
      */
     public function convertShippingAddress(
-        Address $shippingAddress = null,
-        Option $option = null,
+        ?Address $shippingAddress = null,
+        ?Option $option = null,
         ?int $cartId = null,
         bool $onlyPickup = false,
     ): ?Address
