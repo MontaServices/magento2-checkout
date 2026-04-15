@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Jacco.Amersfoort <jacco.amersfoort@monta.nl>
  * @created 12/08/2025 11:47
  */
 namespace Monta\Checkout\Controller\Adminhtml\Credentials;
