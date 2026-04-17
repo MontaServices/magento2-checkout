@@ -115,10 +115,4 @@ readonly class Management
         }
         return $option;
     }
-
-//    private function isOwnShippingMethod(string $methodCode): bool
-//    {
-//        // Checks the name of the carrier_method to validate the method is Monta
-//        return str_starts_with($methodCode, 'monta_');
-//    }
 }
