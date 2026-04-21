@@ -1,14 +1,68 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
+
+@source "../template/**/*.html";
+@source "../../../../../Hyva/view/frontend/templates/**/*.phtml";
+@source "../../../../../Hyva/view/frontend/layout/**/*.xml";
 
 @utility rounded-tile {
     @apply rounded-xl p-4;
 }
 
 @utility monta-blue-focus {
-    /* important ring-color to override gray ring below */
-    @apply !ring-blue-400 ring-inset ring-1 bg-blue-50;
+    @apply border-sky-400 bg-sky-50;
 }
 
 @utility monta-gray-tile {
-    @apply ring-gray-300 ring-inset ring-1;
+    @apply border border-slate-300 bg-white shadow-sm;
+}
+
+@utility monta-panel {
+    @apply rounded-2xl border border-slate-300 bg-white shadow-sm;
+}
+
+@utility monta-panel-soft {
+    @apply rounded-xl border border-slate-200 bg-slate-50;
+}
+
+@utility monta-option-card {
+    @apply rounded-2xl border border-slate-300 bg-white p-4 sm:p-5 shadow-sm transition duration-150;
+}
+
+@utility monta-option-card-selected {
+    @apply border-sky-400 bg-sky-50/40 shadow-[0_8px_22px_-18px_rgba(59,130,246,0.75)];
+}
+
+@utility monta-segment-button {
+    @apply flex min-h-12 items-center justify-center px-3 text-center text-base font-semibold text-slate-900 transition duration-150;
+}
+
+@utility monta-segment-button-active {
+    @apply bg-sky-500 text-white;
+}
+
+@utility monta-day-card {
+    @apply flex min-w-[8rem] shrink-0 flex-col rounded-xl border border-slate-200 bg-white px-4 py-3 text-center shadow-sm transition duration-150;
+}
+
+@utility monta-day-card-selected {
+    @apply border-sky-400 bg-white shadow-[0_10px_20px_-16px_rgba(59,130,246,0.85)];
+}
+
+@utility monta-suboption-row {
+    @apply flex items-center justify-between gap-3 rounded-xl border border-sky-300 bg-white px-4 py-3 transition duration-150;
+}
+
+@utility monta-suboption-row-selected {
+    @apply border-sky-400 bg-sky-50;
+}
+
+@utility monta-hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+@layer utilities {
+    .monta-hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
 }
