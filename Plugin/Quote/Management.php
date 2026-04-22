@@ -4,6 +4,7 @@
  */
 namespace Monta\Checkout\Plugin\Quote;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteManagement;
@@ -45,6 +46,13 @@ readonly class Management
         ?InfoInterface $paymentMethod = null,
     ): void
     {
+        if(!$this->getShippingData($cartId)
+            && $this->shippingHelper->isMonta($this->quoteRepository->get($cartId)->getShippingAddress()->getShippingMethod())) {
+            throw new LocalizedException(
+                __('Please select a shipping option before placing your order.')
+            );
+        }
+
         if ($montaShippingData = $this->getShippingData($cartId)) {
             $montaShippingData->validate();
 
