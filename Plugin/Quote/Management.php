@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Jacco.Amersfoort <jacco.amersfoort@monta.nl>
  * @created 10/2/2025 13:58
  */
 namespace Monta\Checkout\Plugin\Quote;
