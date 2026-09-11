@@ -11,9 +11,11 @@ use Magento\Quote\Model\QuoteManagement;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Monta\Checkout\Helper\Quote;
 use Monta\Checkout\Helper\Shipping;
+use Monta\CheckoutApiWrapper\Exception\ValidationException;
 use Monta\CheckoutApiWrapper\Objects\Option;
 use Monta\CheckoutApiWrapper\Objects\PickupPoint;
 use Monta\CheckoutApiWrapper\Objects\ShippingOption;
+use Psr\Log\LoggerInterface;
 
 readonly class Management
 {
@@ -22,12 +24,14 @@ readonly class Management
      * @param CartRepositoryInterface $quoteRepository
      * @param Shipping $shippingHelper
      * @param Quote $quoteHelper
+     * @param LoggerInterface $logger
      */
     public function __construct(
         protected OrderRepositoryInterface $orderRepository,
         protected CartRepositoryInterface $quoteRepository,
         protected Shipping $shippingHelper,
         protected Quote $quoteHelper,
+        protected LoggerInterface $logger,
     )
     {
     }
@@ -38,7 +42,7 @@ readonly class Management
      * @param int $cartId
      * @param InfoInterface|null $paymentMethod
      * @return void
-     * @throws \Exception
+     * @throws LocalizedException
      */
     public function beforePlaceOrder(
         QuoteManagement $subject,
@@ -54,7 +58,16 @@ readonly class Management
         }
 
         if ($montaShippingData = $this->getShippingData($cartId)) {
-            $montaShippingData->validate();
+            try {
+                $montaShippingData->validate();
+            } catch (ValidationException $e) {
+                // Log the real reason, the LocalizedException message shown to the
+                // customer is kept generic on purpose (no need to expose cache internals)
+                $this->logger->warning('Monta shipping option validation failed: ' . $e->getMessage());
+                throw new LocalizedException(
+                    __('Your selected shipping option is no longer valid, please select it again.'),
+                );
+            }
 
             // In case of pickup, set Pickup address as Shipping address
             if ($montaShippingData->isPickup()) {
