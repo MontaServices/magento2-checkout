@@ -5,6 +5,7 @@
 namespace Monta\Checkout\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\DeploymentConfig;
 use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -21,12 +22,14 @@ class Configuration
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param EncryptorInterface $encryptor
+     * @param DeploymentConfig $deploymentConfig
      */
     public function __construct(
         protected readonly Monta $carrier,
         protected readonly ScopeConfigInterface $scopeConfig,
         protected readonly StoreManagerInterface $storeManager,
         protected readonly EncryptorInterface $encryptor,
+        protected readonly DeploymentConfig $deploymentConfig,
     )
     {
     }
@@ -145,10 +148,15 @@ class Configuration
      */
     protected function getShippingConfig(string $field, bool $decrypt = false): mixed
     {
-        $value = $this->scopeConfig->getValue(self::CONFIG_PATH_SHIPPING . trim(string: $field, characters: "/"));
-        if ($decrypt) {
-            // TODO when value is set in config file (env.php) instead of DB then the value is doubly encrypted here, goes wrong
-            $value = $this->encryptor->decrypt($value);
+        $path  = self::CONFIG_PATH_SHIPPING . trim($field, "/");
+        $value = $this->scopeConfig->getValue($path);
+
+        if ($decrypt && $value !== null && $value !== '') {
+            // env.php (config:sensitive:set) staat al plaintext; alleen DB-waarden zijn encrypted
+            $fromEnv = $this->deploymentConfig->get('system/default/' . $path) !== null;
+            if (!$fromEnv) {
+                $value = $this->encryptor->decrypt($value);
+            }
         }
         return $value;
     }
