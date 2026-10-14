@@ -19,4 +19,11 @@
     </type>
     <preference for="Magento\PageBuilder\Block\GoogleMapsApi"
                 type="Monta\Checkout\Block\GoogleMaps"/>
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="shipping/monta/password" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
