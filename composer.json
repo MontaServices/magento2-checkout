@@ -4,7 +4,7 @@
     "require": {
         "php": "^8.3|^8.4",
         "monta/checkout-api-wrapper": "^2.0",
-        "magento/module-page-builder": "*"
+        "magento/module-page-builder": "^2.0"
     },
     "type": "magento2-module",
     "license": "CC-BY-NC-ND-3.0",
